@@ -1,0 +1,85 @@
+<%/* this is going to be the myaccount page in the dashboard
+this will allow users to edit their goals with an inline editing table
+will include calories, proteins, fats, carbs, sodium, fiber, sugars
+should take everything in as an editable form, similar to inline edited table, updates database, and passkit api after saving
+placeholders will contain default fda values*/%>
+
+    <%# next line includes the partial navbar file%>
+        <% include ./partials/navbar %>
+
+            <!-- Main panel file -->
+            <div class="main-panel">
+                <!-- Top Navbar -->
+                <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <span class="no-icon">
+                                    <%= name %>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <h1>FAQ</h1>
+                <p1>Q: How do I use this service?</p1>
+                <br>
+                <p1>A: Add your card to your mobile wallet from your email. Open your mobile wallet card at any participating restaurant, and present your card to the cashier when paying. The cashier will scan it and your card will be updated. You can always check the back of your card for instructions!</p1>
+                <br style=“line-height:2”>
+                <br>
+                <p1>Q: Which restaurants are using this service?</p1>
+                <br>
+                <p1>A: Currently, none. But when we launch we will put them here! For now you can use our diary tracking tools for free!</p1>
+                <br style=“line-height:2”>
+                <br>
+                <p1>Q: Will you add fitness device functionality?</p1>
+                <br>
+                <p1>A: We plan to integrate with FitBit, MyFitnessPal, and other popular fitness trackers. Most importantly,
+                    we want to add ways to track metrics for chronic diseases like diabetes and heart disease. Reach out if you have ideas!</p1>
+                <br style=“line-height:2”>
+                <br>
+                <p1>Q: What do I do when I want to eat food at home?</p1>
+                <br>
+                <p1>A: In the future, we would like to add a feature to easily track what food is in your fridge/pantry when purchasing at grocery stores! We hope you will be able to use it to better manage expiration dates, keep up to date on food recalls, create new recipe combinations, and give you health feedback on your purchases!</p1>
+                <br style=“line-height:2”>
+                <br>
+                <p1>Q: I have an idea for a new feature. Who do I talk to?</p1>
+                <br>
+                <p1>A: Click on the links below and we will implement your feedback ASAP.
+
+                    <br style=“line-height:2”>
+                    <br>
+                    <p1>Q: Where's my card?</p1>
+                    <br>
+                    <p1>A: Check the email you used to sign up. If you don't receive it, contact us and we can send it to you directly.
+
+                        <h1>Links</h1>
+                        <a href="https://tdeecalculator.net/" style="color: #cc0000">Goal calculator</a>
+                        </a>
+                        <br style=“line-height:2”>
+                        <br>
+                        <a href="https://forms.gle/RNCscBcYBaRkHsji6" style="color: #cc0000">Suggest a restaurant</a>
+                        </a>
+                        <br style=“line-height:2”>
+                        <br>
+                        <a href="https://forms.gle/PaywH2iRGnwVyn6r6" style="color: #cc0000">Ideas and feedback</a>
+                        </a>
+                        <br style=“line-height:2”>
+                        <br>
+                        <a href="https://forms.gle/mC54uMGXrD6ZVM1L9" style="color: #cc0000">Contact us</a>
+                        </a>
+                        <br style=“line-height:2”>
+                        <br>
+                        <!-- End Navbar -->
+            </div>
+
+            <%# jquery libraries%>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

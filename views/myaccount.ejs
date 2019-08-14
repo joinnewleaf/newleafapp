@@ -1,0 +1,102 @@
+<%/* this is going to be the myaccount page in the dashboard
+this will allow users to edit their goals with an inline editing table
+will include calories, proteins, fats, carbs, sodium, fiber, sugars
+should take everything in as an editable form, similar to inline edited table, updates database, and passkit api after saving
+placeholders will contain default fda values*/%>
+
+  <%# next line includes the partial navbar file%>
+    <% include ./partials/navbar %>
+
+      <div class="main-panel">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+          <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar burger-lines"></span>
+            <span class="navbar-toggler-bar burger-lines"></span>
+            <span class="navbar-toggler-bar burger-lines"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <span class="no-icon">
+                  <%= name %>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <h1>My Daily Goals</h1>
+        <p1>Change your goals to update your card.</p1>
+        <%# next line includes the partial messages file, and can be used for
+      displaying success or failure after registration in a flash%>
+          <br style=“line-height:2”>
+          <br>
+          <div class="row">
+            <div class="col-3">
+              <% include ./partials/messages %>
+            </div>
+          </div>
+          <form action="/usergoals/update" method="POST">
+            <div class="row">
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="calorieGoal">Calorie Limit</label>
+                  <input type="text" class="form-control" name="caloriesGoal" placeholder="<%= typeof caloriesGoal != 'undefined' ? caloriesGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="carbGoal">Carbs (g)</label>
+                  <input type="text" class="form-control" name="carbsGoal" placeholder="<%= typeof carbsGoal != 'undefined' ? carbsGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="fatsGoal">Fats (g)</label>
+                  <input type="text" class="form-control" name="fatsGoal" placeholder="<%= typeof fatsGoal != 'undefined' ? fatsGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="proteinsGoal">Proteins (g)</label>
+                  <input type="text" class="form-control" name="proteinsGoal" placeholder="<%= typeof proteinsGoal != 'undefined' ? proteinsGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="sodiumGoal">Sodium (mg)</label>
+                  <input type="text" class="form-control" name="sodiumGoal" placeholder="<%= typeof sodiumGoal != 'undefined' ? sodiumGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="form-group">
+                  <label for="sugarGoal">Sugars (g)</label>
+                  <input type="text" class="form-control" name="sugarsGoal" placeholder="<%= typeof sugarsGoal != 'undefined' ? sugarsGoal : '' %>"
+                    autocomplete="off">
+                </div>
+              </div>
+              <div class="col-2">
+                <button type="submit" class="btn btn-primary">Save Goals</button>
+              </div>
+              <div class="col-2">
+                <input type="button" class="btn btn-primary btn_default" value="Default" onclick="window.location='/usergoals/default';"
+                />
+              </div>
+            </div>
+          </form>
+          <!-- End Navbar -->
+      </div>
+
+      <%# jquery libraries%>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

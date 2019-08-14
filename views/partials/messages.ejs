@@ -1,0 +1,51 @@
+<%# a partial is a piece of html code that you can inject into other html
+pages%> <%# this is going to check if there is an error because we passed errors
+in from register/login%> <%# it will then print to the screen%> <%# if there IS
+an error, loop thru errors array, and print to screen%> <%# errors is an object
+with property msg%> <%# output for ejs needs an equals sign%> <%# for css
+styling, we used dismissal alert on bootstrap%>
+
+<%if (typeof errors != 'undefined') { %>
+  <% errors.forEach(function(error) { %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <%= error.msg %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<% }); %>
+<% } %>
+
+<%if (typeof success_msgs != 'undefined') { %>
+  <% success_msgs.forEach(function(success) { %>
+<div class="alert alert-success alert-dismissible fade in" role="alert">
+  <%= success.msg %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<% }); %>
+<% } %>
+
+<%if (success_msg != '') { %>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <%= success_msg %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<% } %> <%if (error_msg != '') { %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <%= error_msg %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<% } %> <%if (error != '') { %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <%= error %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<% } %>

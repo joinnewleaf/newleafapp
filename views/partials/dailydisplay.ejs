@@ -1,0 +1,81 @@
+<%# card displaying macro goals and daily goals%>
+    <%# practice displaying the date%>
+        <div class="container" style="padding-top: 20px;">
+            <span>Displaying diary for</span>
+            <span class="displayedDate"></span>
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <!-- the overall caloric values -->
+                            <div class="col-xs-12 col-md-6 text-center">
+                                <h1 class="rating-num goals">
+                                </h1>
+                                <div>
+                                    <span class="glyphicon glyphicon-fire"></span>Calories Remaining
+                                </div>
+                                <!-- center-progressbar is a custom class -->
+                                <div class="col-xs-8 col-md-9 center-progressbar">
+                                    <br>
+                                    <div class="progress progress-success">
+                                        <div class="progress-bar progress-bar-success" id="progress-bar-calories" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                            aria-valuemax="100" style="width: 0%">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- carbs -->
+                            <div class="col-xs-12 col-md-6">
+                                <div class="col-xs-3 col-md-3 text-right">
+                                    <span class="">Macros Left:</span>
+                                    <br>
+                                </div>
+                                <br>
+                                <div class="row rating-desc">
+                                    <br>
+                                    <div class="col-xs-3 col-md-3 text-right">
+                                        <span class=""></span>Carbs:
+                                        <span class="carbs"></span>
+                                    </div>
+                                    <div class="col-xs-8 col-md-9">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info" id="progress-bar-carbs" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                aria-valuemax="100" style="width: 0%">
+                                                <span class="sr-only">0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- fats -->
+                                    <div class="col-xs-3 col-md-3 text-right">
+                                        <span class=""></span>Fats:
+                                        <span class="fats"></span>
+                                    </div>
+                                    <div class="col-xs-8 col-md-9">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-warning" id="progress-bar-fats" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                aria-valuemax="100" style="width: 0%">
+                                                <span class="sr-only">0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--proteins -->
+                                    <div class="col-xs-3 col-md-3 text-right">
+                                        <span class=""></span>Proteins:
+                                        <span class="proteins"></span>
+                                    </div>
+                                    <div class="col-xs-8 col-md-9">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-danger" id="progress-bar-proteins" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100" style="width: 0%">
+                                                <span class="sr-only">0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
