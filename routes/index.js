@@ -18,6 +18,9 @@ const Days = require("../models/Days"); //allows us to register users and post o
 //must bring in our created passport authentication middleware to protect dashboard route
 const { ensureAuthenticated } = require("../config/auth");
 
+//self made functions found in controllers, likely want to replace with one big passkit library
+var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+
 //whenever we want to create a route we use get or post, pass it what the user requested (router. creates a method for routing)
 //for instance '/' for the homepage
 //when working with express, we get access to a request and a response object
@@ -43,6 +46,9 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
     //if this user exists, we render the page with the parameters already in the db
     .then(usergoals => {
 
+      //passkit.sendEmail(req.user.email);
+      passkit.createPass(req.user.email);
+
       //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
       if (usergoals) {
 
@@ -56,8 +62,6 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 
         //current datetime
         let currentDate = new Date()
-        console.log(currentDate);
-        console.log(currentDate.toDateString());
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
         Days.findOne({ email: req.user.email, dateString: currentDate.toDateString() })
@@ -193,6 +197,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 
 //post request on the dashboard pulls in data from the database for a certain date
 router.post("/dashboard", ensureAuthenticated, (req, res) => {
+
+
 
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);

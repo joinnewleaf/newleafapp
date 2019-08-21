@@ -20,7 +20,9 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
-var sendEmail = require("../controllers/sendEmail"); //sendEmail function makes a request to passkit API
+var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+//this jwt is specifically used to authenticate requests to Passkit API
+var jwt = require("../config/retrievejwt");
 
 //check index.js file in routes folder for these notes, now we are taking a user login request
 //gets commented out and replaced with render functions
@@ -141,7 +143,7 @@ router.post("/register", (req, res) => {
                     .then(user => {
 
                       //send an email containing the pass; want to pass it in the email, and create a new pass as well
-                      sendEmail.sendEmail();
+                      //passkit.createPass(email);
 
                       //before the redirect, we pass in the flash message
                       req.flash(
@@ -165,6 +167,7 @@ router.post("/register", (req, res) => {
 
 //when logging in need to create a login route
 router.post("/login", (req, res, next) => {
+
   //using the local strategy (passing in local)
   passport.authenticate("local", {
     successRedirect: "/dashboard",
