@@ -22,7 +22,6 @@ const passport = require("passport");
 //self made functions found in controllers, likely want to replace with one big passkit library
 var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 //this jwt is specifically used to authenticate requests to Passkit API
-var jwt = require("../config/retrievejwt");
 
 //check index.js file in routes folder for these notes, now we are taking a user login request
 //gets commented out and replaced with render functions
@@ -61,6 +60,7 @@ router.post("/register", (req, res) => {
   //checks that the passwords match
   if (password !== password2) {
     errors.push({ msg: "Passwords do not match" });
+    console.log('inhere');
   }
 
   //if we have an issue with validation, we want to rerender the registration form
@@ -93,11 +93,15 @@ router.post("/register", (req, res) => {
             password2
           });
         } else {
+
+          //if this is a new user, we create a pass for them
+          let passID = passkit.createPass(email);
+
           //we will create a new user using a new instance of User model, does not save
           const newUser = new User({
             name,
             email,
-            password
+            password,
           });
 
           //this is where we hash the password (after creating an instance of User seen above)
@@ -105,6 +109,8 @@ router.post("/register", (req, res) => {
           bcrypt.genSalt(10, (error, salt) =>
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
+
+              console.log(passID);
 
               //sets password to hashed password
               newUser.password = hash;
@@ -142,17 +148,20 @@ router.post("/register", (req, res) => {
                     //if user gets saved, render the page again, with updated information
                     .then(user => {
 
-                      //send an email containing the pass; want to pass it in the email, and create a new pass as well
-                      //passkit.createPass(email);
+                      //intialize an success message array
+                      let success_msgs = [];
 
-                      //before the redirect, we pass in the flash message
-                      req.flash(
-                        "success_msg",
-                        "You are now registered and can log in. Check your email for your card."
-                      );
+                      //push flash message to screen to show it is updated, need to also pass in as we render
+                      success_msgs.push({ msg: "You are now registered and can log in." })
+                      //multiple flash messages
+                      success_msgs.push({ msg: "Check your email for your digital card." })
 
-                      res.redirect("/users/login");
+                      //render the login page, should probably change to redirect but was having trouble with async flash messages
+                      res.render("login", {
+                        success_msgs,
+                      });
                     })
+
 
                     .catch(err => console.log(err));
 
@@ -178,9 +187,19 @@ router.post("/login", (req, res, next) => {
 
 //handles user logouts using passport middleware
 router.get("/logout", (req, res) => {
+
+  //intialize an success message array
+  let success_msgs = [];
   req.logout();
-  req.flash("success_msg", "You are logged out");
-  res.redirect("/users/login");
+
+  //push flash message to screen to show it is updated, need to also pass in as we render
+  success_msgs.push({ msg: "You are logged out" })
+
+  //render the login page, should probably change to redirect but was having trouble with async flash messages
+  res.render("login", {
+    success_msgs,
+  });
+
 });
 
 //exports the router function to be used in app

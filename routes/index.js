@@ -46,9 +46,6 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
     //if this user exists, we render the page with the parameters already in the db
     .then(usergoals => {
 
-      //passkit.sendEmail(req.user.email);
-      passkit.createPass(req.user.email);
-
       //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
       if (usergoals) {
 
@@ -83,7 +80,6 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
                 days: days
-
               });
 
               //if this Day does not exist for that user, create new one
@@ -101,6 +97,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 
                 //if days gets saved, render the dashboard page
                 .then(days => {
+                  console.log(days);
 
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
@@ -112,12 +109,13 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
                     days: days
-
                   });
                 })
+
                 .catch(err => console.log(err));
             }
           })
+
           .catch(err => console.log(err));
 
       } else {
@@ -188,23 +186,16 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
           .catch(err => console.log(err));
       }
     })
+
     .catch(err => console.log(err));
 });
-
-
-
-
 
 //post request on the dashboard pulls in data from the database for a certain date
 router.post("/dashboard", ensureAuthenticated, (req, res) => {
 
-
-
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
   let dateRequest = new Date(parsedDate);
-
-  console.log(dateRequest.toDateString());
 
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({ email: req.user.email })
@@ -233,7 +224,6 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
             if (days) {
 
               //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
-              //also pass in the goals we set earlier
               res.render("dashboard", {
                 name: req.user.name,
                 caloriesGoal: caloriesGoal,
@@ -243,7 +233,6 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
                 days: days
-
               });
 
               //if this Day does not exist for that user, create new one
@@ -262,6 +251,8 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
                 //if days gets saved, render the dashboard page
                 .then(days => {
 
+                  console.log(days);
+
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
                     name: req.user.name,
@@ -275,9 +266,11 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
 
                   });
                 })
+
                 .catch(err => console.log(err));
             }
           })
+
           .catch(err => console.log(err));
 
       } else {
@@ -342,22 +335,17 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
 
                   });
                 })
+                
                 .catch(err => console.log(err));
             }
           })
+
           .catch(err => console.log(err));
       }
     })
+
     .catch(err => console.log(err));
 });
-
-
-
-
-
-
-
-
 
 //routes to the resources page
 router.get("/resources", ensureAuthenticated, (req, res) =>
@@ -366,6 +354,12 @@ router.get("/resources", ensureAuthenticated, (req, res) =>
   })
 );
 
+//routes to the healthinsights page
+router.get("/healthinsights", ensureAuthenticated, (req, res) =>
+  res.render("healthinsights", {
+    name: req.user.name
+  })
+);
 
 //exports the router function to be used in app
 module.exports = router;

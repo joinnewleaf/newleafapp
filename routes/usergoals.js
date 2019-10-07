@@ -8,9 +8,14 @@ const router = express.Router();
 
 //create a user goals model, so we can call methods using mongoose
 const UserGoals = require("../models/UserGoals");
+//need to retrieve Days model
+const Days = require("../models/Days"); //allows us to register users and post on their goals db
 
 //must bring in our created passport authentication middleware to protect who can create goals
 const { ensureAuthenticated } = require("../config/auth");
+
+//self made functions found in controllers, likely want to replace with one big passkit library
+var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 
 //this handles when users submit a registration form, makes a post request to /usergoals/update
 router.post("/update", ensureAuthenticated, (req, res) => {
@@ -62,19 +67,39 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                     }
                 ).then(function () { //function runs asynchronously, so wait to render
 
-                    //push flash message to screen to show it is updated, need to also pass in as we render
-                    success_msgs.push({ msg: "Goals updated" })
 
-                    res.render("myaccount", {
-                        success_msgs,
-                        name: req.user.name,
-                        caloriesGoal: caloriesGoal,
-                        carbsGoal: carbsGoal,
-                        fatsGoal: fatsGoal,
-                        proteinsGoal: proteinsGoal,
-                        sodiumGoal: sodiumGoal,
-                        sugarsGoal: sugarsGoal
-                    });
+
+                    //to update pass, need to check if we are adding data for the current date
+                    let checkcurrentDate = new Date()
+                    let checkdateString = checkcurrentDate.toDateString()
+
+                    //query days
+                    Days.findOne({
+                        email: req.user.email,
+                        dateString: checkdateString
+                    })
+                        .then(days => {
+
+                            //push flash message to screen to show it is updated, need to also pass in as we render
+                            success_msgs.push({ msg: "Goals updated" })
+
+                            //update pass using current days data
+                            passkit.updatePass(req.user.email, days)
+
+                            //render the account page
+                            res.render("myaccount", {
+                                success_msgs,
+                                name: req.user.name,
+                                caloriesGoal: caloriesGoal,
+                                carbsGoal: carbsGoal,
+                                fatsGoal: fatsGoal,
+                                proteinsGoal: proteinsGoal,
+                                sodiumGoal: sodiumGoal,
+                                sugarsGoal: sugarsGoal
+                            });
+                        })
+
+                        .catch(err => console.log(err));
 
                 });
 
@@ -118,21 +143,40 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                     //if user gets saved, render the page again, with updated information
                     .then(user => {
 
-                        //render the account page
-                        res.render("myaccount", {
-                            name: req.user.name,
-                            caloriesGoal: caloriesGoal,
-                            carbsGoal: carbsGoal,
-                            fatsGoal: fatsGoal,
-                            proteinsGoal: proteinsGoal,
-                            sodiumGoal: sodiumGoal,
-                            sugarsGoal: sugarsGoal
-                        });
+                        //to update pass, need to check if we are adding data for the current date
+                        let checkcurrentDate = new Date()
+                        let checkdateString = checkcurrentDate.toDateString()
+
+                        //query days
+                        Days.findOne({
+                            email: req.user.email,
+                            dateString: checkdateString
+                        })
+                            .then(days => {
+
+                                //update pass using current days data
+                                passkit.updatePass(req.user.email, days)
+
+                                //render the account page
+                                res.render("myaccount", {
+                                    name: req.user.name,
+                                    caloriesGoal: caloriesGoal,
+                                    carbsGoal: carbsGoal,
+                                    fatsGoal: fatsGoal,
+                                    proteinsGoal: proteinsGoal,
+                                    sodiumGoal: sodiumGoal,
+                                    sugarsGoal: sugarsGoal
+                                });
+                            })
+
+                            .catch(err => console.log(err));
                     })
 
                     .catch(err => console.log(err));
             }
-        });
+        })
+
+        .catch(err => console.log(err))
 });
 
 //loads the page, and gets data from db every time page is rendered
@@ -194,21 +238,42 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
                     //if user gets saved, render the page again, with updated information
                     .then(user => {
 
-                        //render the account page
-                        res.render("myaccount", {
-                            name: req.user.name,
-                            caloriesGoal: caloriesGoal,
-                            carbsGoal: carbsGoal,
-                            fatsGoal: fatsGoal,
-                            proteinsGoal: proteinsGoal,
-                            sodiumGoal: sodiumGoal,
-                            sugarsGoal: sugarsGoal
-                        });
+                        //to update pass, need to check if we are adding data for the current date
+                        let checkcurrentDate = new Date()
+                        let checkdateString = checkcurrentDate.toDateString()
+
+                        //query days
+                        Days.findOne({
+                            email: req.user.email,
+                            dateString: checkdateString
+                        })
+                            .then(days => {
+
+                                //update pass using current days data
+                                passkit.updatePass(req.user.email, days)
+
+                                //render the account page
+                                res.render("myaccount", {
+                                    name: req.user.name,
+                                    caloriesGoal: caloriesGoal,
+                                    carbsGoal: carbsGoal,
+                                    fatsGoal: fatsGoal,
+                                    proteinsGoal: proteinsGoal,
+                                    sodiumGoal: sodiumGoal,
+                                    sugarsGoal: sugarsGoal
+                                });
+                            })
+
+                            .catch(err => console.log(err));
+
                     })
 
-                    .catch(err => console.log(err));
+                    .catch(err => console.log(err))
+
             }
         })
+
+        .catch(err => console.log(err))
 )
 
 //sets the default goals on first registration and on default button pressed
@@ -247,21 +312,41 @@ router.get("/default", ensureAuthenticated, (req, res) => {
 
                     }).then(function () { //function runs asynchronously, so wait to render
 
-                        //push flash message to screen to show it is updated, need to also pass in as we render
-                        success_msgs.push({ msg: "Goals set to default" })
+                        //to update pass, need to check if we are adding data for the current date
+                        let checkcurrentDate = new Date()
+                        let checkdateString = checkcurrentDate.toDateString()
 
-                        res.render("myaccount", {
-                            success_msgs,
-                            name: req.user.name,
-                            caloriesGoal: caloriesGoal,
-                            carbsGoal: carbsGoal,
-                            fatsGoal: fatsGoal,
-                            proteinsGoal: proteinsGoal,
-                            sodiumGoal: sodiumGoal,
-                            sugarsGoal: sugarsGoal
-                        });
+                        //query days
+                        Days.findOne({
+                            email: req.user.email,
+                            dateString: checkdateString
+                        })
+                            .then(days => {
 
-                    });
+                                //update pass using current days data
+                                passkit.updatePass(req.user.email, days)
+
+                                //push flash message to screen to show it is updated, need to also pass in as we render
+                                success_msgs.push({ msg: "Goals set to default" })
+
+                                //render the account page
+                                res.render("myaccount", {
+                                    success_msgs,
+                                    name: req.user.name,
+                                    caloriesGoal: caloriesGoal,
+                                    carbsGoal: carbsGoal,
+                                    fatsGoal: fatsGoal,
+                                    proteinsGoal: proteinsGoal,
+                                    sodiumGoal: sodiumGoal,
+                                    sugarsGoal: sugarsGoal
+                                });
+                            })
+
+                            .catch(err => console.log(err));
+
+                    })
+
+                    .catch(err => console.log(err));
 
             } else {
 
@@ -290,14 +375,19 @@ router.get("/default", ensureAuthenticated, (req, res) => {
 
                     //if user gets saved, render the page again, with updated information
                     .then(user => {
+
+                        //update pass after new goals are saved
+                        passkit.updatePass(req.user.email);
+
                         console.log('succesfully registered user')
                     })
 
                     .catch(err => console.log(err));
             }
         })
-})
 
+        .catch(err => console.log(err))
+})
 
 //exports the router function to be used in app
 module.exports = router;

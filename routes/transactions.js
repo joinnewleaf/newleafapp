@@ -141,7 +141,7 @@ router.post("/date", ensureAuthenticated, (req, res) => {
 //when we loop through transactions, we might want to store to an array that gets rendered on the page.
 
 //loads the page, and gets data from db every time page is rendered
-router.get("/date", ensureAuthenticated, (req, res) => {
+router.get("/date", ensureAuthenticated, (req, res) => { 
 
     //pull date from the submitted form
     console.log(req.body);

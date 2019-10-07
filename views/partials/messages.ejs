@@ -5,9 +5,10 @@ an error, loop thru errors array, and print to screen%> <%# errors is an object
 with property msg%> <%# output for ejs needs an equals sign%> <%# for css
 styling, we used dismissal alert on bootstrap%>
 
+<%# for som,e reason, div class fade in is necessary, fade show hides the flash message%>
 <%if (typeof errors != 'undefined') { %>
   <% errors.forEach(function(error) { %>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
   <%= error.msg %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -28,21 +29,21 @@ styling, we used dismissal alert on bootstrap%>
 <% } %>
 
 <%if (success_msg != '') { %>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade in" role="alert">
   <%= success_msg %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <% } %> <%if (error_msg != '') { %>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
   <%= error_msg %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <% } %> <%if (error != '') { %>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
   <%= error %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>

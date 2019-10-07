@@ -14,6 +14,19 @@ const mongoose = require('mongoose');
 //we need date to know which day
 //we will just append a transaction ID onto this schema
 //since we query the exact date, going to store this as a string as well
+
+//child schema needs to be in front of parent schema
+const FoodSchema = new mongoose.Schema({
+    name: String,
+    calories: String,
+    carbs: String,
+    fats: String,
+    proteins: String,
+    sugars: String,
+    sodium: String
+});
+
+//day schema, parent schema
 const DaysSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -26,11 +39,18 @@ const DaysSchema = new mongoose.Schema({
     dateString: {
         type: String,
         require: true
+    },
+    foods: {
+        type: [FoodSchema],
+        require: false
     }
 });
 
-//create a model from our schema, we pass it model name Transactions, and we pass it the schema we set above
+//create a model from our schema, we pass it model name, and we pass it the schema we set above
+const Foods = mongoose.model('Foods', FoodSchema)
 const Days = mongoose.model('Days', DaysSchema);
+
 
 //export this to be used in other files
 module.exports = Days;
+//module.exports = Foods;

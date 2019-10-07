@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    passID: {
+        type: String,
+        require: false
+    },
     date: {
         type: Date,
         default: Date.now

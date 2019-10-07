@@ -88,6 +88,7 @@ app.use("/", require("./routes/index"));
 //can go to localhost5000/users/login to access these from the browser
 app.use("/users", require("./routes/users"));
 app.use("/usergoals", require("./routes/usergoals"));//added this to allow the users goal route
+app.use("/days", require("./routes/days"));//used to write to the db collection days
 
 //creates an instance of a port that can be used for listening, process.env.PORT is used for
 //deploying, eg. Heroku uses this as a default port, 5000 is used for local hosting and development
