@@ -1,0 +1,51 @@
+h2 {
+    font-family: "Roboto";
+    font-size: 30px;
+    color: #3f5745;
+}
+.accordion-section .panel-default > .panel-heading {
+    background: rgb(212, 212, 212);
+    padding: 3px 3px 3px 3px;
+}
+.accordion-section .panel-default .panel-title a {
+    display: block;
+    font-style: bold;
+    font-size: 18px;
+    color: #3f5745; 
+}
+.accordion-section .panel-default .panel-title a:after {
+    font-family: 'FontAwesome';
+    font-style: normal;
+    font-size: 18px;
+    content: "\f106";
+    color: #3f5745;
+    float: right;
+    margin-top: -12px;
+}
+.accordion-section .panel-default .panel-title a.collapsed:after {
+    content: "\f107";
+}
+.accordion-section .panel-default .panel-body {
+    font-size: 1.2rem;
+}
+
+.accordion-section .panel-default .panel-title {
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+}
+
+.padFAQ{
+    padding: 5px; 
+}
+
+.marginFAQ {
+    margin-bottom: 1rem; 
+}
+
+.helpfulLink {
+    color: #608369
+}
+
+.helpfulLink:hover {
+    color: #3f5745; 
+}

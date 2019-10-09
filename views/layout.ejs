@@ -15,17 +15,18 @@ file that allows you to format all of your html pages%>
     <script src="https://kit.fontawesome.com/ab38b2df24.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <!-- Sidebar CSS -->
-    <!-- <link href="/css/navbars.css" rel="stylesheet" type="text/css"> -->
-    <!-- Sidebar CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
     <link href="/css/web-app-styling.css" rel="stylesheet" type="text/css">
 
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"> -->
+
 
     <!-- <link href="/Users/keayramorris/Box Sync/cico/WebApp/sass/web_app_styling_final.css" rel="stylesheet" /> -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <style>
       .myaccount {
         overflow-x: hidden;
@@ -37,24 +38,13 @@ file that allows you to format all of your html pages%>
 
       .main-panel {
         overflow-x: hidden;
+        margin-top: 11px;
       }
 
       .center-progressbar {
         position: absolute;
         left: 50%;
         transform: translate(-50%, -0%);
-      }
-
-      body {
-        margin-top: 20px;
-      }
-
-      .glyphicon {
-        margin-right: 5px;
-      }
-
-      .rating .glyphicon {
-        font-size: 22px;
       }
 
       .rating-num {
@@ -69,6 +59,19 @@ file that allows you to format all of your html pages%>
       .progress-bar {
         text-align: left;
       }
+      
+      .progress-bar-protein {
+        background-color: #F08080; 
+      }
+
+      .progress-bar-fats {
+        background-color: #8FBC8B ; 
+      }
+
+      .progress-bar-carbs {
+        background-color: #FFE4B5; 
+      }
+
 
       .rating-desc .col-md-3 {
         padding-right: 0px;
@@ -89,7 +92,7 @@ file that allows you to format all of your html pages%>
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="wrapper">
       <%# We are taking all the other views and injecting them into this body,
       formatted using a container, need to use this syntax in EJS%>
         <%- body %>
@@ -106,7 +109,7 @@ file that allows you to format all of your html pages%>
         crossorigin="anonymous"></script>
 
       <!-- Jquery libraries -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
       <!-- Daypicker libraries -->
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

@@ -1,0 +1,37 @@
+//test 
+
+
+// This file contains all of the css that is needed for all of the pages and components of the web app. To make any 
+// changes all you need to do is open the associated "_partial.scss." file which will be referenced in the comments above
+// each of the imported partial files. The Sass css output file that is generated from this one is formatted so that 
+// it watches all of the patial components for changes. 
+
+// Imports the CDN for all the bootstrap css
+// @import "/Users/keayramorris/Box Sync/cico/WebApp/node_modules/bootstrap/scss/bootstrap.scss";
+// @import "/Users/keayramorris/Box Sync/cico/WebApp/node_modules/bootstrap/scss/bootstrap.min.scss"; 
+// Imports the CDN for all of the font awesome icons 
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"); 
+
+//Layout partials 
+// Partial Sass file for the css formatting for the sidebar and top navbar. This is all contained in "_navbars.scss"
+@import "sass_partials/_navbars.scss"; 
+// Partial Sass file for the css formating for the footer. This is contained in "_footer.scss" 
+@import "sass_partials/_footer.scss";
+
+
+//Font Formating Files
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto|Varela+Round"); 
+
+//Content Components CSS
+// Styling for the Chartist charts on the health insights page 
+@import "sass_partials/_health_insights.scss"; 
+
+// Main Food Diary Table CSS
+@import "sass_partials/_diary_table.scss"; 
+
+// Styling for the FAQ page
+@import "sass_partials/_FAQpage.scss"; 
+
+
+
