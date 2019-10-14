@@ -54,9 +54,9 @@ function createPass(email) {
       templateName: "New_Leaf_Template_3",
       dynamicData: {
         calories: 2000,
-        protein: "100 g",
-        fats: "65 g",
-        carbs: "250 g",
+        protein: "50 g",
+        fats: "78 g",
+        carbs: "275 g",
         lastMeal: 0
       },
       recoveryEmail: email,
@@ -120,16 +120,14 @@ function updatePass(email, days) {
             var totalSodium = 0;
             var totalSugars = 0;
 
-            console.log( "hi "+days)
-
             //loop through each food, and for each food, total through all values
             days.foods.forEach(function (element) {
 
               console.log(element);
 
               totalCalories += parseInt(element.calories);
-              totalCalories += parseInt(element.carbs);
-              totalCarbs += parseInt(element.sugars);
+              totalCarbs += parseInt(element.carbs);
+              totalSugars += parseInt(element.sugars);
               totalFats += parseInt(element.fats);
               totalProteins += parseInt(element.proteins);
               totalSodium += parseInt(element.sodium);
@@ -174,7 +172,7 @@ function updatePass(email, days) {
                   fats: updatedFatsGoal + " g",
                   carbs: updatedCarbsGoal + " g",
                   lastMeal: 0,
-                  restaurant: "none"
+                  restaurant: "None"
                 }
               },
               json: true

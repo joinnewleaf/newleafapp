@@ -62,7 +62,7 @@ router.post("/add", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log(days);
+                            console.log( "day 1:"+ days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
@@ -135,7 +135,7 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log(days);
+                            console.log( "day 2:"+ days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
@@ -204,7 +204,7 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                             if (req.body.dateString == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
-                            console.log(days);
+                            console.log("day 3:"+ days);
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;

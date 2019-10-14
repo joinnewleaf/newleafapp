@@ -119,7 +119,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                     fatsGoal = 78;
                 }
                 if (sugarsGoal.length == 0) {
-                    sugarsGoal = 37.5;
+                    sugarsGoal = 50;
                 }
                 if (sodiumGoal.length == 0) {
                     sodiumGoal = 2300;
@@ -217,7 +217,7 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
                 let carbsGoal = 275;
                 let proteinsGoal = 50;
                 let fatsGoal = 78;
-                let sugarsGoal = 37.5;
+                let sugarsGoal = 50;
                 let sodiumGoal = 2300;
 
                 //if the user is new, we add new goals
@@ -296,7 +296,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                 let carbsGoal = 275;
                 let proteinsGoal = 50;
                 let fatsGoal = 78;
-                let sugarsGoal = 37.5;
+                let sugarsGoal = 50;
                 let sodiumGoal = 2300;
 
                 // if user already exists, we update
@@ -355,7 +355,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                 let carbsGoal = 275;
                 let proteinsGoal = 50;
                 let fatsGoal = 78;
-                let sugarsGoal = 37.5;
+                let sugarsGoal = 50;
                 let sodiumGoal = 2300;
 
                 //if the user is new, we add new goals

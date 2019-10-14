@@ -127,7 +127,7 @@ router.post("/register", (req, res) => {
                   let carbsGoal = 275;
                   let proteinsGoal = 50;
                   let fatsGoal = 78;
-                  let sugarsGoal = 37.5;
+                  let sugarsGoal = 50;
                   let sodiumGoal = 2300;
 
                   //if the user is new, we add new goals
