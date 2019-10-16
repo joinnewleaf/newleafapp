@@ -90,8 +90,8 @@ typings/
 # config files
 /config/keys.js
 ./config/keys.js
-./retrievejwt2.js
-./retrievejwt2.js
+/config/retrievejwt2.js
+.config/retrievejwt2.js
 
 ./.DS_Store
 ./.eslintrc.js
