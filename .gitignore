@@ -91,7 +91,7 @@ typings/
 /config/keys.js
 ./config/keys.js
 /config/retrievejwt2.js
-.config/retrievejwt2.js
+./config/retrievejwt2.js
 
 ./.DS_Store
 ./.eslintrc.js
