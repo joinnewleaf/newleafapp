@@ -89,15 +89,9 @@ typings/
 
 # config files
 /config/keys.js
-/config/retrievejwt.js
 ./config/keys.js
-./config/retrievejwt.js
-/config/keys.js
-/config/retrievejwt.js
-./config/keys.js
-./config/retrievejwt.js
-/config
+./retrievejwt2.js
+./retrievejwt2.js
 
-./main1.js
 ./.DS_Store
 ./.eslintrc.js
