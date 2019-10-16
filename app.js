@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 
 //configure the database using mongoose, config file is in the confige folder (keys.js)
 //we are requiring the object found in the keys file, we access it using Mongo.URI, and we store it in db to connect to mongo
-const db = require("./config/keys").MongoURI;
+// const db = require("./config/keys").MongoURI;
 
 //flash is middleware that is used for creating and handling flash messages on html page (used to flash that user is registered without rerendering the page)
 const flash = require("connect-flash");
@@ -28,12 +28,18 @@ const passport = require("passport");
 //require passport.js config in app file, used for passport middleware, specifically are requiring the passport function
 require("./config/passport")(passport);
 
+//load anything in a file calls .env into an environment variable
+require("dotenv").config();
+
+//load env variables
+const MONGO_DB_URI = process.env.MONGO_DB_URI
+
 //actually connecting to the mongo database using the above db variable, need the second parameter to prevent a warning
 //this returns a promise so need to do a .then
 //a promise represents a completion or a failure of an asynchronous object
 //.then returns a promise, takes a callback for a success or failure
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(MONGO_DB_URI, { useNewUrlParser: true })
   .then(() => console.log("Mongo DB connected"))
 
   //catch lets you handle an error
