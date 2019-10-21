@@ -335,7 +335,7 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
 
                   });
                 })
-                
+
                 .catch(err => console.log(err));
             }
           })
@@ -360,6 +360,123 @@ router.get("/healthinsights", ensureAuthenticated, (req, res) =>
     name: req.user.name
   })
 );
+
+//routes to biometrics page
+router.get("/biometrics", ensureAuthenticated, (req, res) => {
+
+  //current datetime
+  let currentDate = new Date()
+
+  //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
+  Days.findOne({ email: req.user.email, dateString: currentDate.toDateString() })
+
+    //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
+    .then(days => {
+
+      //if this user exists with this date, render the page with both the goals AND the transactions for that date
+      if (days) {
+
+        //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+        //also pass in the goals we set earlier
+        res.render("biometrics", {
+          name: req.user.name,
+          days: days
+        });
+
+        //if this Day does not exist for that user, create new one
+      } else {
+
+        //we will create a new Day using a new instance of Day model, does not save
+        const newDays = new Days({
+          email: req.user.email,
+          date: currentDate,
+          dateString: currentDate.toDateString()
+        });
+        //save the Day in the DB
+        newDays
+          .save()
+
+          //if days gets saved, render the dashboard page
+          .then(days => {
+            console.log(days);
+
+            //renders the dashboard page anytime this page gets called
+            res.render("biometrics", {
+              name: req.user.name,
+              days: days
+            });
+          })
+
+          .catch(err => console.log(err));
+      }
+    })
+
+    .catch(err => console.log(err));
+
+});
+
+//post request on the dashboard pulls in data from the database for a certain date
+router.post("/biometrics", ensureAuthenticated, (req, res) => {
+
+  //pull date from submitted request, turns into readable format using JS Date methods
+  let parsedDate = Date.parse(req.body.date);
+  let dateRequest = new Date(parsedDate);
+
+  //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
+  Days.findOne({ email: req.user.email, dateString: dateRequest.toDateString() })
+
+    //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
+    .then(days => {
+
+      //if this user exists with this date, render the page with both the goals AND the transactions for that date
+      if (days) {
+
+        //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+        res.render("biometrics", {
+          name: req.user.name,
+          days: days
+        });
+
+        //if this Day does not exist for that user, create new one
+      } else {
+
+        //we will create a new Day using a new instance of Day model, does not save
+        const newDays = new Days({
+          email: req.user.email,
+          date: dateRequest,
+          dateString: dateRequest.toDateString()
+        });
+        //save the Day in the DB
+        newDays
+          .save()
+
+          //if days gets saved, render the dashboard page
+          .then(days => {
+
+            console.log(days);
+
+            //renders the dashboard page anytime this page gets called
+            res.render("biometrics", {
+              name: req.user.name,
+              days: days
+
+            });
+          })
+
+          .catch(err => console.log(err));
+      }
+    })
+
+    .catch(err => console.log(err));
+
+});
+
+
+
+
+
+
+
 
 //exports the router function to be used in app
 module.exports = router;

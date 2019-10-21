@@ -26,6 +26,15 @@ const FoodSchema = new mongoose.Schema({
     sodium: String
 });
 
+//child schema needs to be in front of parent schema
+const BloodPressureSchema = new mongoose.Schema({
+    systolicBP: String,
+    diastolicBP: String,
+    heartRate: String,
+    time: String,
+    notes: String
+});
+
 //day schema, parent schema
 const DaysSchema = new mongoose.Schema({
     email: {
@@ -43,11 +52,16 @@ const DaysSchema = new mongoose.Schema({
     foods: {
         type: [FoodSchema],
         require: false
+    },
+    bloodPressures: {
+        type: [BloodPressureSchema],
+        require: false
     }
 });
 
 //create a model from our schema, we pass it model name, and we pass it the schema we set above
-const Foods = mongoose.model('Foods', FoodSchema)
+const Foods = mongoose.model('Foods', FoodSchema);
+const BloodPressures = mongoose.model('BloodPressures', BloodPressureSchema)
 const Days = mongoose.model('Days', DaysSchema);
 
 

@@ -1,7 +1,42 @@
 <%/* will be a file that will have diary measurements for biometrics shown below. */%>
-<%/* General: age, gender, height, weight, waist circumference, BMI, lean body mass */%>
-<%/* Physical activity: step count, aerobic, strength training */%>
-<%/* Hypertension: SBP, DBP, total cholesterol, smoking status BP category*/%>
-<%/* Diabetes: HbA1c, fasting blood glucose, bloog glucose, diabetes risk scores */%>
-<%/* Other: mood, pain, comments */%>
+    <%/* General: age, gender, height, weight, waist circumference, BMI, lean body mass */%>
+        <%/* Physical activity: step count, aerobic, strength training */%>
+            <%/* Hypertension: SBP, DBP, total cholesterol, smoking status BP category*/%>
+                <%/* Diabetes: HbA1c, fasting blood glucose, bloog glucose, diabetes risk scores */%>
+                    <%/* Other: mood, pain, comments */%>
 
+                        <%# sidebar file and main panel%>
+                            <% include ./partials/navbar %>
+
+                                <div class="main-panel">
+                                    <% include ./partials/biometricspanel %>
+                                </div>
+
+                                <!-- Daypicker libraries -->
+                                <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+                                <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+                                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
+                                />
+
+                                <script type="text/javascript">
+                                    $(document).ready(function ($) {
+
+                                        // function is a built in jquery calendar, this will allow us to make requests to the database by date
+                                        function callDatePicker() {
+                                            var date_input = $('input[name="date"]'); //our date input has the name "date"
+                                            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+                                            var options = {
+                                                format: 'mm/dd/yyyy',
+                                                container: container,
+                                                todayHighlight: true,
+                                                autoclose: true,
+                                            };
+                                            date_input.datepicker(options);
+
+                                        }
+                                        //call the datepicker before working with the table data
+                                        callDatePicker();
+                                    });
+
+                                </script>

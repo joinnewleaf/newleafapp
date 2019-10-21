@@ -62,7 +62,7 @@ router.post("/add", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log( "day 1:"+ days);
+                            console.log("day 1:" + days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
@@ -135,7 +135,7 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log( "day 2:"+ days);
+                            console.log("day 2:" + days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
@@ -204,7 +204,7 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                             if (req.body.dateString == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
-                            console.log("day 3:"+ days);
+                            console.log("day 3:" + days);
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;
@@ -228,6 +228,118 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                         }
                     });
             });
+    });
+});
+
+
+
+// Blood Pressure Diary Section
+//post request on the dashboard adds in new data to diary
+router.post("/addBP", ensureAuthenticated, (req, res) => {
+
+    console.log(req.body)
+    //pull important values out of the request
+    var new_row_data = {
+        time: req.body.time.toString(),
+        systolicBP: req.body.systolicBP,
+        diastolicBP: req.body.diastolicBP,
+        heartRate: req.body.heartRate,
+        notes: req.body.notes
+    }
+
+    //insert new food into end of food array for each day
+    Days.updateOne(
+        {
+            email: req.user.email,
+            dateString: req.body.dateString
+        },
+        {
+            $push: { bloodPressures: [new_row_data] }
+        }
+
+        //want to query the foods for that day and pass them into the table/rerender the dashboard
+    ).then(function () {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString
+        }).then(days => {
+
+            // re render the dashboard after having updated the days collection
+            res.render("biometrics", {
+                name: req.user.name,
+                days: days
+            });
+        })
+    });
+});
+
+
+
+//delete BP
+router.post("/deleteBP", ensureAuthenticated, (req, res) => {
+
+    //have to turn string into a mongo object id
+    var _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+    //how to delete subdocuments
+    Days.updateOne(
+        { 'bloodPressures._id': _id },
+        { $pull: { bloodPressures: { "_id": _id } } }
+    ).then(response => {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString
+        })
+            .then(days => {
+                // re render the dashboard after having updated the days collection
+                res.render("biometrics", {
+                    name: req.user.name,
+                    days: days
+                });
+            })
+    });
+});
+
+
+//post request on the dashboard edits old data on the diary
+router.post("/editBP", ensureAuthenticated, (req, res) => {
+
+    //have to turn string into a mongo object id
+    var _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+    //how to update subdocuments within an array, finds the first element with matching id, and updates those using positional $
+    Days.updateOne(
+        { 'bloodPressures._id': _id },
+        {
+            $set: {
+                'bloodPressures.$.time': req.body.time.toString(),
+                'bloodPressures.$.systolicBP': req.body.systolicBP,
+                'bloodPressures.$.diastolicBP': req.body.diastolicBP,
+                'bloodPressures.$.heartRate': req.body.heartRate,
+                'bloodPressures.$.notes': req.body.notes
+            }
+        }
+
+        // want to query the foods for that day and pass them into the table/rerender the dashboard
+    ).then(response => {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString
+        })
+            .then(days => {
+
+                // re render the dashboard after having updated the days collection
+                res.render("biometrics", {
+                    name: req.user.name,
+                    days: days
+                });
+            })
     });
 });
 
