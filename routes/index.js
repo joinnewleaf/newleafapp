@@ -109,6 +109,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
                     days: days
+
                   });
                 })
 
@@ -177,7 +178,6 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
                     days: days
-
                   });
                 })
                 .catch(err => console.log(err));
@@ -470,13 +470,6 @@ router.post("/biometrics", ensureAuthenticated, (req, res) => {
     .catch(err => console.log(err));
 
 });
-
-
-
-
-
-
-
 
 //exports the router function to be used in app
 module.exports = router;
