@@ -369,10 +369,12 @@
             });
 
             //deletes one row
-            $(document).on('click', '.btn-delete', function (event) {
+            $(document).on('click', '.delete', function (event) {
 
                 //may need this?
                 event.preventDefault();
+
+                console.log("delete")
 
                 //find tbl row and its ID closest to the click, will be used to update the db
                 var tbl_row = $(this).closest('tr');

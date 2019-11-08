@@ -35,10 +35,11 @@ router.post("/add", ensureAuthenticated, (req, res) => {
     }
 
     //insert new food into end of food array for each day
+    //dateString needs to be trimmed because excess characters on edges
     Days.updateOne(
         {
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         },
         {
             $push: { foods: [new_row_data] }
@@ -50,9 +51,10 @@ router.post("/add", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
-        })
-            .then(days => {
+            dateString: req.body.dateString.trim()
+        }).then(days => {
+            console.log("Right here:" + days);
+            if (days) {
 
                 //also need to pull user goals
                 UserGoals.findOne({ email: req.user.email })
@@ -62,12 +64,11 @@ router.post("/add", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log("day 1:" + days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString == checkdateString) {
+                            if (req.body.dateString.trim() == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
 
@@ -93,7 +94,11 @@ router.post("/add", ensureAuthenticated, (req, res) => {
                         }
                     })
                     .catch(err => console.log(err));
-            })
+
+            } else {
+                console.log("Days is undefined")
+            }
+        })
             .catch(err => console.log(err));
     })
         .catch(err => console.log(err));
@@ -126,7 +131,7 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
 
@@ -138,12 +143,11 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
 
                         //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                         if (usergoals) {
-                            console.log("day 2:" + days);
 
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString == checkdateString) {
+                            if (req.body.dateString.trim() == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
 
@@ -191,7 +195,7 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
 
@@ -207,7 +211,7 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString == checkdateString) {
+                            if (req.body.dateString.trim() == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
                             console.log("day 3:" + days);
@@ -274,7 +278,7 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                     //query days
                     Days.findOne({
                         email: req.user.email,
-                        dateString: req.body.dateString
+                        dateString: req.body.dateString.trim()
                     })
                         .then(days => {
 
@@ -290,10 +294,9 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                                         //to update pass, need to check if we are adding data for the current date
                                         let checkcurrentDate = new Date()
                                         let checkdateString = checkcurrentDate.toDateString()
-                                        if (req.body.dateString == checkdateString) {
+                                        if (req.body.dateString.trim() == checkdateString) {
                                             passkit.updatePass(req.user.email, days)
                                         }
-                                        console.log("day 3:" + days);
 
                                         //sets goals data on the page to what's stored in the db
                                         let caloriesGoal = usergoals.caloriesGoal;
@@ -326,11 +329,10 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
 
     } else {
 
-        console.log("no entries")
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
 
@@ -346,10 +348,9 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString == checkdateString) {
+                            if (req.body.dateString.trim() == checkdateString) {
                                 passkit.updatePass(req.user.email, days)
                             }
-                            console.log("day 3:" + days);
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;
@@ -378,8 +379,6 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
     }
 });
 
-
-
 // Blood Pressure Diary Section
 //post request on the dashboard adds in new data to diary
 router.post("/addBP", ensureAuthenticated, (req, res) => {
@@ -398,7 +397,7 @@ router.post("/addBP", ensureAuthenticated, (req, res) => {
     Days.updateOne(
         {
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         },
         {
             $push: { bloodPressures: [new_row_data] }
@@ -410,7 +409,7 @@ router.post("/addBP", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         }).then(days => {
 
             // re render the dashboard after having updated the days collection
@@ -441,7 +440,7 @@ router.post("/deleteBP", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
                 // re render the dashboard after having updated the days collection
@@ -489,7 +488,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
                     //query days
                     Days.findOne({
                         email: req.user.email,
-                        dateString: req.body.dateString
+                        dateString: req.body.dateString.trim()
                     })
                         .then(days => {
 
@@ -509,11 +508,10 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
 
     } else {
 
-        console.log("no entries")
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
 
@@ -553,7 +551,7 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
         //query days
         Days.findOne({
             email: req.user.email,
-            dateString: req.body.dateString
+            dateString: req.body.dateString.trim()
         })
             .then(days => {
 
@@ -566,7 +564,6 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
             .catch(err => console.log(err));
     })
         .catch(err => console.log(err));
-
 });
 
 //exports the router function to be used in app
