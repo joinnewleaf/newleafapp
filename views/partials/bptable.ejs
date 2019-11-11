@@ -47,8 +47,8 @@
                             <tr>
                                 <th>
                                     <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                        <label for="checkbox1"></label>
+                                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
+                                        <label for="checkbox2"></label>
                                     </span>
                                 </th>
                                 <th>Time</th>
@@ -274,6 +274,21 @@
 
     <script type="text/javascript">
         $(document).ready(function ($) {
+
+            //on changing the checkbox header
+            $('#checkbox2').change(function () {
+
+                //if the check box is checked, cycle through document and check everything
+                if (this.checked == true) {
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", true);
+                    })
+                } else { //uncheck everything
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", false);
+                    })
+                }
+            })
 
             //these double check that input values are valid numbers for blood pressures and heart rate; input patterns make sure the input is a certain length
             $(".check-numbers1").keyup(function () {
