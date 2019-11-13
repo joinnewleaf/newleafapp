@@ -216,10 +216,12 @@ input:focus {
 
 .footer {
     background-color: #FFFFFF;
+    padding-bottom: 10px; 
 }
 
 .footer .footer-menu {
     height: 50px;
+    overflow-y: hidden; 
 }
 
 .footer nav>ul {
@@ -554,6 +556,7 @@ Copyright (c) 2015 Daniel Eden
     body {
         position: relative;
     }
+    
     body>.navbar-collapse {
         position: fixed;
         display: block;

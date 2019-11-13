@@ -18,16 +18,16 @@
         <div class="panel-body">
             <div class="tbl_day_data"></div>
 
-            <div id="food-diary" class="container">
-                <div id="food-diary" class="table-wrapper">
-                    <div id="food-diary" class="table-title">
+            <div id="bp-diary" class="container">
+                <div id="bp-diary" class="table-wrapper">
+                    <div id="bp-diary" class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>
+                                <h4 class="tableHeadMobile">
                                     <b>Blood Pressure Log</b>
                                 </h4>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 tableButtonMobile">
                                 <a href="#addEmployeeModal" class="btn btn-add" data-toggle="modal">
                                     <i class="material-icons">&#xE147;</i>
                                     <span>Add Entry</span>
@@ -52,9 +52,12 @@
                                     </span>
                                 </th>
                                 <th>Time</th>
-                                <th>Systolic BP (mmHg)</th>
-                                <th>Diastolic BP (mmHg)</th>
-                                <th>Heart Rate (bpm)</th>
+                                <th class="columnHideMobile">Systolic BP (mmHg)</th>
+                                <th class="blankForMobile"><br></th>
+                                <th class="columnHideMobile">Diastolic BP (mmHg)</th>
+                                <th class="blankForMobile"><br></th>
+                                <th class="columnHideMobile">Heart Rate (bpm)</th>
+                                <th class="blankForMobile"><br></th>
                                 <th>Notes</th>
                                 <th></th>
                             </tr>
@@ -76,21 +79,22 @@
                                         <td class="name_data">
                                             <%= bloodPressures.time %>
                                         </td>
-                                        <td class="row_data" column_name="systolicBP_data">
+                                        <td class="blankForMobile newRowMobile"><br></td>
+                                        <td class="row_data newRowMobile" data-label="Systolic: " column_name="systolicBP_data">
                                             <%if (typeof bloodPressures.systolicBP != 'undefined') { %>
                                                 <%= bloodPressures.systolicBP %>
                                                     <% } else { %>
                                                         <%= NR %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="diastolicBP_data">
+                                        <td class="row_data newRowMobile" data-label="Diastolic: " column_name="diastolicBP_data">
                                             <%if (typeof bloodPressures.diastolicBP != 'undefined') { %>
                                                 <%= bloodPressures.diastolicBP %>
                                                     <% } else { %>
                                                         <%= NR %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="heartRate_data">
+                                        <td class="row_data newRowMobile" data-label="Heart Rate: " column_name="heartRate_data">
                                             <%if (typeof bloodPressures.heartRate != 'undefined') { %>
                                                 <%= bloodPressures.heartRate %>
                                                     <% } else { %>

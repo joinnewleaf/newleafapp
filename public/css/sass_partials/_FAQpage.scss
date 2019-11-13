@@ -1,24 +1,24 @@
 h2 {
     font-family: "Roboto";
     font-size: 30px;
-    color: #3f5745;
+    color: #000000;
 }
 .accordion-section .panel-default > .panel-heading {
-    background: rgb(212, 212, 212);
+    background: rgb(255, 255, 255);
     padding: 3px 3px 3px 3px;
 }
 .accordion-section .panel-default .panel-title a {
     display: block;
     font-style: bold;
     font-size: 18px;
-    color: #3f5745; 
+    color: #000000; 
 }
 .accordion-section .panel-default .panel-title a:after {
     font-family: 'FontAwesome';
     font-style: normal;
     font-size: 18px;
     content: "\f106";
-    color: #3f5745;
+    color: #000000;
     float: right;
     margin-top: -12px;
 }

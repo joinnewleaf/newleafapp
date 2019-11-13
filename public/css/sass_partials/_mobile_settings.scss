@@ -1,0 +1,17 @@
+@media (max-width: 991px) {
+.bodyMobileSettings {
+    min-height: 100vh; 
+    overflow-y: auto;
+}
+
+.sidebar {
+    position: absolute; 
+    min-height: 100vh; 
+    overflow-y: hidden; 
+}
+
+.customizeMobileSettings {
+    height: 100vh;
+    overflow-y: auto; 
+}
+}

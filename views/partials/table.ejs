@@ -13,7 +13,7 @@
             margin: 0;
         }
     </style>
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-default-Mobile">
         <div class="panel-body">
             <div class="tbl_day_data"></div>
 
@@ -22,11 +22,11 @@
                     <div id="food-diary" class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>
+                                <h4 class="tableHeadMobile">
                                     <b>Food Diary</b>
                                 </h4>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 tableButtonMobile">
                                 <a href="#addEmployeeModal" class="btn btn-add" data-toggle="modal">
                                     <i class="material-icons">&#xE147;</i>
                                     <span>Add Food</span>
@@ -49,14 +49,18 @@
                                         <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                         <label for="checkbox1"></label>
                                     </span>
+
+                                    <!-- The columns labeled with the class columnHideMobile will be hidden on mobile,
+                                    instead these labels will be added as data-labels when you are on mobile and the 
+                                    data that was included here is populated as one cell of grouped rows -->
                                 </th>
                                 <th>Food</th>
                                 <th>Calories (kcal)</th>
-                                <th>Carbs (g)</th>
-                                <th>Fats (g)</th>
-                                <th>Protein (g)</th>
-                                <th>Sugar (g)</th>
-                                <th>Sodium (mg)</th>
+                                <th scope="col" class="columnHideMobile">Carbs (g)</th>
+                                <th scope="col" class="columnHideMobile">Fats (g)</th>
+                                <th scope="col" class="columnHideMobile">Protein (g)</th>
+                                <th scope="col" class="columnHideMobile">Sugar (g)</th>
+                                <th scope="col" class="columnHideMobile">Sodium (mg)</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -84,42 +88,51 @@
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="carbs_data">
+
+                                        <!-- The class newRowMobile takes this data and displays it as a grouped set of 
+                                        rows displayed in a single cell of the table with the data-label giving it the 
+                                        name that is displayed to the left when viewed on mobile 
+                                    
+                                        NOTE: newRowMobile is different than the above columnHdideMobile since that one
+                                        makes it so that the column headers are not shown on mobile while the 
+                                        newRowMobile class tells the data to be displayed but differently than  if it 
+                                        were viewed on desktop -->
+                                        <td class="row_data newRowMobile" data-label="Carbs: " column_name="carbs_data">
                                             <%if (typeof foods.carbs != 'undefined') { %>
                                                 <%= foods.carbs %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="fats_data">
+                                        <td class="row_data newRowMobile" data-label="Fats: " column_name="fats_data">
                                             <%if (typeof foods.fats != 'undefined') { %>
                                                 <%= foods.fats %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="proteins_data">
+                                        <td class="row_data newRowMobile" data-label="Proteins: " column_name="proteins_data">
                                             <%if (typeof foods.proteins != 'undefined') { %>
                                                 <%= foods.proteins %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="sugars_data">
+                                        <td class="row_data newRowMobile" data-label="Sugars: " column_name="sugars_data">
                                             <%if (typeof foods.sugar != 'undefined') { %>
                                                 <%= foods.sugar %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="sodium_data">
+                                        <td class="row_data newRowMobile" data-label="Sodium: " column_name="sodium_data">
                                             <%if (typeof foods.sodium != 'undefined') { %>
                                                 <%= foods.sodium %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td>
+                                        <td class="editEntryMobile">
                                             <a href="#editEmployeeModal" class="edit" data-toggle="modal">
                                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                             </a>
@@ -138,7 +151,7 @@
 
             <!-- Add Modal HTML -->
             <div id="addEmployeeModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/add" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -188,7 +201,7 @@
 
             <!-- Edit Modal HTML -->
             <div id="editEmployeeModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/edit" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -239,7 +252,7 @@
 
             <!-- Delete Modal HTML -->
             <div id="deleteEmployeeModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/delete" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -323,11 +336,11 @@
                 totals_row += '<td></td>';
                 totals_row += '<td>Totals</td>';
                 totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
-                totals_row += '<td total_type="Carbs">' + totalCarbs + '</td>';
-                totals_row += '<td total_type="Fats">' + totalFats + '</td>';
-                totals_row += '<td total_type="Proteins">' + totalProteins + '</td>';
-                totals_row += '<td total_type="Sugars">' + totalSugars + '</td>';
-                totals_row += '<td total_type="Sodium">' + totalSodium + '</td>';
+                totals_row += '<td class="newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs + '</td>';
+                totals_row += '<td class="newRowMobile" data-label="Fats: "total_type="Fats">' + totalFats + '</td>';
+                totals_row += '<td class="newRowMobile" data-label="Proteins: " total_type="Proteins">' + totalProteins + '</td>';
+                totals_row += '<td class="newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars + '</td>';
+                totals_row += '<td class="newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium + '</td>';
                 totals_row += '<td></td>';
                 totals_row += '</tr>';
 
@@ -338,6 +351,7 @@
                 calculateGoal()
 
             };
+
 
             //this function will calculate the goals and update them at the top of the table
             function calculateGoal() {

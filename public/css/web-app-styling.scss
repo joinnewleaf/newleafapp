@@ -18,6 +18,8 @@
 // Partial Sass file for the css formating for the footer. This is contained in "_footer.scss" 
 @import "sass_partials/_footer.scss";
 
+//Formating for mobile layout
+@import "sass_partials/mobile_settings"; 
 
 //Font Formating Files
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
@@ -32,6 +34,15 @@
 
 // Styling for the FAQ page
 @import "sass_partials/_FAQpage.scss"; 
+
+// Styling for the Date Display 
+@import "sass_partials/datepicker.scss"; 
+
+// Styling for the progressbars that show macro breakdown
+@import "sass_partials/macros_databars.scss"; 
+
+// Styling for the blood pressure page 
+@import "sass_partials/bptable"; 
 
 
 
