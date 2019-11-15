@@ -14,7 +14,7 @@
             margin: 0;
         }
     </style>
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-default-Mobile">
         <div class="panel-body">
             <div class="tbl_day_data"></div>
 
@@ -23,11 +23,12 @@
                     <div id="food-diary" class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h4>
+                                <h4 class="tableHeadMobile">
                                     <b>Food Diary</b>
                                 </h4>
                             </div>
-                            <div class="col-sm-6">
+
+                            <div class="col-sm-6 tableButtonMobile">
                                 <a href="#addModal" class="btn btn-add" data-toggle="modal">
                                     <i class="material-icons">&#xE147;</i>
                                     <span>Add Food</span>
@@ -50,14 +51,18 @@
                                         <input type="checkbox" id="checkbox2" name="options[]" value="1">
                                         <label for="checkbox2"></label>
                                     </span>
+
+                                    <!-- The columns labeled with the class columnHideMobile will be hidden on mobile,
+                                    instead these labels will be added as data-labels when you are on mobile and the 
+                                    data that was included here is populated as one cell of grouped rows -->
                                 </th>
                                 <th>Food</th>
                                 <th>Calories (kcal)</th>
-                                <th>Carbs (g)</th>
-                                <th>Fats (g)</th>
-                                <th>Protein (g)</th>
-                                <th>Sugar (g)</th>
-                                <th>Sodium (mg)</th>
+                                <th scope="col" class="columnHideMobile">Carbs (g)</th>
+                                <th scope="col" class="columnHideMobile">Fats (g)</th>
+                                <th scope="col" class="columnHideMobile">Protein (g)</th>
+                                <th scope="col" class="columnHideMobile">Sugar (g)</th>
+                                <th scope="col" class="columnHideMobile">Sodium (mg)</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -85,42 +90,52 @@
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="carbs_data">
+
+                                        <!-- The class newRowMobile takes this data and displays it as a grouped set of 
+                                        rows displayed in a single cell of the table with the data-label giving it the 
+                                        name that is displayed to the left when viewed on mobile 
+                                    
+                                        NOTE: newRowMobile is different than the above columnHdideMobile since that one
+                                        makes it so that the column headers are not shown on mobile while the 
+                                        newRowMobile class tells the data to be displayed but differently than  if it 
+                                        were viewed on desktop -->
+                                        <td class="row_data newRowMobile" data-label="Carbs: " column_name="carbs_data">
                                             <%if (typeof foods.carbs != 'undefined') { %>
                                                 <%= foods.carbs %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="fats_data">
+                                        <td class="row_data newRowMobile" data-label="Fats: " column_name="fats_data">
                                             <%if (typeof foods.fats != 'undefined') { %>
                                                 <%= foods.fats %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="proteins_data">
+                                        <td class="row_data newRowMobile" data-label="Proteins: " column_name="proteins_data">
                                             <%if (typeof foods.proteins != 'undefined') { %>
                                                 <%= foods.proteins %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="sugars_data">
+                                        <td class="row_data newRowMobile" data-label="Sugars: " column_name="sugars_data">
                                             <%if (typeof foods.sugar != 'undefined') { %>
                                                 <%= foods.sugar %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td class="row_data" column_name="sodium_data">
+                                        <td class="row_data newRowMobile" data-label="Sodium: " column_name="sodium_data">
                                             <%if (typeof foods.sodium != 'undefined') { %>
                                                 <%= foods.sodium %>
                                                     <% } else { %>
                                                         <%= 0 %>
                                                             <% } %>
                                         </td>
-                                        <td>
+
+                                        <td class="editEntryMobile">
                                             <a href="#editModal" class="edit" data-toggle="modal">
                                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                             </a>
@@ -137,35 +152,9 @@
                 </div>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalButton" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Modal Title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="false">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>This is the body of this
-                                <b>Modal</b>
-                            </p>
-                            <p>
-                            </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Button</button> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <!-- Delete Modal HTML -->
             <div id="deleteModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/delete" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -192,7 +181,7 @@
 
             <!-- Delete Multiple Modal HTML -->
             <div id="deleteMultipleModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/deleteMultipleFoods" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -217,10 +206,8 @@
                 </div>
             </div>
 
-
-            <!-- Edit Modal HTML -->
             <div id="editModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/edit" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -270,10 +257,9 @@
                 </div>
             </div>
 
-
             <!-- Add Modal HTML -->
             <div id="addModal" class="modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/days/add" method="POST" autocomplete="off">
                             <div class="modal-header">
@@ -288,22 +274,6 @@
                                     <datalist id="result">
                                         <option class="searchResultOptions" value="Quick Add">
                                     </datalist>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="units" class="formText">Units</label>
-                                        <input list="unitsList" type="text" class="form-control" id="units" name="units">
-                                        <datalist id="unitsList">
-                                            <option class="ResultOptions" value="Grams">
-                                                <option class="ResultOptions" value="Cups">
-                                                    <option class="ResultOptions" value="Ounces">
-                                        </datalist>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="quantity" class="formText">Quantity</label>
-                                        <input type="text" class="form-control" id="quantity" name="quantity">
-                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Calories</label>
@@ -340,206 +310,204 @@
                     </div>
                 </div>
 
+                <!-- Add Modal HTML -->
+                <div id="addModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/days/add" method="POST" autocomplete="off">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Food</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Food</label>
+                                        <input list="result" name="food" placeholder="search" class="form-control" id="search" type="text" required maxlength="50"
+                                            onclick="this.select()">
+                                        <datalist id="result">
+                                            <option class="searchResultOptions" value="Quick Add">
+                                        </datalist>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="units" class="formText">Units</label>
+                                            <input list="unitsList" type="text" class="form-control" id="units" name="units">
+                                            <datalist id="unitsList">
+                                                <option class="ResultOptions" value="Grams">
+                                                    <option class="ResultOptions" value="Cups">
+                                                        <option class="ResultOptions" value="Ounces">
+                                            </datalist>
+                                        </div>
 
+                                        <div class="form-group col-md-6">
+                                            <label for="quantity" class="formText">Quantity</label>
+                                            <input type="text" class="form-control" id="quantity" name="quantity">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Calories</label>
+                                        <input type="number" name="calories" class="form-control add_row_data calories_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Carbs</label>
+                                        <input type="number" name="carbs" class="form-control add_row_data carbs_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fats</label>
+                                        <input type="number" name="fats" class="form-control add_row_data fats_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Protein</label>
+                                        <input type="number" name="proteins" class="form-control add_row_data proteins_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sugar</label>
+                                        <input type="number" name="sugar" class="form-control add_row_data sugars_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sodium</label>
+                                        <input type="number" name="sodium" class="form-control add_row_data sodium_data" value="0" required maxlength="10" onclick="this.select()">
+                                    </div>
+                                    <input type="hidden" name="date" value="<%= days.date %>" />
+                                    <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                        <input type="submit" class="btn btn-success" value="Add">
+                                    </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
-        </div>
 
-        <script type="text/javascript">
-            $(document).ready(function ($) {
+            <script type="text/javascript">
+                $(document).ready(function ($) {
 
-                //on changing the checkbox header
-                $('#checkbox2').change(function () {
+                    //on changing the checkbox header
+                    $('#checkbox2').change(function () {
 
-                    //if the check box is checked, cycle through document and check everything
-                    if (this.checked == true) {
-                        $(document).find('input[type=checkbox]').each(function (index, val) {
-                            $(val).prop("checked", true);
-                        })
-                    } else { //uncheck everything
-                        $(document).find('input[type=checkbox]').each(function (index, val) {
-                            $(val).prop("checked", false);
-                        })
-                    }
-                })
-
-                var recheckInput = true;
-
-                //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
-                $("#search").on("input", function (event) {
-
-                    //the text the user entered
-                    var userText = $(this).val();
-
-                    //we need to replace first option with the exact clicked option
-                    var firstOption = true;
-
-                    //if the user selected an option from the list, make an ajax call to the ingredients db
-                    $("#result").find("option").each(function () {
-
-                        //check if the value entered is in the list
-                        if (($(this).val() == userText) && firstOption) {
-
-                            //only select the first of the matched values
-                            firstOption = false;
-
-                            //store event as input
-                            var input = event.target,
-                                list = input.getAttribute('list'); //get the list attribute from the event
-
-                            //check if the input element has the attribute list
-                            if (list) {
-                                input.removeAttribute('list'); //remove it so we don't see the dropdown
-                            }
-
-                            var inputCounter = 0;
-
-                            //pull the fdcId from the DOM
-                            var fdcId = $(this).attr('fdcId');
-
-                            //ajax call with fdcId as param
-                            $.ajax({
-                                url: "/foods/foodDetails/" + fdcId,
-                                type: "GET",
-                                dataType: "json",
-                                cache: false,
-                                success: (data) => {
-
-                                    if (typeof data != undefined) {
-
-                                        //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
-                                        recheckInput = false;
-
-                                        //once we get the data find the elements that need updated, loop and update
-                                        $("#addModal").find('.add_row_data').each(function (index, val) {
-
-                                            if ($(this).hasClass('calories_data')) {
-                                                $(this).attr("value", data['details'][0]['calories']);
-                                            } else if ($(this).hasClass('carbs_data')) {
-                                                $(this).attr("value", data['details'][0]['carbs']);
-                                            } else if ($(this).hasClass('proteins_data')) {
-                                                $(this).attr("value", data['details'][0]['proteins']);
-                                            } else if ($(this).hasClass('fats_data')) {
-                                                $(this).attr("value", data['details'][0]['fats']);
-                                            } else if ($(this).hasClass('sugars_data')) {
-                                                $(this).attr("value", data['details'][0]['sugars']);
-                                            } else if ($(this).hasClass('sodium_data')) {
-                                                $(this).attr("value", data['details'][0]['sodium']);
-                                            }
-
-                                            inputCounter++;
-
-                                            //check if at end of loop, if at end we need to be allowed to recheck if input changes
-                                            if (inputCounter == $("#addModal").find('.add_row_data').length) {
-                                                recheckInput = true;//we are at the end of the loop so we can now recheck any keystrokes
-                                            }
-                                        });
-                                    } else {
-                                        console.log("No matches");
-                                    }
-                                }
+                        //if the check box is checked, cycle through document and check everything
+                        if (this.checked == true) {
+                            $(document).find('input[type=checkbox]').each(function (index, val) {
+                                $(val).prop("checked", true);
+                            })
+                        } else { //uncheck everything
+                            $(document).find('input[type=checkbox]').each(function (index, val) {
+                                $(val).prop("checked", false);
                             })
                         }
                     })
-                });
 
-                //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
-                $('#search').keyup(function (event) {
+                    var recheckInput = true;
 
-                    //result is stored in an unordered list which we wish to write to after retrieving query
-                    $('#result').html('');
+                    //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
+                    $("#search").on("input", function (event) {
 
-                    //if we need to start rechecking for new dropdowns
-                    if (recheckInput == true) {
+                        //the text the user entered
+                        var userText = $(this).val();
 
-                        //reset because we won't need to recheck Inputs until we select another dropdown option
-                        recheckInput = false;
+                        //we need to replace first option with the exact clicked option
+                        var firstOption = true;
 
-                        //store event as input
-                        var input = event.target,
-                            list = input.getAttribute('list'); //get the list attribute from the event
+                        //if the user selected an option from the list, make an ajax call to the ingredients db
+                        $("#result").find("option").each(function () {
 
-                        //if there is no value to list
-                        if (list == null) {
-                            input.setAttribute('list', 'result'); //allow us to display options as a list again
-                        }
+                            //check if the value entered is in the list
+                            if (($(this).val() == userText) && firstOption) {
 
-                    }
+                                //only select the first of the matched values
+                                firstOption = false;
 
-                    //get the text box search value and store it into a variable
-                    var searchField = $('#search').val();
+                                //store event as input
+                                var input = event.target,
+                                    list = input.getAttribute(
+                                        'list'); //get the list attribute from the event
 
-                    //makes call to foods/: with the search field we enter
-                    //need to set the url manually to be absolute
-                    $.ajax({
-                        url: "/foods/" + searchField,
-                        type: "GET",
-                        dataType: "json",
-                        cache: false,
-                        success: (data) => {
+                                //check if the input element has the attribute list
+                                if (list) {
+                                    input.removeAttribute(
+                                        'list'); //remove it so we don't see the dropdown
+                                }
 
-                            // console.log(data['foods']);
-                            if (data['foods']) {
-                                //loop through all the returned results
-                                data['foods'].forEach(function (data) {
+                                var inputCounter = 0;
 
-                                    //Appends the data to a dropdown menu, when we click the dropdown menu, it should fire another event
-                                    $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + data.description + '"></option>');
+                                //pull the fdcId from the DOM
+                                var fdcId = $(this).attr('fdcId');
 
-                                });
+                                //ajax call with fdcId as param
+                                $.ajax({
+                                    url: "/foods/foodDetails/" + fdcId,
+                                    type: "GET",
+                                    dataType: "json",
+                                    cache: false,
+                                    success: (data) => {
 
-                            } else {
-                                console.log("No response returned");
-                                recheckInput = true;
+                                        if (typeof data != undefined) {
+
+                                            //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
+                                            recheckInput = false;
+
+                                            //once we get the data find the elements that need updated, loop and update
+                                            $("#addModal").find('.add_row_data').each(
+                                                function (index, val) {
+
+                                                    if ($(this).hasClass(
+                                                        'calories_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'calories'
+                                                        ]);
+                                                    } else if ($(this).hasClass(
+                                                        'carbs_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'carbs'
+                                                        ]);
+                                                    } else if ($(this).hasClass(
+                                                        'proteins_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'proteins'
+                                                        ]);
+                                                    } else if ($(this).hasClass(
+                                                        'fats_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'fats'
+                                                        ]);
+                                                    } else if ($(this).hasClass(
+                                                        'sugars_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'sugars'
+                                                        ]);
+                                                    } else if ($(this).hasClass(
+                                                        'sodium_data')) {
+                                                        $(this).attr("value", data[
+                                                            'details'][0][
+                                                            'sodium'
+                                                        ]);
+                                                    }
+
+                                                    inputCounter++;
+
+                                                    //check if at end of loop, if at end we need to be allowed to recheck if input changes
+                                                    if (inputCounter == $("#addModal")
+                                                        .find('.add_row_data').length) {
+                                                        recheckInput =
+                                                            true; //we are at the end of the loop so we can now recheck any keystrokes
+                                                    }
+                                                });
+                                        } else {
+                                            console.log("No matches");
+                                        }
+                                    }
+                                })
                             }
-                        }
-                    });
-
-                });
-
-                //we will place the goal data, to be imported from the database within each day here
-                var caloriesGoal = "<%= caloriesGoal %>";
-                var carbsGoal = "<%= carbsGoal %>";
-                var fatsGoal = "<%= fatsGoal %>";
-                var proteinsGoal = "<%= proteinsGoal %>";
-                var sodiumGoal = "<%= sodiumGoal %>";
-                var sugarsGoal = "<%= sugarsGoal %>";
-
-                //initialize total sums as global vars
-                var totalCalories = 0;
-                var totalCarbs = 0;
-                var totalFats = 0;
-                var totalProteins = 0;
-                var totalSodium = 0;
-                var totalSugars = 0;
-
-                //this function will calculate the totals row, and update it. Will use function in .save and .delete, as well as page load
-                function calculateTotal() {
-
-                    //need to loop through all rows and keep a running sum
-                    $(document).find('.row_data').each(function (index, val) {
-                        let column_name = $(this).attr('column_name');
-                        let column_value = $(this).html();
-
-                        //switch case using the column header, add to the running sum for each column
-                        switch (column_name) {
-                            case "calorie_data":
-                                totalCalories += parseInt(column_value);
-                                break;
-                            case "carbs_data":
-                                totalCarbs += parseInt(column_value);
-                                break;
-                            case "fats_data":
-                                totalFats += parseInt(column_value);
-                                break;
-                            case "proteins_data":
-                                totalProteins += parseInt(column_value);
-                                break;
-                            case "sodium_data":
-                                totalSodium += parseInt(column_value);
-                                break;
-                            case "sugars_data":
-                                totalSugars += parseInt(column_value);
-                        }
+                        })
                     });
 
                     //new row
@@ -549,11 +517,16 @@
                     totals_row += '<td></td>';
                     totals_row += '<td>Totals</td>';
                     totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
-                    totals_row += '<td total_type="Carbs">' + totalCarbs + '</td>';
-                    totals_row += '<td total_type="Fats">' + totalFats + '</td>';
-                    totals_row += '<td total_type="Proteins">' + totalProteins + '</td>';
-                    totals_row += '<td total_type="Sugars">' + totalSugars + '</td>';
-                    totals_row += '<td total_type="Sodium">' + totalSodium + '</td>';
+                    totals_row += '<td class="newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs +
+                        '</td>';
+                    totals_row += '<td class="newRowMobile" data-label="Fats: "total_type="Fats">' + totalFats +
+                        '</td>';
+                    totals_row += '<td class="newRowMobile" data-label="Proteins: " total_type="Proteins">' +
+                        totalProteins + '</td>';
+                    totals_row += '<td class="newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars +
+                        '</td>';
+                    totals_row += '<td class="newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium +
+                        '</td>';
                     totals_row += '<td></td>';
                     totals_row += '</tr>';
 
@@ -563,127 +536,322 @@
                     //call function to recalculate goals
                     calculateGoal()
 
-                };
+                    //this function will calculate the goals and update them at the top of the table
+                    function calculateGoal() {
 
-                //this function will calculate the goals and update them at the top of the table
-                function calculateGoal() {
+                        //uses goals object imported from database
+                        var updatedCaloriesGoal = caloriesGoal - totalCalories;
+                        var updatedCarbsGoal = carbsGoal - totalCarbs;
+                        var updatedProteinsGoal = proteinsGoal - totalProteins;
+                        var updatedFatsGoal = fatsGoal - totalFats;
 
-                    //uses goals object imported from database
-                    var updatedCaloriesGoal = caloriesGoal - totalCalories;
-                    var updatedCarbsGoal = carbsGoal - totalCarbs;
-                    var updatedProteinsGoal = proteinsGoal - totalProteins;
-                    var updatedFatsGoal = fatsGoal - totalFats;
+                        //updates html page
+                        $(document).find('.goals').html(updatedCaloriesGoal);
+                        $(document).find('.proteins').html(updatedProteinsGoal + ' g');
+                        $(document).find('.fats').html(updatedFatsGoal + ' g');
+                        $(document).find('.carbs').html(updatedCarbsGoal + ' g');
 
-                    //updates html page
-                    $(document).find('.goals').html(updatedCaloriesGoal);
-                    $(document).find('.proteins').html(updatedProteinsGoal + ' g');
-                    $(document).find('.fats').html(updatedFatsGoal + ' g');
-                    $(document).find('.carbs').html(updatedCarbsGoal + ' g');
+                        //update progress bar using a percentage
+                        var updatedProgressBar_calories = Math.floor((totalCalories / caloriesGoal) * 100);
+                        var updatedProgressBar_proteins = Math.floor((totalProteins / proteinsGoal) * 100);
+                        var updatedProgressBar_carbs = Math.floor((totalCarbs / carbsGoal) * 100);
+                        var updatedProgressBar_fats = Math.floor((totalFats / fatsGoal) * 100);
 
-                    //update progress bar using a percentage
-                    var updatedProgressBar_calories = Math.floor((totalCalories / caloriesGoal) * 100);
-                    var updatedProgressBar_proteins = Math.floor((totalProteins / proteinsGoal) * 100);
-                    var updatedProgressBar_carbs = Math.floor((totalCarbs / carbsGoal) * 100);
-                    var updatedProgressBar_fats = Math.floor((totalFats / fatsGoal) * 100);
+                        //finds progress-bar-calories id, selects style attribute and sets to new value
+                        $('#progress-bar-calories').attr('style', "width: " + updatedProgressBar_calories + "%");
+                        $('#progress-bar-fats').attr('style', "width: " + updatedProgressBar_fats + "%");
+                        $('#progress-bar-carbs').attr('style', "width: " + updatedProgressBar_carbs + "%");
+                        $('#progress-bar-proteins').attr('style', "width: " + updatedProgressBar_proteins + "%");
 
-                    //finds progress-bar-calories id, selects style attribute and sets to new value
-                    $('#progress-bar-calories').attr('style', "width: " + updatedProgressBar_calories + "%");
-                    $('#progress-bar-fats').attr('style', "width: " + updatedProgressBar_fats + "%");
-                    $('#progress-bar-carbs').attr('style', "width: " + updatedProgressBar_carbs + "%");
-                    $('#progress-bar-proteins').attr('style', "width: " + updatedProgressBar_proteins + "%");
+                    }
 
-                }
+                    $(document).on('click', '.edit', function (event) {
 
-                $(document).on('click', '.edit', function (event) {
+                        //may need this?
+                        event.preventDefault();
 
-                    console.log("edit")
+                        //find tbl row and its ID closest to the click, will be used to update the db
+                        var tbl_row = $(this).closest('tr');
+                        var id = tbl_row.attr('id');
 
-                    //find tbl row and its ID closest to the click, will be used to update the db
-                    var tbl_row = $(this).closest('tr');
-                    var id = tbl_row.attr('id');
+                        var temp_row_data = [];
+                        let i = 0;
 
-                    var temp_row_data = [];
-                    let i = 0;
+                        //get new name
+                        var name = tbl_row.find('.name_data').html();
+                        name = name.trim();
+                        $("#editEmployeeModal").find('.name_row_data').attr("value", name);
 
-                    //get new name
-                    var name = tbl_row.find('.name_data').html();
-                    name = name.trim();
-                    $("#editModal").find('.name_row_data').attr("value", name);
+                        //get row id
+                        $("#editEmployeeModal").find('.row_id_data').attr("value", id);
+                        //take each value in the actual row data and update the default value for the edit form
+                        tbl_row.find('.row_data').each(function (index, val) {
 
-                    //get row id
-                    $("#editModal").find('.row_id_data').attr("value", id);
-                    //take each value in the actual row data and update the default value for the edit form
-                    tbl_row.find('.row_data').each(function (index, val) {
+                            //for each value of the row store to array, need to get the int out of it
+                            temp_row_data[i] = parseInt(($(this).html()));
+                            i++;
 
-                        //for each value of the row store to array, need to get the int out of it
-                        temp_row_data[i] = parseInt(($(this).html()));
-                        i++;
+                            //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
+                            $('#search').keyup(function (event) {
 
-                    });
+                                //result is stored in an unordered list which we wish to write to after retrieving query
+                                $('#result').html('');
 
-                    //for each value in the edit form, we update with the temporary data
-                    let j = 0;
-                    $("#editModal").find('.edit_row_data').each(function (index, val) {
+                                //if we need to start rechecking for new dropdowns
+                                if (recheckInput == true) {
 
-                        //update edit form
-                        $(this).attr("value", temp_row_data[j]);
-                        j++;
+                                    //reset because we won't need to recheck Inputs until we select another dropdown option
+                                    recheckInput = false;
 
-                    });
-                });
+                                    //store event as input
+                                    var input = event.target,
+                                        list = input.getAttribute(
+                                            'list'); //get the list attribute from the event
 
-                $(document).on('click', '.delete', function (event) {
+                                    //if there is no value to list
+                                    if (list == null) {
+                                        input.setAttribute('list',
+                                            'result'); //allow us to display options as a list again
+                                    }
 
-                    console.log("delete one")
+                                }
 
-                    //find tbl row and its ID closest to the click, will be used to update the db
-                    var tbl_row = $(this).closest('tr');
-                    var id = tbl_row.attr('id');
+                                //get the text box search value and store it into a variable
+                                var searchField = $('#search').val();
 
-                    console.log(id);
+                                //makes call to foods/: with the search field we enter
+                                //need to set the url manually to be absolute
+                                $.ajax({
+                                    url: "/foods/" + searchField,
+                                    type: "GET",
+                                    dataType: "json",
+                                    cache: false,
+                                    success: (data) => {
 
-                    //update row id in the submit form
-                    $("#deleteModal").find('.row_id_data').attr("value", id);
-                });
+                                        // console.log(data['foods']);
+                                        if (data['foods']) {
+                                            //loop through all the returned results
+                                            data['foods'].forEach(function (data) {
 
-                calculateTotal();
+                                                //Appends the data to a dropdown menu, when we click the dropdown menu, it should fire another event
+                                                $('#result').append(
+                                                    '<option class = "searchResultOptions" fdcId = "' +
+                                                    data.fdcId +
+                                                    '" value="' +
+                                                    data.description +
+                                                    '"></option>');
 
-                //deletes all checked rows
-                $(document).on('click', '.btn-delete-multiple', function (event) {
+                                            });
 
-                    console.log("delete multiple")
+                                        } else {
+                                            console.log("No response returned");
+                                            recheckInput = true;
+                                        }
+                                    }
+                                });
 
-                    //find tbl row and its ID closest to the click, will be used to update the db
-                    var tbl_row_array = [];
-                    var id_array = [];
+                            });
 
-                    //checkbox counter
-                    let checkboxCounter = 0;
-                    let arrayIndex = 0;
+                            //we will place the goal data, to be imported from the database within each day here
+                            var caloriesGoal = "<%= caloriesGoal %>";
+                            var carbsGoal = "<%= carbsGoal %>";
+                            var fatsGoal = "<%= fatsGoal %>";
+                            var proteinsGoal = "<%= proteinsGoal %>";
+                            var sodiumGoal = "<%= sodiumGoal %>";
+                            var sugarsGoal = "<%= sugarsGoal %>";
 
-                    //loop through checkboxes, store values and send to router
-                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                            //initialize total sums as global vars
+                            var totalCalories = 0;
+                            var totalCarbs = 0;
+                            var totalFats = 0;
+                            var totalProteins = 0;
+                            var totalSodium = 0;
+                            var totalSugars = 0;
 
-                        //if the box is checked, collect the row id
-                        if ($(val).prop('checked') && checkboxCounter > 0) {
+                            //this function will calculate the totals row, and update it. Will use function in .save and .delete, as well as page load
+                            function calculateTotal() {
 
-                            //find tbl row and its ID closest to the click, will be used to update the db
-                            var tbl_row = $(this).closest('tr');
-                            var id = tbl_row.attr('id');
-                            id_array[arrayIndex] = id;
-                            arrayIndex++;
-                        }
+                                //need to loop through all rows and keep a running sum
+                                $(document).find('.row_data').each(function (index, val) {
+                                    let column_name = $(this).attr('column_name');
+                                    let column_value = $(this).html();
 
-                        //check if end of checkbox coounter, then submit request
-                        if (checkboxCounter == $(document).find('input[type=checkbox]').length - 1) {
-                            console.log("id_array= " + id_array.toString());
+                                    //switch case using the column header, add to the running sum for each column
+                                    switch (column_name) {
+                                        case "calorie_data":
+                                            totalCalories += parseInt(column_value);
+                                            break;
+                                        case "carbs_data":
+                                            totalCarbs += parseInt(column_value);
+                                            break;
+                                        case "fats_data":
+                                            totalFats += parseInt(column_value);
+                                            break;
+                                        case "proteins_data":
+                                            totalProteins += parseInt(column_value);
+                                            break;
+                                        case "sodium_data":
+                                            totalSodium += parseInt(column_value);
+                                            break;
+                                        case "sugars_data":
+                                            totalSugars += parseInt(column_value);
+                                    }
+                                });
 
-                            //update row id in the submit form
-                            $("#deleteMultipleModal").find('.row_id_data_array').attr("value", id_array);
-                        }
-                        checkboxCounter++;
-                    });
-                });
+                                //new row
+                                let totals_row = '';
+                                //append totals rows to end of table, all in one row, which calculated during loop, table row must be set to id (not id) to use the jquery functions
+                                totals_row += '<tr id="totals_row">';
+                                totals_row += '<td></td>';
+                                totals_row += '<td>Totals</td>';
+                                totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
+                                totals_row += '<td total_type="Carbs">' + totalCarbs + '</td>';
+                                totals_row += '<td total_type="Fats">' + totalFats + '</td>';
+                                totals_row += '<td total_type="Proteins">' + totalProteins + '</td>';
+                                totals_row += '<td total_type="Sugars">' + totalSugars + '</td>';
+                                totals_row += '<td total_type="Sodium">' + totalSodium + '</td>';
+                                totals_row += '<td></td>';
+                                totals_row += '</tr>';
 
-            });
-        </script>
+                                //removes the previous totals row, and appends the new one
+                                $("#totals_row").remove();
+                                $("#food_table").append(totals_row);
+                                //call function to recalculate goals
+                                calculateGoal()
+
+                            };
+
+                            //this function will calculate the goals and update them at the top of the table
+                            function calculateGoal() {
+
+                                //uses goals object imported from database
+                                var updatedCaloriesGoal = caloriesGoal - totalCalories;
+                                var updatedCarbsGoal = carbsGoal - totalCarbs;
+                                var updatedProteinsGoal = proteinsGoal - totalProteins;
+                                var updatedFatsGoal = fatsGoal - totalFats;
+
+                                //updates html page
+                                $(document).find('.goals').html(updatedCaloriesGoal);
+                                $(document).find('.proteins').html(updatedProteinsGoal + ' g');
+                                $(document).find('.fats').html(updatedFatsGoal + ' g');
+                                $(document).find('.carbs').html(updatedCarbsGoal + ' g');
+
+                                //update progress bar using a percentage
+                                var updatedProgressBar_calories = Math.floor((totalCalories /
+                                    caloriesGoal) *
+                                    100);
+                                var updatedProgressBar_proteins = Math.floor((totalProteins /
+                                    proteinsGoal) *
+                                    100);
+                                var updatedProgressBar_carbs = Math.floor((totalCarbs / carbsGoal) * 100);
+                                var updatedProgressBar_fats = Math.floor((totalFats / fatsGoal) * 100);
+
+                                //finds progress-bar-calories id, selects style attribute and sets to new value
+                                $('#progress-bar-calories').attr('style', "width: " +
+                                    updatedProgressBar_calories + "%");
+                                $('#progress-bar-fats').attr('style', "width: " + updatedProgressBar_fats +
+                                    "%");
+                                $('#progress-bar-carbs').attr('style', "width: " +
+                                    updatedProgressBar_carbs +
+                                    "%");
+                                $('#progress-bar-proteins').attr('style', "width: " +
+                                    updatedProgressBar_proteins + "%");
+
+                            }
+
+                            $(document).on('click', '.edit', function (event) {
+
+                                console.log("edit")
+
+                                //find tbl row and its ID closest to the click, will be used to update the db
+                                var tbl_row = $(this).closest('tr');
+                                var id = tbl_row.attr('id');
+
+                                var temp_row_data = [];
+                                let i = 0;
+
+                                //get new name
+                                var name = tbl_row.find('.name_data').html();
+                                name = name.trim();
+                                $("#editModal").find('.name_row_data').attr("value", name);
+
+                                //get row id
+                                $("#editModal").find('.row_id_data').attr("value", id);
+                                //take each value in the actual row data and update the default value for the edit form
+                                tbl_row.find('.row_data').each(function (index, val) {
+
+                                    //for each value of the row store to array, need to get the int out of it
+                                    temp_row_data[i] = parseInt(($(this).html()));
+                                    i++;
+
+                                });
+
+                                //for each value in the edit form, we update with the temporary data
+                                let j = 0;
+                                $("#editModal").find('.edit_row_data').each(function (index, val) {
+
+                                    //update edit form
+                                    $(this).attr("value", temp_row_data[j]);
+                                    j++;
+
+                                });
+                            });
+
+                            $(document).on('click', '.delete', function (event) {
+
+                                console.log("delete one")
+
+                                //find tbl row and its ID closest to the click, will be used to update the db
+                                var tbl_row = $(this).closest('tr');
+                                var id = tbl_row.attr('id');
+
+                                console.log(id);
+
+                                //update row id in the submit form
+                                $("#deleteModal").find('.row_id_data').attr("value", id);
+                            });
+
+                            calculateTotal();
+
+                            //deletes all checked rows
+                            $(document).on('click', '.btn-delete-multiple', function (event) {
+
+                                console.log("delete multiple")
+
+                                //find tbl row and its ID closest to the click, will be used to update the db
+                                var tbl_row_array = [];
+                                var id_array = [];
+
+                                //checkbox counter
+                                let checkboxCounter = 0;
+                                let arrayIndex = 0;
+
+                                //loop through checkboxes, store values and send to router
+                                $(document).find('input[type=checkbox]').each(function (index,
+                                    val) {
+
+                                    //if the box is checked, collect the row id
+                                    if ($(val).prop('checked') && checkboxCounter > 0) {
+
+                                        //find tbl row and its ID closest to the click, will be used to update the db
+                                        var tbl_row = $(this).closest('tr');
+                                        var id = tbl_row.attr('id');
+                                        id_array[arrayIndex] = id;
+                                        arrayIndex++;
+                                    }
+
+                                    //check if end of checkbox coounter, then submit request
+                                    if (checkboxCounter == $(document).find(
+                                        'input[type=checkbox]').length - 1) {
+                                        console.log("id_array= " + id_array.toString());
+
+                                        //update row id in the submit form
+                                        $("#deleteMultipleModal").find('.row_id_data_array')
+                                            .attr("value", id_array);
+                                    }
+                                    checkboxCounter++;
+                                });
+                            });
+
+                        });
+            </script>

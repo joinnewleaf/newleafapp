@@ -7,158 +7,383 @@ placeholders will contain default fda values*/%>
 <%# next line includes the partial navbar file%>
 <% include ./partials/navbar %>
 
-<div class="main-panel">
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-        <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar burger-lines"></span>
-            <span class="navbar-toggler-bar burger-lines"></span>
-            <span class="navbar-toggler-bar burger-lines"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <span class="no-icon">
-                        <%= name %>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="content">
-        <section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
-            <div class="container">
-
-                <h2>Frequently Asked Questions</h2>
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse0" aria-expanded="true"
-                                    aria-controls="collapse0">
-                                    How do I use the wallet card?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
-                            <div class="panel-body px-3 mb-4">
-                                <p>Add your card to your mobile wallet from your email. Open your mobile wallet card
-                                    when purchasing food at participating locations, and present it to the cashier when paying.
-                                    After scanning, your card and account will be synced with dietary data from the purchase.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse1" aria-expanded="true"
-                                    aria-controls="collapse1">
-                                    Which locations use the mobile wallet card?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
-                            <div class="panel-body px-3 mb-4">
-                                <p>Currently, none. But when we launch we will put them here! For now you can use our
-                                    other health monitoring tools for free!</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse2" aria-expanded="true"
-                                    aria-controls="collapse2">
-                                    Will you add fitness device functionality?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse2" class="panel-collapÏse collapse" role="tabpanel" aria-labelledby="heading2">
-                            <div class="panel-body px-3 mb-4">
-                                <p>We plan to integrate with FitBit, MyFitnessPal, and other popular fitness trackers.
-                                    Most importantly, we want to add ways to track metrics for chronic diseases like
-                                    diabetes and heart disease. Reach out if you have ideas!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-4" role="tab" id="heading4">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse4" aria-expanded="true"
-                                    aria-controls="collapse4">
-                                    I have an idea for a new feature. Who do I talk to?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
-                            <div class="panel-body px-3 mb-4">
-                                <p>Click on the "Ideas and Feedback" link below and we will implement your feedback ASAP.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse5" aria-expanded="true"
-                                    aria-controls="collapse5">
-                                    Where is my card?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
-                            <div class="panel-body px-3 mb-4">
-                                <p>Check the email you used to sign up. If you don't receive it, contact us and we can
-                                    send it to you directly.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
-                            <h3 class="panel-title">
-                                <a class="collapsed" role="button" title="" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse5" aria-expanded="true"
-                                    aria-controls="collapse5">
-                                    How do I determine my target goals?
-                                </a>
-                            </h3>
-                        </div>
-                        <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
-                            <div class="panel-body px-3 mb-4">
-                                <p>Click on the Food Diary Goal Calculator or Calculate Target Blood Pressure in the links below.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <h2>Helpful Links</h2>
-                <a class="helpfulLink" href="https://tdeecalculator.net/">Food Diary Goal Calculator</a>
-                <br>
-                <br>
-                <a class="helpfulLink" href="https://forms.gle/RNCscBcYBaRkHsji6">Calculate Target Blood Pressure</a>
-                <br>
-                <br>
-                <a class="helpfulLink" href="https://forms.gle/RNCscBcYBaRkHsji6">Suggest a Location</a>
-                <br>
-                <br>
-                <a class="helpfulLink" href="https://forms.gle/PaywH2iRGnwVyn6r6">Ideas and feedback</a>
-                <br>
-                <br>
-                <a class="helpfulLink" href="https://forms.gle/mC54uMGXrD6ZVM1L9">Contact Us</a>
+<!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+so that you can click on it and close out the sidebar -->
+<div class="content blankPanelSidebarOpen">
+    <div class="main-panel faqDesktopSettings">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <span class="no-icon">
+                            <%= name %>
+                        </span>
+                    </li>
+                </ul>
             </div>
-        </section>
+        </nav>
+        <div class="content">
+            <div id="accordion">
+                <section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
+                    <div class="container">
+
+                        <h2>Frequently Asked Questions</h2>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse0" aria-expanded="true"
+                                            aria-controls="collapse0">
+                                            How do I use the wallet card?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse0" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading0">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>Add your card to your mobile wallet from your email. Open your mobile wallet
+                                            card
+                                            when purchasing food at participating locations, and present it to the
+                                            cashier when paying.
+                                            After scanning, your card and account will be synced with dietary data from
+                                            the purchase.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse1" aria-expanded="true"
+                                            aria-controls="collapse1">
+                                            Which locations use the mobile wallet card?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading1">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>Currently, none. But when we launch we will put them here! For now you can
+                                            use our
+                                            other health monitoring tools for free!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse2" aria-expanded="true"
+                                            aria-controls="collapse2">
+                                            Will you add fitness device functionality?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse2" class="panel-collapÏse collapse" role="tabpanel"
+                                    aria-labelledby="heading2">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>We plan to integrate with FitBit, MyFitnessPal, and other popular fitness
+                                            trackers.
+                                            Most importantly, we want to add ways to track metrics for chronic diseases
+                                            like
+                                            diabetes and heart disease. Reach out if you have ideas!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-3" role="tab" id="heading3">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse3" aria-expanded="true"
+                                            aria-controls="collapse3">
+                                            What do I do when I want to eat food at home?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading3">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>In the future, we would like to add a feature to easily track what food is in
+                                            your
+                                            fridge/pantry when purchasing at grocery stores! We hope you will be able to
+                                            use it to better manage expiration dates, keep up to date on food recalls,
+                                            create
+                                            new recipe combinations, and give you health feedback on your purchases!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-4" role="tab" id="heading4">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse4" aria-expanded="true"
+                                            aria-controls="collapse4">
+                                            I have an idea for a new feature. Who do I talk to?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading4">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>Click on the "Ideas and Feedback" link below and we will implement your
+                                            feedback ASAP.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                            data-parent="#accordion" href="#collapse5" aria-expanded="true"
+                                            aria-controls="collapse5">
+                                            Where is my card?
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading5">
+                                    <div class="panel-body px-3 mb-4">
+                                        <p>Check the email you used to sign up. If you don't receive it, contact us and
+                                            we can
+                                            send it to you directly.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
+                                <h3 class="panel-title">
+                                    <a class="collapsed" role="button" title="" data-toggle="collapse"
+                                        data-parent="#accordion" href="#collapse5" aria-expanded="true"
+                                        aria-controls="collapse5">
+                                        How do I determine my target goals?
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="collapse5" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="heading5">
+                                <div class="panel-body px-3 mb-4">
+                                    <p>Click on the Food Diary Goal Calculator or Calculate Target Blood Pressure in the
+                                        links below.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Helpful Links</h2>
+                    <a class="helpfulLink" href="https://tdeecalculator.net/">Food Diary Goal Calculator</a>
+                    <br>
+                    <br>
+                    <a class="helpfulLink" href="https://forms.gle/RNCscBcYBaRkHsji6">Calculate Target Blood
+                        Pressure</a>
+                    <br>
+                    <br>
+                    <a class="helpfulLink" href="https://forms.gle/RNCscBcYBaRkHsji6">Suggest a Location</a>
+                    <br>
+                    <br>
+                    <a class="helpfulLink" href="https://forms.gle/PaywH2iRGnwVyn6r6">Ideas and feedback</a>
+                    <br>
+                    <br>
+                    <a class="helpfulLink" href="https://forms.gle/mC54uMGXrD6ZVM1L9">Contact Us</a>
+            </div>
+            </section>
+        </div>
+        <% include ./partials/footer.ejs %>
     </div>
-    <% include ./partials/footer.ejs %>
 </div>
 
+<!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
+<!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
+JQuery MUST be loaded first so because this calls on functions in that file -->
+<script type="text/javascript">
+    // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
+    var searchVisible = 0;
+    var transparent = true;
+
+    var transparentDemo = true;
+    var fixedTop = false;
+
+    var navbar_initialized = false;
+    var mobile_menu_visible = 0,
+        mobile_menu_initialized = false,
+        toggle_initialized = false,
+        bootstrap_nav_initialized = false,
+        $sidebar,
+        isWindows;
+
+    //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
+    $(document).ready(function () {
+        window_width = $(window).width();
+
+        // check if there is an image set for the sidebar's background -- we dont have an image right now
+        // but i kept it anyways in case we decide that we want to add one
+        lbd.checkSidebarImage();
+
+        // Init navigation toggle for small screens
+        if (window_width <= 991) {
+            lbd.initRightMenu();
+        }
+
+        //  Activate the tooltips --- I have no fucking idea what this is but if you un-comment it then it causes an error 
+        // so just keep it here for now 
+        // $('[rel="tooltip"]').tooltip();
+
+        // Activate regular switches
+        if ($("[data-toggle='switch']").length != 0) {
+            $("[data-toggle='switch']").bootstrapSwitch();
+        }
+
+        $('.form-control').on("focus", function () {
+            $(this).parent('.input-group').addClass("input-group-focus");
+        }).on("blur", function () {
+            $(this).parent(".input-group").removeClass("input-group-focus");
+        });
+
+        // Fixes sub-nav not working as expected on IOS
+        $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // activate collapse right menu when the windows is resized
+    $(window).resize(function () {
+        if ($(window).width() <= 991) {
+            lbd.initRightMenu();
+        }
+    });
+
+    lbd = {
+        misc: {
+            navbar_menu_visible: 0
+        },
+        checkSidebarImage: function () {
+            $sidebar = $('.sidebar');
+            image_src = $sidebar.data('image');
+
+            if (image_src !== undefined) {
+                sidebar_container = '<div class="sidebar-background" style="background-image: url(' +
+                    image_src + ') "/>'
+                $sidebar.append(sidebar_container);
+            } else if (mobile_menu_initialized == true) {
+                // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+                $sidebar_wrapper.find('.navbar-form').remove();
+                $sidebar_wrapper.find('.nav-mobile-menu').remove();
+
+                mobile_menu_initialized = false;
+            }
+        },
+
+        initRightMenu: function () {
+            $sidebar_wrapper = $('.sidebar-wrapper');
+
+            if (!mobile_menu_initialized) {
+
+                $navbar = $('nav').find('.navbar-collapse').first().clone(true);
+
+                nav_content = '';
+                mobile_menu_content = '';
+
+                //add the content from the regular header to the mobile menu
+                $navbar.children('ul').each(function () {
+
+                    content_buff = $(this).html();
+                    nav_content = nav_content + content_buff;
+                });
+
+                nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
+
+                $navbar_form = $('nav').find('.navbar-form').clone(true);
+
+                $sidebar_nav = $sidebar_wrapper.find(' > .nav');
+
+                // insert the navbar form before the sidebar list
+                $nav_content = $(nav_content);
+                $nav_content.insertBefore($sidebar_nav);
+                $navbar_form.insertBefore($nav_content);
+
+                $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
+                    event.stopPropagation();
+
+                });
+
+                mobile_menu_initialized = true;
+            } else {
+                console.log('window with:' + $(window).width());
+                if ($(window).width() > 991) {
+                    // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+                    $sidebar_wrapper.find('.navbar-form').remove();
+                    $sidebar_wrapper.find('.nav-mobile-menu').remove();
+
+                    mobile_menu_initialized = false;
+                }
+            }
+
+            if (!toggle_initialized) {
+                $toggle = $('.navbar-toggler');
+
+                $toggle.click(function () {
+
+                    if (mobile_menu_visible == 1) {
+                        $('html').removeClass('nav-open');
+
+                        $('.close-layer').remove();
+                        setTimeout(function () {
+                            $toggle.removeClass('toggled');
+                        }, 400);
+
+                        mobile_menu_visible = 0;
+                    } else {
+                        setTimeout(function () {
+                            $toggle.addClass('toggled');
+                        }, 430);
+
+                        // This is the function that figures out the height of the main panel when in mobile and then adds
+                        // the a div at the begining of the main panel (pushing the content down on the screen) so that 
+                        // you can click on it and close out the sidebar without having to click on a link in the sidebar
+                        main_panel_height = $('.main-panel')[0].scrollHeight;
+                        $layer = $('<div class="close-layer"></div>');
+                        $layer.css('height', main_panel_height + 'px');
+                        $layer.prependTo(".blankPanelSidebarOpen");
+
+
+                        setTimeout(function () {
+                            $layer.addClass('visible');
+                        }, 100);
+
+                        $layer.click(function () {
+                            console.log("hi")
+                            $('html').removeClass('nav-open');
+                            mobile_menu_visible = 0;
+
+                            $layer.removeClass('visible');
+
+                            setTimeout(function () {
+                                $layer.remove();
+                                $toggle.removeClass('toggled');
+
+                            }, 400);
+                        });
+
+                        $('html').addClass('nav-open');
+                        mobile_menu_visible = 1;
+
+                    }
+                });
+
+                toggle_initialized = true;
+            }
+        }
+    }
+</script>

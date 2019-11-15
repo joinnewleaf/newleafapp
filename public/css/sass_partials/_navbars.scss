@@ -142,6 +142,23 @@ body,
     position: relative;
 }
 
+
+// These desktop settings things below shuould probably be fixed somehow and made into a general class for all
+// of the pages so that it forces the main-panel to fill up the whole screen and puts the footer at the bottom
+// vh = viewport height and is expressed as a percent so here we are setting the main panels to take up 100% of 
+// whatever the viewport is for that device (desktop/ipad) --> there are other settings for mobile devices
+.customizeDesktopSettings {
+    height: 100vh !important; 
+}
+
+.bloodPressureDesktopSettings {
+    height: 100vh !important; 
+}
+
+.faqDesktopSettings {
+    height: 100vh !important; 
+}
+
 /* Link settings */
 a {
     color: #1DC7EA;
@@ -1442,6 +1459,7 @@ Copyright (c) 2015 Daniel Eden
         width: 40px;
         height: 40px;
     }
+
    
     @keyframes topbar-x {
         0% {

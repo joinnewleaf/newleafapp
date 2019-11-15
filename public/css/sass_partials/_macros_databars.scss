@@ -1,0 +1,16 @@
+.desktopWindowPadding {
+    padding-bottom: 20px; 
+}
+
+@media (max-width: 991px) {
+.macrosBreakdownMobile {
+    padding-top: 30px;
+};
+.textLeftMobile {
+    text-align: left !important; 
+}; 
+.textLeftMobileHeader {
+    text-align: left !important; 
+    padding-left: 0px;
+}; 
+}

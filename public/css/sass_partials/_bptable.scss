@@ -1,8 +1,9 @@
-#food-diary .container {
+
+#bp-diary .container {
     padding: 10px;
 }
 
-#food-diary .table {
+#bp-diary .table {
     color: #4e4e4e;
     background: #f5f5f5;
     font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
@@ -12,7 +13,7 @@
     text-align: left;
 }
 
-#food-diary .table-wrapper {
+#bp-diary .table-wrapper {
     background: #fff;
     padding: 10px;
     margin: 30px 0;
@@ -20,7 +21,7 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 
-#food-diary .table-title {
+#bp-diary .table-title {
     padding-bottom: 15px;
     background: #85b291;
     color: #fff;
@@ -31,16 +32,16 @@
 .table-title h4 {
     margin: 5px 0 0;
     font-size: 20px;
-    color: #fff;
+    color: #fff ;
     text-transform: uppercase;
     font-weight: normal;
 }
 
-#food-diary .table-title .btn-group {
-    float: right;
+#bp-diary .table-title .btn-group {
+    float: right; 
 }
 
-#food-diary .table-title .btn {
+#bp-diary .table-title .btn {
     color: #fff;
     float: right;
     font-size: 13px;
@@ -52,21 +53,23 @@
     margin-left: 10px;
 }
 
-#food-diary .table-title .btn-add {
-    background-color: #586358;
+#bp-diary .table-title .btn-add
+{
+    background-color: #586358; 
 }
 
-#food-diary .table-title .btn-delete {
-    background-color: rgb(155, 16, 16);
+#bp-diary .table-title .btn-delete
+{
+    background-color: rgb(155, 16, 16); 
 }
 
-#food-diary .table-title .btn i {
+#bp-diary .table-title .btn i {
     float: right;
     font-size: 21px;
     margin-right: 5px;
 }
 
-#food-diary .table-title .btn span {
+#bp-diary .table-title .btn span {
     float: right;
     margin-top: 2px;
 }
@@ -89,7 +92,7 @@ table.table tr th:last-child {
 }
 
 table.table tr td:last-child {
-    width: 100px;
+    width: 100px; 
 }
 
 table.table-striped tbody tr:nth-of-type(odd) {
@@ -252,8 +255,8 @@ table.table .avatar {
     max-width: 400px;
     position: center;
     margin-top: 10px;
-    margin-bottom: 10px;
-    max-height: calc(100vh - 20px);
+    margin-bottom: 10px; 
+    max-height: calc(100vh - 20px); 
 }
 
 .modal .modal-header,
@@ -269,7 +272,7 @@ table.table .avatar {
 .modal .modal-footer {
     background: #ecf0f1;
     border-radius: 3px 3px;
-    padding-top: 15px !important;
+    padding-top: 15px !important; 
 }
 
 .modal .modal-title {
@@ -295,55 +298,67 @@ table.table .avatar {
     font-weight: normal;
 }
 
+#bp-diary th.blankForMobile {
+    display: none;
+}
 
 @media (max-width: 991px) {
 
-    #food-diary .columnHideMobile {
+    .main-panel-biometricsMobile{
+        height: 100vh;
+    }
+
+    #bp-diary .columnHideMobile {
         display: none;
     }
 
-    #food-diary .newRowMobile {
-        display: table-row-group;
+    #bp-diary th.blankForMobile {
         border: none;
+        display: contents; 
+        padding: 12px 15px;
+        vertical-align: middle;
     }
 
-    #food-diary #totals_row td {
-        font-weight: bold;
+    #bp-diary .newRowMobile {
+        display: table-row-group; 
+        border: none;
+        padding: 12px 15px; 
+        vertical-align: middle;
     }
 
-    #food-diary .tableHeadMobile {
+
+    #bp-diary .tableHeadMobile {
         text-align: center;
-        font-size: 26px;
-        padding-bottom: 10px;
+        font-size: 26px; 
+        padding-bottom: 10px; 
+        border-bottom-color: inherit;
     }
 
-    #food-diary .tableButtonMobile {
-        align-content: center;
+    #bp-diary .tableButtonMobile {
+        align-content: center; 
     }
 
-    #food-diary .table-title .btn {
+    #bp-diary .table-title .btn {
         float: none;
     }
 
-    #food-diary .editEntryMobile {
-        padding-right: 2px;
-        padding-left: 2px;
+    #bp-diary .editEntryMobile {
+        padding-right: 2px; 
+        padding-left: 2px; 
     }
 
-    #food-diary.container {
+    #bp-diary.container {
         width: 100%;
         padding-left: 0px;
         padding-right: 0px;
     }
-
-
-    table td::before {
+      
+      
+      table td::before {
         content: attr(data-label);
         float: left;
-    }
-
-
-    /* Modal styles */
+      }
+        /* Modal styles */
 
     .modal {
         object-fit: cover;
@@ -399,11 +414,11 @@ table.table .avatar {
         font-weight: normal;
     }
 
-    // for now when you are on mobile this makes it so that the background doesnt become darker like it does on desktop
-    // im still trying to troubleshoot why but for some reason on mobile the background overlays the modal and makes
-    // it so that it is inactive 
     .modal-backdrop {
         display: none;
     }
 
 }
+
+
+
