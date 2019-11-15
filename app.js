@@ -95,6 +95,8 @@ app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 app.use("/usergoals", require("./routes/usergoals"));//added this to allow the users goal route
 app.use("/days", require("./routes/days"));//used to write to the db collection days
+app.use("/foods", require("./routes/foods"));//potentially used to search gov database for foods
+
 
 //creates an instance of a port that can be used for listening, process.env.PORT is used for
 //deploying, eg. Heroku uses this as a default port, 5000 is used for local hosting and development

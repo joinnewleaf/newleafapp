@@ -4011,7 +4011,8 @@ is still in here */
   background-color: #586358;
 }
 
-#food-diary .table-title .btn-delete {
+/* had to change the btn-delete to btn-delete-multiple to separate the jquery */
+#food-diary .table-title .btn-delete-multiple {
   background-color: #9b1010;
 }
 
