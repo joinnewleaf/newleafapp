@@ -165,6 +165,10 @@ input:focus {
   outline: 0 !important;
 }
 
+.inline-form input{
+  float:left;
+}
+
 /*           Animations              */
 .form-control,
 .input-group-addon,
