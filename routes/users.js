@@ -153,8 +153,6 @@ router.post("/register", (req, res) => {
 
                       //push flash message to screen to show it is updated, need to also pass in as we render
                       success_msgs.push({ msg: "You are now registered and can log in." })
-                      //multiple flash messages
-                      success_msgs.push({ msg: "Check your email for your digital card." })
 
                       //render the login page, should probably change to redirect but was having trouble with async flash messages
                       res.render("login", {
