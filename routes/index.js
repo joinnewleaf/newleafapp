@@ -19,7 +19,7 @@ const Days = require("../models/Days"); //allows us to register users and post o
 const { ensureAuthenticated } = require("../config/auth");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
-var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+// var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 
 //whenever we want to create a route we use get or post, pass it what the user requested (router. creates a method for routing)
 //for instance '/' for the homepage

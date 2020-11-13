@@ -18,7 +18,7 @@ const Days = require("../models/Days"); //allows us to register users and post o
 const { ensureAuthenticated } = require("../config/auth");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
-var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+//var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 
 //post request on the dashboard adds in new data to diary
 router.post("/add", ensureAuthenticated, (req, res) => {
@@ -68,9 +68,9 @@ router.post("/add", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString.trim() == checkdateString) {
-                                passkit.updatePass(req.user.email, days)
-                            }
+                            // if (req.body.dateString.trim() == checkdateString) {
+                            //     passkit.updatePass(req.user.email, days)
+                            // }
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;
@@ -147,9 +147,11 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString.trim() == checkdateString) {
-                                passkit.updatePass(req.user.email, days)
-                            }
+
+                            //next line commented out for passkit update
+                            // if (req.body.dateString.trim() == checkdateString) {
+                            //     passkit.updatePass(req.user.email, days)
+                            // }
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;
@@ -211,9 +213,11 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString.trim() == checkdateString) {
-                                passkit.updatePass(req.user.email, days)
-                            }
+
+                            //next line commented out for passkit update
+                            // if (req.body.dateString.trim() == checkdateString) {
+                            //     passkit.updatePass(req.user.email, days)
+                            // }
                             console.log("day 3:" + days);
 
                             //sets goals data on the page to what's stored in the db
@@ -294,9 +298,9 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                                         //to update pass, need to check if we are adding data for the current date
                                         let checkcurrentDate = new Date()
                                         let checkdateString = checkcurrentDate.toDateString()
-                                        if (req.body.dateString.trim() == checkdateString) {
-                                            passkit.updatePass(req.user.email, days)
-                                        }
+                                        // if (req.body.dateString.trim() == checkdateString) {
+                                        //     passkit.updatePass(req.user.email, days)
+                                        // }
 
                                         //sets goals data on the page to what's stored in the db
                                         let caloriesGoal = usergoals.caloriesGoal;
@@ -348,9 +352,11 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                             //to update pass, need to check if we are adding data for the current date
                             let checkcurrentDate = new Date()
                             let checkdateString = checkcurrentDate.toDateString()
-                            if (req.body.dateString.trim() == checkdateString) {
-                                passkit.updatePass(req.user.email, days)
-                            }
+
+                            //next line commented out for passkit update
+                            // if (req.body.dateString.trim() == checkdateString) {
+                            //     passkit.updatePass(req.user.email, days)
+                            // }
 
                             //sets goals data on the page to what's stored in the db
                             let caloriesGoal = usergoals.caloriesGoal;

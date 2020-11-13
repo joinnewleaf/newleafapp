@@ -20,7 +20,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
-var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+// var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 //this jwt is specifically used to authenticate requests to Passkit API
 
 //check index.js file in routes folder for these notes, now we are taking a user login request
@@ -95,7 +95,7 @@ router.post("/register", (req, res) => {
         } else {
 
           //if this is a new user, we create a pass for them
-          let passID = passkit.createPass(email);
+          // let passID = passkit.createPass(email);
 
           //we will create a new user using a new instance of User model, does not save
           const newUser = new User({
@@ -110,7 +110,7 @@ router.post("/register", (req, res) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
 
-              console.log(passID);
+              // console.log(passID);
 
               //sets password to hashed password
               newUser.password = hash;

@@ -15,7 +15,7 @@ const Days = require("../models/Days"); //allows us to register users and post o
 const { ensureAuthenticated } = require("../config/auth");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
-var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
+// var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 
 //this handles when users submit a registration form, makes a post request to /usergoals/update
 router.post("/update", ensureAuthenticated, (req, res) => {
@@ -84,7 +84,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                             success_msgs.push({ msg: "Goals updated" })
 
                             //update pass using current days data
-                            passkit.updatePass(req.user.email, days)
+                            // passkit.updatePass(req.user.email, days)
 
                             //render the account page
                             res.render("myaccount", {
@@ -155,7 +155,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                             .then(days => {
 
                                 //update pass using current days data
-                                passkit.updatePass(req.user.email, days)
+                                // passkit.updatePass(req.user.email, days)
 
                                 //render the account page
                                 res.render("myaccount", {
@@ -250,7 +250,7 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
                             .then(days => {
 
                                 //update pass using current days data
-                                passkit.updatePass(req.user.email, days)
+                                // passkit.updatePass(req.user.email, days)
 
                                 //render the account page
                                 res.render("myaccount", {
@@ -324,7 +324,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                             .then(days => {
 
                                 //update pass using current days data
-                                passkit.updatePass(req.user.email, days)
+                                // passkit.updatePass(req.user.email, days)
 
                                 //push flash message to screen to show it is updated, need to also pass in as we render
                                 success_msgs.push({ msg: "Goals set to default" })
@@ -377,7 +377,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                     .then(user => {
 
                         //update pass after new goals are saved
-                        passkit.updatePass(req.user.email);
+                        // passkit.updatePass(req.user.email);
 
                         console.log('succesfully registered user')
                     })
