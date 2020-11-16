@@ -572,5 +572,189 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
         .catch(err => console.log(err));
 });
 
+
+//weight log diary section
+//post request on the dashboard adds in new data to diary
+router.post("/addBodyWeight", ensureAuthenticated, (req, res) => {
+
+    console.log(req.body)
+    //pull important values out of the request
+    var new_row_data = {
+        time: req.body.time.toString(),
+        bodyWeight: req.body.bodyWeight,
+        notes: req.body.notes
+    }
+
+    //insert new food into end of food array for each day
+    Days.updateOne(
+        {
+            email: req.user.email,
+            dateString: req.body.dateString.trim()
+        },
+        {
+            $push: { bodyWeights: [new_row_data] }
+        }
+
+        //want to query the foods for that day and pass them into the table/rerender the dashboard
+    ).then(function () {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString.trim()
+        }).then(days => {
+
+            // re render the dashboard after having updated the days collection
+            res.render("biometrics", {
+                name: req.user.name,
+                days: days
+            });
+        })
+            .catch(err => console.log(err));
+    })
+        .catch(err => console.log(err));
+});
+
+
+
+//delete BP
+router.post("/deleteBodyWeight", ensureAuthenticated, (req, res) => {
+
+    //have to turn string into a mongo object id
+    var _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+    //how to delete subdocuments
+    Days.updateOne(
+        { 'bodyWeights._id': _id },
+        { $pull: { bodyWeights: { "_id": _id } } }
+    ).then(response => {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString.trim()
+        })
+            .then(days => {
+                // re render the dashboard after having updated the days collection
+                res.render("biometrics", {
+                    name: req.user.name,
+                    days: days
+                });
+            })
+            .catch(err => console.log(err));
+    })
+        .catch(err => console.log(err));
+});
+
+//delete BP
+router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
+
+    //extract id from request
+    var _id = req.body.row_id;
+
+    //split into array
+    let _id_array = _id.split(",");
+
+    let arrayCounter = 0;
+
+    if (_id != "empty") {
+
+        //for each element, do new delete request in db
+        _id_array.forEach(element => {
+
+            //have to turn string into a mongo object id
+            var _id_obj = mongoose.mongo.ObjectId(element);
+
+            //delete all subdocuments in array
+            Days.updateOne(
+                { 'bodyWeights._id': _id_obj },
+                { $pull: { bodyWeights: { "_id": _id_obj } } }
+            ).then(response => {
+
+                //need to update the array counter after each request is completed
+                arrayCounter++;
+
+                //check if done updating array before sending response
+                if (arrayCounter == _id_array.length) {
+
+                    //query days
+                    Days.findOne({
+                        email: req.user.email,
+                        dateString: req.body.dateString.trim()
+                    })
+                        .then(days => {
+
+                            //re render the dashboard after having updated the days collection
+                            res.render("biometrics", {
+                                name: req.user.name,
+                                days: days
+                            });
+                        })
+                        .catch(err => console.log(err));
+                }
+
+            })
+                .catch(err => console.log(err));
+
+        });
+
+    } else {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString.trim()
+        })
+            .then(days => {
+
+                //re render the dashboard after having updated the days collection
+                res.render("biometrics", {
+                    name: req.user.name,
+                    days: days
+                });
+            })
+            .catch(err => console.log(err));
+    }
+});
+
+
+//post request on the dashboard edits old data on the diary
+router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
+
+    //have to turn string into a mongo object id
+    var _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+    //how to update subdocuments within an array, finds the first element with matching id, and updates those using positional $
+    Days.updateOne(
+        { 'bodyWeights._id': _id },
+        {
+            $set: {
+                'bodyWeights.$.time': req.body.time.toString(),
+                'bodyWeights.$.bodyWeight': req.body.bodyWeight,
+                'bodyWeights.$.notes': req.body.notes
+            }
+        }
+
+        // want to query the foods for that day and pass them into the table/rerender the dashboard
+    ).then(response => {
+
+        //query days
+        Days.findOne({
+            email: req.user.email,
+            dateString: req.body.dateString.trim()
+        })
+            .then(days => {
+
+                // re render the dashboard after having updated the days collection
+                res.render("biometrics", {
+                    name: req.user.name,
+                    days: days
+                });
+            })
+            .catch(err => console.log(err));
+    })
+        .catch(err => console.log(err));
+});
+
 //exports the router function to be used in app
 module.exports = router;
