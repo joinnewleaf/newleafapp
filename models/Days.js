@@ -42,6 +42,12 @@ const BodyWeightSchema = new mongoose.Schema({
     notes: String
 });
 
+//child schema needs to be in front of parent schema
+const ExerciseSchema = new mongoose.Schema({
+    exercise: String,
+    minutes: String
+});
+
 //day schema, parent schema
 const DaysSchema = new mongoose.Schema({
     email: {
@@ -67,6 +73,10 @@ const DaysSchema = new mongoose.Schema({
     bodyWeights: {
         type: [BodyWeightSchema],
         require: false
+    },
+    exercises: {
+        type: [ExerciseSchema],
+        require: false
     }
 });
 
@@ -74,6 +84,7 @@ const DaysSchema = new mongoose.Schema({
 const Foods = mongoose.model('Foods', FoodSchema);
 const BloodPressures = mongoose.model('BloodPressures', BloodPressureSchema)
 const BodyWeights = mongoose.model('BodyWeights', BodyWeightSchema)
+const Exercises = mongoose.model('Exercises', ExerciseSchema)
 const Days = mongoose.model('Days', DaysSchema);
 
 
