@@ -34,7 +34,7 @@
                 <span>Add Entry</span>
               </a>
               <a
-                href="#deleteMultipleModal2"
+                href="#deleteMultipleModal"
                 class="btn btn-delete-multiple"
                 data-toggle="modal"
               >
@@ -53,11 +53,11 @@
                 <span class="custom-checkbox">
                   <input
                     type="checkbox"
-                    id="checkbox2"
+                    id="checkbox1"
                     name="options[]"
                     value="1"
                   />
-                  <label for="checkbox2"></label>
+                  <label for="checkbox1"></label>
                 </span>
               </th>
               <th>Time</th>
@@ -78,7 +78,7 @@
                 <span class="custom-checkbox">
                   <input
                     type="checkbox"
-                    id="checkbox"
+                    id="checkbox_weights"
                     name="options[]"
                     value="1"
                   />
@@ -325,7 +325,7 @@
     </div>
 
     <!-- Delete Multiple Modal HTML -->
-    <div id="deleteMultipleModal2" class="modal fade">
+    <div id="deleteMultipleModal_weights" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form
@@ -381,18 +381,18 @@
 <script type="text/javascript">
   $(document).ready(function($) {
     //on changing the checkbox header
-    $("#checkbox2").change(function() {
+    $("#checkbox1").change(function() {
       //if the check box is checked, cycle through document and check everything
       if (this.checked == true) {
         $(document)
-          .find("input[type=checkbox]")
+          .find("input[id=checkbox_weights]")
           .each(function(index, val) {
             $(val).prop("checked", true);
           });
       } else {
         //uncheck everything
         $(document)
-          .find("input[type=checkbox]")
+          .find("input[id=checkbox_weights]")
           .each(function(index, val) {
             $(val).prop("checked", false);
           });
@@ -541,7 +541,7 @@
             console.log("id_array= " + id_array.toString());
 
             //update row id in the submit form
-            $("#deleteMultipleModal2")
+            $("#deleteMultipleModal_weights")
               .find(".row_id_data_array")
               .attr("value", id_array);
           }
