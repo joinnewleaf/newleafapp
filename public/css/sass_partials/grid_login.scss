@@ -1,0 +1,29 @@
+
+.login-grid {
+    display: grid;
+    grid-template-rows: 1fr minmax(100px, 200px) auto auto auto 1fr;
+    justify-items: center;
+    height: 100vh;
+    padding: 5px;
+}
+
+.login-grid > p {
+    grid-row: 3;
+    text-align: center;
+    padding: 5px;
+}
+
+.login-grid img {
+    grid-row: 2;
+    height: 100%;
+}
+
+.grid-button1 {
+    grid-row-start: 4;
+    max-width: 300px; 
+}
+.grid-button2 {
+    grid-row-start: 5;
+    max-width: 300px;
+}
+
