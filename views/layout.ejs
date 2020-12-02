@@ -97,11 +97,13 @@ file that allows you to format all of your html pages%>
   </head>
 
  <body class="bodyMobileSettings"> 
-    <div class="wrapper">
+
+  <!--The wrapper class is what makes the layout cover 100% of the viewport-->
+   <div class="wrapper"> 
       <%# We are taking all the other views and injecting them into this body,
       formatted using a container, need to use this syntax in EJS%>
         <%- body %>
-    </div>
+   </div> 
 
     <%# These are bootstrap srcs that are needed to use flash messages%>
 

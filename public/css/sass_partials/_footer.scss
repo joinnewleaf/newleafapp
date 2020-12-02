@@ -137,7 +137,8 @@ input:focus {
 }
 
 .main-panel>.content {
-    padding: 30px 15px;
+    padding-left: 15px;
+    padding-right: 15px;
     min-height: calc(100% - 123px);
 }
 
@@ -501,9 +502,7 @@ Copyright (c) 2015 Daniel Eden
     .footer .copyright {
         float: right;
     }
-    .footer:not(.footer-big) nav>ul li:first-child {
-        margin-left: 0;
-    }
+
 }
 
 /*          Changes for small display      */

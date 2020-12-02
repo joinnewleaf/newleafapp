@@ -1,4 +1,7 @@
 
+// this sets up the grid for the main login page 
+// the rows sets the height of the rows to make the page responsive
+
 .login-grid {
     display: grid;
     grid-template-rows: 1fr minmax(100px, 200px) auto auto auto 1fr;
@@ -13,6 +16,8 @@
     padding: 5px;
 }
 
+// this places the image in the second row and the height of 100%
+// makes sure that it changes size with the grid
 .login-grid img {
     grid-row: 2;
     height: 100%;
