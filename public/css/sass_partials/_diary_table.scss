@@ -56,7 +56,9 @@
     background-color: #586358;
 }
 
-#food-diary .table-title .btn-delete-multiple {
+
+// All tables share the same classes, need to get rid of the IDs for the food diary table so that all tables will function the same
+.table-title .btn-delete-multiple {
     background-color: rgb(155, 16, 16);
 }
 
