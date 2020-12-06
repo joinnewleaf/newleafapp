@@ -1989,6 +1989,11 @@ License - nucleoapp.com/license/
 
  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.*/
 /*      light colors         */
+.footer-docs {
+  font-size: 50%;
+  align-items: center;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -4844,30 +4849,32 @@ table.table .avatar {
 }
 .login-grid {
   display: grid;
-  grid-template-rows: 1fr minmax(100px, 200px) auto auto auto 1fr;
+  grid-template-rows: 1fr minmax(100px, 200px) auto auto auto auto 1fr;
   justify-items: center;
   height: 100vh;
   padding: 5px;
 }
 
 .login-grid > p {
-  grid-row: 3;
+  grid-row: 4;
   text-align: center;
   padding: 5px;
 }
 
 .login-grid img {
   grid-row: 2;
+  display: block;
   height: 100%;
+  width: auto;
 }
 
 .grid-button1 {
-  grid-row-start: 4;
+  grid-row-start: 5;
   max-width: 300px;
 }
 
 .grid-button2 {
-  grid-row-start: 5;
+  grid-row-start: 6;
   max-width: 300px;
 }
 
