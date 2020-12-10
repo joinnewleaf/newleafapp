@@ -550,11 +550,11 @@
                         totals_row += '<td></td>';
                         totals_row += '<td>Totals</td>';
                         totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
-                        totals_row += '<td total_type="Carbs">' + totalCarbs + '</td>';
-                        totals_row += '<td total_type="Fats">' + totalFats + '</td>';
-                        totals_row += '<td total_type="Proteins">' + totalProteins + '</td>';
-                        totals_row += '<td total_type="Sugars">' + totalSugars + '</td>';
-                        totals_row += '<td total_type="Sodium">' + totalSodium + '</td>';
+                        totals_row += '<td class="row_data newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs + '</td>';
+                        totals_row += '<td class="row_data newRowMobile" data-label="Fats: " total_type="Fats">' + totalFats + '</td>';
+                        totals_row += '<td class="row_data newRowMobile" data-label="Proteins: " total_type="Proteins">' + totalProteins + '</td>';
+                        totals_row += '<td class="row_data newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars + '</td>';
+                        totals_row += '<td class="row_data newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium + '</td>';
                         totals_row += '<td></td>';
                         totals_row += '</tr>';
                         //removes the previous totals row, and appends the new one
