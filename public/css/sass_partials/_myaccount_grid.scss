@@ -1,0 +1,37 @@
+
+// this sets up the grid for the main login page
+// we need this to make the page responsive
+
+
+.my-account-grid {
+    display: grid;
+    justify-items: left;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(50px, 100px));
+    height: 100vh;
+    padding: 10px;
+    column-gap: 10px;
+}
+
+.my-daily-goals {
+    padding-left: 10px; 
+}
+
+.edit-your-goals {
+    padding-left: 10px; 
+    padding-right: 10px;
+    padding-bottom: 10px; 
+    padding-top: 0px; 
+}
+
+.save-goals {
+    height: 37px;
+    width: 150px;
+    align-self: center;
+}
+
+.return-to-default {
+    height: 37px; 
+    width: 150px;
+    align-self: center;
+}
