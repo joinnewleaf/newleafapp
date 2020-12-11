@@ -39,16 +39,18 @@ router.get("/", (req, res) => res.render("welcome"));
 //dashboard page, we pass in ensure athenticated as a second parameter middleware
 //when we render the dashboard we pass in an object to let it know the user
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
-
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
-  UserGoals.findOne({ email: req.user.email })
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
 
     //if this user exists, we render the page with the parameters already in the db
-    .then(usergoals => {
-
+    .then((usergoals) => {
       //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
       if (usergoals) {
-
         //sets goals data on the page to what's stored in the db
         let caloriesGoal = usergoals.caloriesGoal;
         let carbsGoal = usergoals.carbsGoal;
@@ -58,69 +60,68 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         let sodiumGoal = usergoals.sodiumGoal;
 
         //current datetime
-        let currentDate = new Date()
+        let currentDate = new Date();
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-        Days.findOne({ email: req.user.email, dateString: currentDate.toDateString() })
+        Days.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+          dateString: currentDate.toDateString(),
+        }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-          .then(days => {
-
+          .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-
               //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
                 fatsGoal: fatsGoal,
                 proteinsGoal: proteinsGoal,
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
-                days: days
+                days: days,
               });
 
               //if this Day does not exist for that user, create new one
             } else {
-
               //we will create a new Day using a new instance of Day model, does not save
               const newDays = new Days({
                 email: req.user.email,
+                username: req.user.username,
                 date: currentDate,
-                dateString: currentDate.toDateString()
+                dateString: currentDate.toDateString(),
               });
               //save the Day in the DB
               newDays
                 .save()
 
                 //if days gets saved, render the dashboard page
-                .then(days => {
-                  console.log(days);
-
+                .then((days) => {
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
-                    name: req.user.name,
+                    name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
                     fatsGoal: fatsGoal,
                     proteinsGoal: proteinsGoal,
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
-                    days: days
-
+                    days: days,
                   });
                 })
 
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             }
           })
 
-          .catch(err => console.log(err));
-
+          .catch((err) => console.log(err));
       } else {
-
         //if dashboard page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
         //also need if/else statements in here for Day transactions
         let caloriesGoal = 2000;
@@ -131,81 +132,85 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         let sodiumGoal = 2300;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-        Days.findOne({ email: req.user.email, dateString: currentDate.toDateString() })
+        Days.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+          dateString: currentDate.toDateString(),
+        }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-          .then(days => {
-
+          .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-
               //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
                 fatsGoal: fatsGoal,
                 proteinsGoal: proteinsGoal,
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
-                days: days
+                days: days,
               });
 
               //if this Day does not exist for that user, create new one
             } else {
-
               //we will create a new Day using a new instance of Day model, does not save
               const newDays = new Days({
                 email: req.user.email,
+                username: req.user.username,
                 date: currentDate,
-                dateString: currentDate.toDateString()
+                dateString: currentDate.toDateString(),
               });
               //save the Day in the DB
               newDays
                 .save()
 
                 //if days gets saved, render the dashboard page
-                .then(days => {
-
+                .then((days) => {
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
-                    name: req.user.name,
+                    name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
                     fatsGoal: fatsGoal,
                     proteinsGoal: proteinsGoal,
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
-                    days: days
+                    days: days,
                   });
                 })
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             }
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
     })
-
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 //post request on the dashboard pulls in data from the database for a certain date
 router.post("/dashboard", ensureAuthenticated, (req, res) => {
-
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
   let dateRequest = new Date(parsedDate);
 
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
-  UserGoals.findOne({ email: req.user.email })
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
 
     //if this user exists, we render the page with the parameters already in the db
-    .then(usergoals => {
-
+    .then((usergoals) => {
       //check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
       if (usergoals) {
-
         //sets goals data on the page to what's stored in the db
         let caloriesGoal = usergoals.caloriesGoal;
         let carbsGoal = usergoals.carbsGoal;
@@ -215,66 +220,66 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
         let sodiumGoal = usergoals.sodiumGoal;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-        Days.findOne({ email: req.user.email, dateString: dateRequest.toDateString() })
+        // Days.findOne({
+        //   email: req.user.email,
+        //   dateString: dateRequest.toDateString(),
+        // })
+        Days.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+          dateString: currentDate.toDateString(),
+        }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-          .then(days => {
-
+          .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-
               //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
                 fatsGoal: fatsGoal,
                 proteinsGoal: proteinsGoal,
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
-                days: days
+                days: days,
               });
 
               //if this Day does not exist for that user, create new one
             } else {
-
               //we will create a new Day using a new instance of Day model, does not save
               const newDays = new Days({
                 email: req.user.email,
+                username: req.user.username,
                 date: dateRequest,
-                dateString: dateRequest.toDateString()
+                dateString: dateRequest.toDateString(),
               });
               //save the Day in the DB
               newDays
                 .save()
 
                 //if days gets saved, render the dashboard page
-                .then(days => {
-
-                  console.log(days);
-
+                .then((days) => {
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
-                    name: req.user.name,
+                    name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
                     fatsGoal: fatsGoal,
                     proteinsGoal: proteinsGoal,
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
-                    days: days
-
+                    days: days,
                   });
                 })
-
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             }
           })
-
-          .catch(err => console.log(err));
-
+          .catch((err) => console.log(err));
       } else {
-
         //if dashboard page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
         //also need if/else statements in here for Day transactions
         let caloriesGoal = 2000;
@@ -285,190 +290,183 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
         let sodiumGoal = 2300;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-        Days.findOne({ email: req.user.email, dateString: dateRequest.toDateString() })
+        Days.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+          dateString: currentDate.toDateString(),
+        }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-          .then(days => {
-
+          .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-
               //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
                 fatsGoal: fatsGoal,
                 proteinsGoal: proteinsGoal,
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
-                days: days
+                days: days,
               });
 
               //if this Day does not exist for that user, create new one
             } else {
-
               //we will create a new Day using a new instance of Day model, does not save
               const newDays = new Days({
                 email: req.user.email,
+                username: req.user.username,
                 date: dateRequest,
-                dateString: dateRequest.toDateString()
+                dateString: dateRequest.toDateString(),
               });
               //save the Day in the DB
               newDays
                 .save()
 
                 //if days gets saved, render the dashboard page
-                .then(days => {
-
+                .then((days) => {
                   //renders the dashboard page anytime this page gets called
                   res.render("dashboard", {
-                    name: req.user.name,
+                    name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
                     fatsGoal: fatsGoal,
                     proteinsGoal: proteinsGoal,
                     sodiumGoal: sodiumGoal,
                     sugarsGoal: sugarsGoal,
-                    days: days
-
+                    days: days,
                   });
                 })
-
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             }
           })
-
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
     })
-
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 //routes to the resources page
 router.get("/resources", ensureAuthenticated, (req, res) =>
   res.render("resources", {
-    name: req.user.name
+    name: req.user.email,
   })
 );
 
 //routes to the healthinsights page
 router.get("/healthinsights", ensureAuthenticated, (req, res) =>
   res.render("healthinsights", {
-    name: req.user.name
+    name: req.user.email,
   })
 );
 
 //routes to biometrics page
 router.get("/biometrics", ensureAuthenticated, (req, res) => {
-
   //current datetime
-  let currentDate = new Date()
+  let currentDate = new Date();
 
   //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-  Days.findOne({ email: req.user.email, dateString: currentDate.toDateString() })
+  Days.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+    dateString: currentDate.toDateString(),
+  }) //should properly check if either username or email match
 
     //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-    .then(days => {
-
+    .then((days) => {
       //if this user exists with this date, render the page with both the goals AND the transactions for that date
       if (days) {
-
         //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
         //also pass in the goals we set earlier
         res.render("biometrics", {
-          name: req.user.name,
-          days: days
+          name: req.user.email,
+          days: days,
         });
 
         //if this Day does not exist for that user, create new one
       } else {
-
         //we will create a new Day using a new instance of Day model, does not save
         const newDays = new Days({
           email: req.user.email,
+          username: req.user.username,
           date: currentDate,
-          dateString: currentDate.toDateString()
+          dateString: currentDate.toDateString(),
         });
         //save the Day in the DB
         newDays
           .save()
 
           //if days gets saved, render the dashboard page
-          .then(days => {
-            console.log(days);
-
+          .then((days) => {
             //renders the dashboard page anytime this page gets called
             res.render("biometrics", {
-              name: req.user.name,
-              days: days
+              name: req.user.email,
+              days: days,
             });
           })
-
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
     })
-
-    .catch(err => console.log(err));
-
+    .catch((err) => console.log(err));
 });
 
 //post request on the dashboard pulls in data from the database for a certain date
 router.post("/biometrics", ensureAuthenticated, (req, res) => {
-
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
   let dateRequest = new Date(parsedDate);
 
   //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-  Days.findOne({ email: req.user.email, dateString: dateRequest.toDateString() })
+  Days.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+    dateString: currentDate.toDateString(),
+  }) //should properly check if either username or email match
 
     //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
-    .then(days => {
-
+    .then((days) => {
       //if this user exists with this date, render the page with both the goals AND the transactions for that date
       if (days) {
-
         //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
         res.render("biometrics", {
-          name: req.user.name,
-          days: days
+          name: req.user.email,
+          days: days,
         });
 
         //if this Day does not exist for that user, create new one
       } else {
-
         //we will create a new Day using a new instance of Day model, does not save
         const newDays = new Days({
           email: req.user.email,
+          username: req.user.username,
           date: dateRequest,
-          dateString: dateRequest.toDateString()
+          dateString: dateRequest.toDateString(),
         });
         //save the Day in the DB
         newDays
           .save()
 
           //if days gets saved, render the dashboard page
-          .then(days => {
-
-            console.log(days);
-
+          .then((days) => {
             //renders the dashboard page anytime this page gets called
             res.render("biometrics", {
-              name: req.user.name,
-              days: days
-
+              name: req.user.email,
+              days: days,
             });
           })
-
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       }
     })
-
-    .catch(err => console.log(err));
-
+    .catch((err) => console.log(err));
 });
 
 //exports the router function to be used in app

@@ -12,7 +12,6 @@ var request = require("request");
 const User = require("../models/User");
 const UserGoals = require("../models/UserGoals"); //allows us to register users and post on their goals db
 
-
 // function sendEmail(email) {
 //   //actually retrieve the jwt by running function retrievejwt within the imported script
 //   var jwtAuth = jwt.retrievejwt(); //this gets put in the function so a jwt is only called when we need it

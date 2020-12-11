@@ -11,28 +11,33 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 //passport gets passed in from app.js file
-module.exports = function(passport) {
+module.exports = function (passport) {
   //creates a new local strategy using a given email, takes in
   passport.use(
     new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-      //checks to see if an email in the database matches the login email
-      User.findOne({ email: email })
+      //checks to see if an email/username in the database matches the login email
+      //email var is actually both username and email taken from the login screen
+      User.findOne({
+        $or: [
+          { $and: [{ email: email }, { email: { $ne: "" } }] },
+          { username: email },
+        ],
+      })
 
         //if a user is returned, the result is stored in user
-        .then(user => {
+        .then((user) => {
           //it either returns a user or null --> if no user returned, then return a null user (user does not exist)
           if (!user) {
             //return done, it is a callback
             return done(null, false, {
-              message: "That email is not registered"
+              message: "That email or username is not registered",
             });
           } else {
-
             //now we have to match the password with that email using bcrypt
             //user.password is a hashed password returned from the database, isMatch is boolean
             bcrypt.compare(password, user.password, (err, isMatch) => {
               if (err) throw err;
-  
+
               //the user is passed
               //option if the user login password  matched the database password
               if (isMatch) {
@@ -43,21 +48,19 @@ module.exports = function(passport) {
                 return done(null, false, { message: "Password incorrect" });
               }
             });
-
           }
-
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
   );
 
   //from passport documentation, we have to serialize and deserialize the users, stores authentication credentials in a user session
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
       done(err, user);
     });
   });

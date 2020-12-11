@@ -1,7 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable camelcase */
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 // were going to use this anytime we need to read or write foods from the database
 
 // we use express router to make this easy
@@ -34,35 +30,45 @@ router.post("/add", ensureAuthenticated, (req, res) => {
     fats: req.body.fats,
     proteins: req.body.proteins,
     sugars: req.body.sugar,
-    sodium: req.body.sodium
+    sodium: req.body.sodium,
   };
 
   // insert new food into end of food array for each day
   // dateString needs to be trimmed because excess characters on edges
   Days.updateOne(
     {
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
     },
     {
-      $push: { foods: [new_row_data] }
+      $push: { foods: [new_row_data] },
     }
-
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
     .then(() => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           if (days) {
             // also need to pull user goals
-            UserGoals.findOne({ email: req.user.email })
+            // UserGoals.findOne({ email: req.user.email })
+            UserGoals.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+            }) //should properly check if either username or email match
 
               // if this user exists, we render the page with the parameters already in the db
-              .then(usergoals => {
+              .then((usergoals) => {
                 // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                 if (usergoals) {
                   // to update pass, need to check if we are adding data for the current date
@@ -89,18 +95,18 @@ router.post("/add", ensureAuthenticated, (req, res) => {
                     proteinsGoal,
                     sodiumGoal,
                     sugarsGoal,
-                    days
+                    days,
                   });
                 }
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           } else {
             console.log("Days is undefined");
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // post request on the dashboard edits old data on the diary
@@ -119,24 +125,30 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
         "foods.$.fats": req.body.fats,
         "foods.$.proteins": req.body.proteins,
         "foods.$.sugars": req.body.sugar,
-        "foods.$.sodium": req.body.sodium
-      }
+        "foods.$.sodium": req.body.sodium,
+      },
     }
-
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // also need to pull user goals
-          UserGoals.findOne({ email: req.user.email })
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
 
             // if this user exists, we render the page with the parameters already in the db
-            .then(usergoals => {
+            .then((usergoals) => {
               // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
               if (usergoals) {
                 // to update pass, need to check if we are adding data for the current date
@@ -165,15 +177,15 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
                   proteinsGoal,
                   sodiumGoal,
                   sugarsGoal,
-                  days
+                  days,
                 });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete row in the diary
@@ -183,18 +195,27 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
 
   // how to delete subdocuments
   Days.updateOne({ "foods._id": _id }, { $pull: { foods: { _id } } })
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // also need to pull user goals
-          UserGoals.findOne({ email: req.user.email })
+          //needs to be updated with username
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
 
             // if this user exists, we render the page with the parameters already in the db
-            .then(usergoals => {
+            .then((usergoals) => {
               // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
               if (usergoals) {
                 // to update pass, need to check if we are adding data for the current date
@@ -205,7 +226,6 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                 // if (req.body.dateString.trim() == checkdateString) {
                 //     passkit.updatePass(req.user.email, days)
                 // }
-                console.log(`day 3:${days}`);
 
                 // sets goals data on the page to what's stored in the db
                 const { caloriesGoal } = usergoals;
@@ -216,23 +236,24 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                 const { sodiumGoal } = usergoals;
 
                 // re render the dashboard after having updated the days collection
+                //replace name with username
                 res.render("dashboard", {
-                  name: req.user.name,
+                  name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
                   fatsGoal,
                   proteinsGoal,
                   sodiumGoal,
                   sugarsGoal,
-                  days
+                  days,
                 });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete Foods
@@ -247,7 +268,7 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
 
   if (_id != "empty") {
     // for each element, do new delete request in db
-    _id_array.forEach(element => {
+    _id_array.forEach((element) => {
       // have to turn string into a mongo object id
       const _id_obj = mongoose.mongo.ObjectId(element);
 
@@ -256,7 +277,7 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
         { "foods._id": _id_obj },
         { $pull: { foods: { _id: _id_obj } } }
       )
-        .then(response => {
+        .then((response) => {
           // need to update the array counter after each request is completed
           arrayCounter++;
 
@@ -264,15 +285,25 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
           if (arrayCounter == _id_array.length) {
             // query days
             Days.findOne({
-              email: req.user.email,
-              dateString: req.body.dateString.trim()
-            })
-              .then(days => {
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
                 // also need to pull user goals
-                UserGoals.findOne({ email: req.user.email })
+                UserGoals.findOne({
+                  $or: [
+                    {
+                      $and: [{ email: req.user.email }, { email: { $ne: "" } }],
+                    },
+                    { username: req.user.username },
+                  ],
+                })
 
                   // if this user exists, we render the page with the parameters already in the db
-                  .then(usergoals => {
+                  .then((usergoals) => {
                     // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                     if (usergoals) {
                       // to update pass, need to check if we are adding data for the current date
@@ -292,36 +323,44 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
 
                       // re render the dashboard after having updated the days collection
                       res.render("dashboard", {
-                        name: req.user.name,
+                        name: req.user.email,
                         caloriesGoal,
                         carbsGoal,
                         fatsGoal,
                         proteinsGoal,
                         sodiumGoal,
                         sugarsGoal,
-                        days
+                        days,
                       });
                     }
                   })
-                  .catch(err => console.log(err));
+                  .catch((err) => console.log(err));
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   } else {
     // query days
     Days.findOne({
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
-    })
-      .then(days => {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
         // also need to pull user goals
-        UserGoals.findOne({ email: req.user.email })
+        UserGoals.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+        })
 
           // if this user exists, we render the page with the parameters already in the db
-          .then(usergoals => {
+          .then((usergoals) => {
             // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
             if (usergoals) {
               // to update pass, need to check if we are adding data for the current date
@@ -343,64 +382,67 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
 
               // re render the dashboard after having updated the days collection
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal,
                 carbsGoal,
                 fatsGoal,
                 proteinsGoal,
                 sodiumGoal,
                 sugarsGoal,
-                days
+                days,
               });
             }
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 });
 
 // Blood Pressure Diary Section
 // post request on the dashboard adds in new data to diary
 router.post("/addBP", ensureAuthenticated, (req, res) => {
-  console.log(req.body);
   // pull important values out of the request
   const new_row_data = {
     time: req.body.time.toString(),
     systolicBP: req.body.systolicBP,
     diastolicBP: req.body.diastolicBP,
     heartRate: req.body.heartRate,
-    notes: req.body.notes
+    notes: req.body.notes,
   };
 
-  // insert new food into end of food array for each day
+  // insert new blood pressure into end of bp array for each day
   Days.updateOne(
     {
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
     },
     {
-      $push: { bloodPressures: [new_row_data] }
+      $push: { bloodPressures: [new_row_data] },
     }
-
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
     .then(() => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
             name: req.user.name,
-            days
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete BP
@@ -413,22 +455,25 @@ router.post("/deleteBP", ensureAuthenticated, (req, res) => {
     { "bloodPressures._id": _id },
     { $pull: { bloodPressures: { _id } } }
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
-            name: req.user.name,
-            days
+            name: req.user.email,
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete BP
@@ -443,7 +488,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
 
   if (_id != "empty") {
     // for each element, do new delete request in db
-    _id_array.forEach(element => {
+    _id_array.forEach((element) => {
       // have to turn string into a mongo object id
       const _id_obj = mongoose.mongo.ObjectId(element);
 
@@ -452,7 +497,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
         { "bloodPressures._id": _id_obj },
         { $pull: { bloodPressures: { _id: _id_obj } } }
       )
-        .then(response => {
+        .then((response) => {
           // need to update the array counter after each request is completed
           arrayCounter++;
 
@@ -460,35 +505,45 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
           if (arrayCounter == _id_array.length) {
             // query days
             Days.findOne({
-              email: req.user.email,
-              dateString: req.body.dateString.trim()
-            })
-              .then(days => {
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
                 // re render the dashboard after having updated the days collection
                 res.render("biometrics", {
                   name: req.user.name,
-                  days
+                  days,
                 });
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   } else {
     // query days
+    // Days.findOne({
+    //   email: req.user.email,
+    //   dateString: req.body.dateString.trim(),
+    // })
     Days.findOne({
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
-    })
-      .then(days => {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
         // re render the dashboard after having updated the days collection
         res.render("biometrics", {
           name: req.user.name,
-          days
+          days,
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 });
 
@@ -506,69 +561,75 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
         "bloodPressures.$.systolicBP": req.body.systolicBP,
         "bloodPressures.$.diastolicBP": req.body.diastolicBP,
         "bloodPressures.$.heartRate": req.body.heartRate,
-        "bloodPressures.$.notes": req.body.notes
-      }
+        "bloodPressures.$.notes": req.body.notes,
+      },
     }
 
     // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
-            name: req.user.name,
-            days
+            name: req.user.email,
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // weight log diary section
 // post request on the dashboard adds in new data to diary
 router.post("/addBodyWeight", ensureAuthenticated, (req, res) => {
-  console.log(req.body);
   // pull important values out of the request
   const new_row_data = {
     time: req.body.time.toString(),
     bodyWeight: req.body.bodyWeight,
-    notes: req.body.notes
+    notes: req.body.notes,
   };
 
-  // insert new food into end of food array for each day
+  // insert new body weight into end of body weight array for each day
   Days.updateOne(
     {
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
     },
     {
-      $push: { bodyWeights: [new_row_data] }
+      $push: { bodyWeights: [new_row_data] },
     }
-
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
     .then(() => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
-            name: req.user.name,
-            days
+            name: req.user.email,
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete BP
@@ -581,22 +642,25 @@ router.post("/deleteBodyWeight", ensureAuthenticated, (req, res) => {
     { "bodyWeights._id": _id },
     { $pull: { bodyWeights: { _id } } }
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match, $ne is not equal
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
-            name: req.user.name,
-            days
+            name: req.user.email,
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete BP
@@ -611,7 +675,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
 
   if (_id != "empty") {
     // for each element, do new delete request in db
-    _id_array.forEach(element => {
+    _id_array.forEach((element) => {
       // have to turn string into a mongo object id
       const _id_obj = mongoose.mongo.ObjectId(element);
 
@@ -620,7 +684,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
         { "bodyWeights._id": _id_obj },
         { $pull: { bodyWeights: { _id: _id_obj } } }
       )
-        .then(response => {
+        .then((response) => {
           // need to update the array counter after each request is completed
           arrayCounter++;
 
@@ -628,35 +692,41 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
           if (arrayCounter == _id_array.length) {
             // query days
             Days.findOne({
-              email: req.user.email,
-              dateString: req.body.dateString.trim()
-            })
-              .then(days => {
-                // re render the dashboard after having updated the days collection
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
+                //re render the dashboard after having updated the days collection
                 res.render("biometrics", {
-                  name: req.user.name,
-                  days
+                  name: req.user.email,
+                  days,
                 });
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   } else {
     // query days
     Days.findOne({
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
-    })
-      .then(days => {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
         // re render the dashboard after having updated the days collection
         res.render("biometrics", {
-          name: req.user.name,
-          days
+          name: req.user.email,
+          days,
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 });
 
@@ -672,70 +742,77 @@ router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
       $set: {
         "bodyWeights.$.time": req.body.time.toString(),
         "bodyWeights.$.bodyWeight": req.body.bodyWeight,
-        "bodyWeights.$.notes": req.body.notes
-      }
+        "bodyWeights.$.notes": req.body.notes,
+      },
     }
 
     // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // re render the dashboard after having updated the days collection
           res.render("biometrics", {
-            name: req.user.name,
-            days
+            name: req.user.email,
+            days,
           });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // exercise diary section
 // post request on the dashboard adds in new data to diary
 router.post("/addExercise", ensureAuthenticated, (req, res) => {
-  console.log(`request 1. is ${req.body.exercise}`);
   // pull important values out of the request
   const new_row_data = {
     exercise: req.body.exercise,
-    minutes: req.body.minutes
+    minutes: req.body.minutes,
   };
 
-  console.log(`new_row_data is  ${new_row_data}`);
-
-  // insert new food into end of food array for each day
+  // insert new exercise into end of exercise array for each day
   // dateString needs to be trimmed because excess characters on edges
   Days.updateOne(
     {
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
     },
     {
-      $push: { exercises: [new_row_data] }
+      $push: { exercises: [new_row_data] },
     }
-
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
     .then(() => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           if (days) {
             // also need to pull user goals
-
-            console.log(`days is ${days}`);
-            UserGoals.findOne({ email: req.user.email })
+            UserGoals.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+            })
 
               // if this user exists, we render the page with the parameters already in the db
-              .then(usergoals => {
+              .then((usergoals) => {
                 // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                 if (usergoals) {
                   // to update pass, need to check if we are adding data for the current date
@@ -755,25 +832,25 @@ router.post("/addExercise", ensureAuthenticated, (req, res) => {
 
                   // re render the dashboard after having updated the days collection
                   res.render("dashboard", {
-                    name: req.user.name,
+                    name: req.user.email,
                     caloriesGoal,
                     carbsGoal,
                     fatsGoal,
                     proteinsGoal,
                     sodiumGoal,
                     sugarsGoal,
-                    days
+                    days,
                   });
                 }
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           } else {
             console.log("Days is undefined");
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // post request on the dashboard edits old data on the diary
@@ -787,24 +864,32 @@ router.post("/editExercise", ensureAuthenticated, (req, res) => {
     {
       $set: {
         "exercises.$.exercise": req.body.exercise,
-        "exercises.$.minutes": req.body.minutes
-      }
+        "exercises.$.minutes": req.body.minutes,
+      },
     }
 
     // want to query the foods for that day and pass them into the table/rerender the dashboard
   )
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // also need to pull user goals
-          UserGoals.findOne({ email: req.user.email })
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
 
             // if this user exists, we render the page with the parameters already in the db
-            .then(usergoals => {
+            .then((usergoals) => {
               // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
               if (usergoals) {
                 // to update pass, need to check if we are adding data for the current date
@@ -826,22 +911,22 @@ router.post("/editExercise", ensureAuthenticated, (req, res) => {
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
-                  name: req.user.name,
+                  name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
                   fatsGoal,
                   proteinsGoal,
                   sodiumGoal,
                   sugarsGoal,
-                  days
+                  days,
                 });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete row in the diary
@@ -851,18 +936,26 @@ router.post("/deleteExercise", ensureAuthenticated, (req, res) => {
 
   // how to delete subdocuments
   Days.updateOne({ "exercises._id": _id }, { $pull: { exercises: { _id } } })
-    .then(response => {
+    .then((response) => {
       // query days
       Days.findOne({
-        email: req.user.email,
-        dateString: req.body.dateString.trim()
-      })
-        .then(days => {
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
           // also need to pull user goals
-          UserGoals.findOne({ email: req.user.email })
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
 
             // if this user exists, we render the page with the parameters already in the db
-            .then(usergoals => {
+            .then((usergoals) => {
               // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
               if (usergoals) {
                 // to update pass, need to check if we are adding data for the current date
@@ -884,22 +977,22 @@ router.post("/deleteExercise", ensureAuthenticated, (req, res) => {
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
-                  name: req.user.name,
+                  name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
                   fatsGoal,
                   proteinsGoal,
                   sodiumGoal,
                   sugarsGoal,
-                  days
+                  days,
                 });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // delete Foods
@@ -914,7 +1007,7 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
 
   if (_id != "empty") {
     // for each element, do new delete request in db
-    _id_array.forEach(element => {
+    _id_array.forEach((element) => {
       // have to turn string into a mongo object id
       const _id_obj = mongoose.mongo.ObjectId(element);
 
@@ -923,7 +1016,7 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
         { "exercises._id": _id_obj },
         { $pull: { exercises: { _id: _id_obj } } }
       )
-        .then(response => {
+        .then((response) => {
           // need to update the array counter after each request is completed
           arrayCounter++;
 
@@ -931,15 +1024,25 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
           if (arrayCounter == _id_array.length) {
             // query days
             Days.findOne({
-              email: req.user.email,
-              dateString: req.body.dateString.trim()
-            })
-              .then(days => {
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
                 // also need to pull user goals
-                UserGoals.findOne({ email: req.user.email })
+                UserGoals.findOne({
+                  $or: [
+                    {
+                      $and: [{ email: req.user.email }, { email: { $ne: "" } }],
+                    },
+                    { username: req.user.username },
+                  ],
+                })
 
                   // if this user exists, we render the page with the parameters already in the db
-                  .then(usergoals => {
+                  .then((usergoals) => {
                     // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
                     if (usergoals) {
                       // to update pass, need to check if we are adding data for the current date
@@ -966,29 +1069,37 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
                         proteinsGoal,
                         sodiumGoal,
                         sugarsGoal,
-                        days
+                        days,
                       });
                     }
                   })
-                  .catch(err => console.log(err));
+                  .catch((err) => console.log(err));
               })
-              .catch(err => console.log(err));
+              .catch((err) => console.log(err));
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
   } else {
     // query days
     Days.findOne({
-      email: req.user.email,
-      dateString: req.body.dateString.trim()
-    })
-      .then(days => {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
         // also need to pull user goals
-        UserGoals.findOne({ email: req.user.email })
+        UserGoals.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+        })
 
           // if this user exists, we render the page with the parameters already in the db
-          .then(usergoals => {
+          .then((usergoals) => {
             // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
             if (usergoals) {
               // to update pass, need to check if we are adding data for the current date
@@ -1010,20 +1121,20 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
 
               // re render the dashboard after having updated the days collection
               res.render("dashboard", {
-                name: req.user.name,
+                name: req.user.email,
                 caloriesGoal,
                 carbsGoal,
                 fatsGoal,
                 proteinsGoal,
                 sodiumGoal,
                 sugarsGoal,
-                days
+                days,
               });
             }
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 });
 

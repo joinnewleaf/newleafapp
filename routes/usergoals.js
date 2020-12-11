@@ -19,375 +19,383 @@ const { ensureAuthenticated } = require("../config/auth");
 
 //this handles when users submit a registration form, makes a post request to /usergoals/update
 router.post("/update", ensureAuthenticated, (req, res) => {
+  //pulls goals from submitted form
+  var {
+    caloriesGoal,
+    carbsGoal,
+    fatsGoal,
+    proteinsGoal,
+    sodiumGoal,
+    sugarsGoal,
+  } = req.body;
 
-    //pulls goals from submitted form
-    console.log(req.body)
-    var { caloriesGoal, carbsGoal, fatsGoal, proteinsGoal, sodiumGoal, sugarsGoal } = req.body;
+  //intialize an success message array
+  let success_msgs = [];
 
-    //intialize an success message array
-    let success_msgs = [];
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
 
-    //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
-    UserGoals.findOne({ email: req.user.email })
+    //if this user exists, we update the goals; usergoals is the variable that mongodb function returns
+    .then((usergoals) => {
+      if (usergoals) {
+        //if no info was submitted, set to the original goal, before updating
+        if (caloriesGoal.length == 0) {
+          caloriesGoal = usergoals.caloriesGoal;
+        }
+        if (carbsGoal.length == 0) {
+          carbsGoal = usergoals.carbsGoal;
+        }
+        if (proteinsGoal.length == 0) {
+          proteinsGoal = usergoals.proteinsGoal;
+        }
+        if (fatsGoal.length == 0) {
+          fatsGoal = usergoals.fatsGoal;
+        }
+        if (sugarsGoal.length == 0) {
+          sugarsGoal = usergoals.sugarsGoal;
+        }
+        if (sodiumGoal.length == 0) {
+          sodiumGoal = usergoals.sodiumGoal;
+        }
 
-        //if this user exists, we update the goals; usergoals is the variable that mongodb function returns
-        .then(usergoals => {
-            if (usergoals) {
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            caloriesGoal: caloriesGoal,
+            carbsGoal: carbsGoal,
+            fatsGoal: fatsGoal,
+            proteinsGoal: proteinsGoal,
+            sodiumGoal: sodiumGoal,
+            sugarsGoal: sugarsGoal,
+          }
+        ).then(function () {
+          //function runs asynchronously, so wait to render
 
-                //if no info was submitted, set to the original goal, before updating
-                if (caloriesGoal.length == 0) {
-                    caloriesGoal = usergoals.caloriesGoal;
-                }
-                if (carbsGoal.length == 0) {
-                    carbsGoal = usergoals.carbsGoal;
-                }
-                if (proteinsGoal.length == 0) {
-                    proteinsGoal = usergoals.proteinsGoal;
-                }
-                if (fatsGoal.length == 0) {
-                    fatsGoal = usergoals.fatsGoal;
-                }
-                if (sugarsGoal.length == 0) {
-                    sugarsGoal = usergoals.sugarsGoal;
-                }
-                if (sodiumGoal.length == 0) {
-                    sodiumGoal = usergoals.sodiumGoal;
-                }
+          //to update pass, need to check if we are adding data for the current date
+          let checkcurrentDate = new Date();
+          let checkdateString = checkcurrentDate.toDateString();
 
-                // if user already exists, we update
-                UserGoals.updateOne(
-                    { email: req.user.email },
-                    {
-                        caloriesGoal: caloriesGoal,
-                        carbsGoal: carbsGoal,
-                        fatsGoal: fatsGoal,
-                        proteinsGoal: proteinsGoal,
-                        sodiumGoal: sodiumGoal,
-                        sugarsGoal: sugarsGoal
-                    }
-                ).then(function () { //function runs asynchronously, so wait to render
+          //query days
+          Days.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+            dateString: checkdateString,
+          })
+            .then((days) => {
+              //push flash message to screen to show it is updated, need to also pass in as we render
+              success_msgs.push({ msg: "Goals updated" });
 
+              //update pass using current days data
+              // passkit.updatePass(req.user.email, days)
 
+              //render the account page
+              res.render("myaccount", {
+                success_msgs,
+                name: req.user.email,
+                caloriesGoal: caloriesGoal,
+                carbsGoal: carbsGoal,
+                fatsGoal: fatsGoal,
+                proteinsGoal: proteinsGoal,
+                sodiumGoal: sodiumGoal,
+                sugarsGoal: sugarsGoal,
+              });
+            })
+            .catch((err) => console.log(err));
+        });
+      } else {
+        //if new user AND no info was submitted, set goals to default FDA guidelines
+        if (caloriesGoal.length == 0) {
+          caloriesGoal = 2000;
+        }
+        if (carbsGoal.length == 0) {
+          carbsGoal = 275;
+        }
+        if (proteinsGoal.length == 0) {
+          proteinsGoal = 50;
+        }
+        if (fatsGoal.length == 0) {
+          fatsGoal = 78;
+        }
+        if (sugarsGoal.length == 0) {
+          sugarsGoal = 50;
+        }
+        if (sodiumGoal.length == 0) {
+          sodiumGoal = 2300;
+        }
 
-                    //to update pass, need to check if we are adding data for the current date
-                    let checkcurrentDate = new Date()
-                    let checkdateString = checkcurrentDate.toDateString()
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          caloriesGoal,
+          carbsGoal,
+          fatsGoal,
+          proteinsGoal,
+          sodiumGoal,
+          sugarsGoal,
+        });
 
-                    //query days
-                    Days.findOne({
-                        email: req.user.email,
-                        dateString: checkdateString
-                    })
-                        .then(days => {
+        //save new goals in the db
+        newUserGoals
+          .save()
 
-                            //push flash message to screen to show it is updated, need to also pass in as we render
-                            success_msgs.push({ msg: "Goals updated" })
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
 
-                            //update pass using current days data
-                            // passkit.updatePass(req.user.email, days)
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
 
-                            //render the account page
-                            res.render("myaccount", {
-                                success_msgs,
-                                name: req.user.name,
-                                caloriesGoal: caloriesGoal,
-                                carbsGoal: carbsGoal,
-                                fatsGoal: fatsGoal,
-                                proteinsGoal: proteinsGoal,
-                                sodiumGoal: sodiumGoal,
-                                sugarsGoal: sugarsGoal
-                            });
-                        })
-
-                        .catch(err => console.log(err));
-
+                //render the account page
+                res.render("myaccount", {
+                  name: req.user.email,
+                  caloriesGoal: caloriesGoal,
+                  carbsGoal: carbsGoal,
+                  fatsGoal: fatsGoal,
+                  proteinsGoal: proteinsGoal,
+                  sodiumGoal: sodiumGoal,
+                  sugarsGoal: sugarsGoal,
                 });
-
-            } else {
-
-                //if new user AND no info was submitted, set goals to default FDA guidelines
-                if (caloriesGoal.length == 0) {
-                    caloriesGoal = 2000;
-                }
-                if (carbsGoal.length == 0) {
-                    carbsGoal = 275;
-                }
-                if (proteinsGoal.length == 0) {
-                    proteinsGoal = 50;
-                }
-                if (fatsGoal.length == 0) {
-                    fatsGoal = 78;
-                }
-                if (sugarsGoal.length == 0) {
-                    sugarsGoal = 50;
-                }
-                if (sodiumGoal.length == 0) {
-                    sodiumGoal = 2300;
-                }
-
-                //if the user is new, we add new goals
-                const newUserGoals = new UserGoals({
-                    email: req.user.email,
-                    caloriesGoal,
-                    carbsGoal,
-                    fatsGoal,
-                    proteinsGoal,
-                    sodiumGoal,
-                    sugarsGoal
-                });
-
-                //save new goals in the db
-                newUserGoals
-                    .save()
-
-                    //if user gets saved, render the page again, with updated information
-                    .then(user => {
-
-                        //to update pass, need to check if we are adding data for the current date
-                        let checkcurrentDate = new Date()
-                        let checkdateString = checkcurrentDate.toDateString()
-
-                        //query days
-                        Days.findOne({
-                            email: req.user.email,
-                            dateString: checkdateString
-                        })
-                            .then(days => {
-
-                                //update pass using current days data
-                                // passkit.updatePass(req.user.email, days)
-
-                                //render the account page
-                                res.render("myaccount", {
-                                    name: req.user.name,
-                                    caloriesGoal: caloriesGoal,
-                                    carbsGoal: carbsGoal,
-                                    fatsGoal: fatsGoal,
-                                    proteinsGoal: proteinsGoal,
-                                    sodiumGoal: sodiumGoal,
-                                    sugarsGoal: sugarsGoal
-                                });
-                            })
-
-                            .catch(err => console.log(err));
-                    })
-
-                    .catch(err => console.log(err));
-            }
-        })
-
-        .catch(err => console.log(err))
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
 });
 
 //loads the page, and gets data from db every time page is rendered
 router.get("/myaccount", ensureAuthenticated, (req, res) =>
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
 
-    //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
-    UserGoals.findOne({ email: req.user.email })
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals exists in the database
+      if (usergoals) {
+        //sets goals data on the page to what's stored in the db
+        let caloriesGoal = usergoals.caloriesGoal;
+        let carbsGoal = usergoals.carbsGoal;
+        let proteinsGoal = usergoals.proteinsGoal;
+        let fatsGoal = usergoals.fatsGoal;
+        let sugarsGoal = usergoals.sugarsGoal;
+        let sodiumGoal = usergoals.sodiumGoal;
 
-        //if this user exists, we render the page with the parameters already in the db
-        .then(usergoals => {
+        //renders the myaccount page anytime this page gets called
+        res.render("myaccount", {
+          name: req.user.email,
+          caloriesGoal: caloriesGoal,
+          carbsGoal: carbsGoal,
+          fatsGoal: fatsGoal,
+          proteinsGoal: proteinsGoal,
+          sodiumGoal: sodiumGoal,
+          sugarsGoal: sugarsGoal,
+        });
+      } else {
+        //if myaccount page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
+        let caloriesGoal = 2000;
+        let carbsGoal = 275;
+        let proteinsGoal = 50;
+        let fatsGoal = 78;
+        let sugarsGoal = 50;
+        let sodiumGoal = 2300;
 
-            //check if usersgoals exists in the database
-            if (usergoals) {
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          caloriesGoal,
+          carbsGoal,
+          fatsGoal,
+          proteinsGoal,
+          sodiumGoal,
+          sugarsGoal,
+        });
 
-                //sets goals data on the page to what's stored in the db
-                let caloriesGoal = usergoals.caloriesGoal;
-                let carbsGoal = usergoals.carbsGoal;
-                let proteinsGoal = usergoals.proteinsGoal;
-                let fatsGoal = usergoals.fatsGoal;
-                let sugarsGoal = usergoals.sugarsGoal;
-                let sodiumGoal = usergoals.sodiumGoal;
+        //save new goals in the db
+        newUserGoals
+          .save()
 
-                //renders the myaccount page anytime this page gets called
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
+
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
+
+                //render the account page
                 res.render("myaccount", {
-                    name: req.user.name,
-                    caloriesGoal: caloriesGoal,
-                    carbsGoal: carbsGoal,
-                    fatsGoal: fatsGoal,
-                    proteinsGoal: proteinsGoal,
-                    sodiumGoal: sodiumGoal,
-                    sugarsGoal: sugarsGoal
+                  name: req.user.email,
+                  caloriesGoal: caloriesGoal,
+                  carbsGoal: carbsGoal,
+                  fatsGoal: fatsGoal,
+                  proteinsGoal: proteinsGoal,
+                  sodiumGoal: sodiumGoal,
+                  sugarsGoal: sugarsGoal,
                 });
-
-            } else {
-
-                //if myaccount page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
-                let caloriesGoal = 2000;
-                let carbsGoal = 275;
-                let proteinsGoal = 50;
-                let fatsGoal = 78;
-                let sugarsGoal = 50;
-                let sodiumGoal = 2300;
-
-                //if the user is new, we add new goals
-                const newUserGoals = new UserGoals({
-                    email: req.user.email,
-                    caloriesGoal,
-                    carbsGoal,
-                    fatsGoal,
-                    proteinsGoal,
-                    sodiumGoal,
-                    sugarsGoal
-                });
-
-                //save new goals in the db
-                newUserGoals
-                    .save()
-
-                    //if user gets saved, render the page again, with updated information
-                    .then(user => {
-
-                        //to update pass, need to check if we are adding data for the current date
-                        let checkcurrentDate = new Date()
-                        let checkdateString = checkcurrentDate.toDateString()
-
-                        //query days
-                        Days.findOne({
-                            email: req.user.email,
-                            dateString: checkdateString
-                        })
-                            .then(days => {
-
-                                //update pass using current days data
-                                // passkit.updatePass(req.user.email, days)
-
-                                //render the account page
-                                res.render("myaccount", {
-                                    name: req.user.name,
-                                    caloriesGoal: caloriesGoal,
-                                    carbsGoal: carbsGoal,
-                                    fatsGoal: fatsGoal,
-                                    proteinsGoal: proteinsGoal,
-                                    sodiumGoal: sodiumGoal,
-                                    sugarsGoal: sugarsGoal
-                                });
-                            })
-
-                            .catch(err => console.log(err));
-
-                    })
-
-                    .catch(err => console.log(err))
-
-            }
-        })
-
-        .catch(err => console.log(err))
-)
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err))
+);
 
 //sets the default goals on first registration and on default button pressed
 router.get("/default", ensureAuthenticated, (req, res) => {
+  //intialize an success message array
+  let success_msgs = [];
 
-    //intialize an success message array
-    let success_msgs = [];
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
 
-    //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
-    UserGoals.findOne({ email: req.user.email })
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals already exists in the database
+      if (usergoals) {
+        //sets goals data on the page to default values
+        let caloriesGoal = 2000;
+        let carbsGoal = 275;
+        let proteinsGoal = 50;
+        let fatsGoal = 78;
+        let sugarsGoal = 50;
+        let sodiumGoal = 2300;
 
-        //if this user exists, we render the page with the parameters already in the db
-        .then(usergoals => {
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            caloriesGoal: caloriesGoal,
+            carbsGoal: carbsGoal,
+            fatsGoal: fatsGoal,
+            proteinsGoal: proteinsGoal,
+            sodiumGoal: sodiumGoal,
+            sugarsGoal: sugarsGoal,
+          }
+        )
+          .then(function () {
+            //function runs asynchronously, so wait to render
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
 
-            //check if usersgoals already exists in the database
-            if (usergoals) {
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
 
-                //sets goals data on the page to default values
-                let caloriesGoal = 2000;
-                let carbsGoal = 275;
-                let proteinsGoal = 50;
-                let fatsGoal = 78;
-                let sugarsGoal = 50;
-                let sodiumGoal = 2300;
+                //push flash message to screen to show it is updated, need to also pass in as we render
+                success_msgs.push({ msg: "Goals set to default" });
 
-                // if user already exists, we update
-                UserGoals.updateOne(
-                    { email: req.user.email },
-                    {
-                        caloriesGoal: caloriesGoal,
-                        carbsGoal: carbsGoal,
-                        fatsGoal: fatsGoal,
-                        proteinsGoal: proteinsGoal,
-                        sodiumGoal: sodiumGoal,
-                        sugarsGoal: sugarsGoal
-
-                    }).then(function () { //function runs asynchronously, so wait to render
-
-                        //to update pass, need to check if we are adding data for the current date
-                        let checkcurrentDate = new Date()
-                        let checkdateString = checkcurrentDate.toDateString()
-
-                        //query days
-                        Days.findOne({
-                            email: req.user.email,
-                            dateString: checkdateString
-                        })
-                            .then(days => {
-
-                                //update pass using current days data
-                                // passkit.updatePass(req.user.email, days)
-
-                                //push flash message to screen to show it is updated, need to also pass in as we render
-                                success_msgs.push({ msg: "Goals set to default" })
-
-                                //render the account page
-                                res.render("myaccount", {
-                                    success_msgs,
-                                    name: req.user.name,
-                                    caloriesGoal: caloriesGoal,
-                                    carbsGoal: carbsGoal,
-                                    fatsGoal: fatsGoal,
-                                    proteinsGoal: proteinsGoal,
-                                    sodiumGoal: sodiumGoal,
-                                    sugarsGoal: sugarsGoal
-                                });
-                            })
-
-                            .catch(err => console.log(err));
-
-                    })
-
-                    .catch(err => console.log(err));
-
-            } else {
-
-                //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
-                let caloriesGoal = 2000;
-                let carbsGoal = 275;
-                let proteinsGoal = 50;
-                let fatsGoal = 78;
-                let sugarsGoal = 50;
-                let sodiumGoal = 2300;
-
-                //if the user is new, we add new goals
-                const newUserGoals = new UserGoals({
-                    email: req.user.email,
-                    caloriesGoal,
-                    carbsGoal,
-                    fatsGoal,
-                    proteinsGoal,
-                    sodiumGoal,
-                    sugarsGoal
+                //render the account page
+                res.render("myaccount", {
+                  success_msgs,
+                  name: req.user.email,
+                  caloriesGoal: caloriesGoal,
+                  carbsGoal: carbsGoal,
+                  fatsGoal: fatsGoal,
+                  proteinsGoal: proteinsGoal,
+                  sodiumGoal: sodiumGoal,
+                  sugarsGoal: sugarsGoal,
                 });
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      } else {
+        //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
+        let caloriesGoal = 2000;
+        let carbsGoal = 275;
+        let proteinsGoal = 50;
+        let fatsGoal = 78;
+        let sugarsGoal = 50;
+        let sodiumGoal = 2300;
 
-                //save new goals in the db
-                newUserGoals
-                    .save()
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          caloriesGoal,
+          carbsGoal,
+          fatsGoal,
+          proteinsGoal,
+          sodiumGoal,
+          sugarsGoal,
+        });
 
-                    //if user gets saved, render the page again, with updated information
-                    .then(user => {
+        //save new goals in the db
+        newUserGoals
+          .save()
 
-                        //update pass after new goals are saved
-                        // passkit.updatePass(req.user.email);
-
-                        console.log('succesfully registered user')
-                    })
-
-                    .catch(err => console.log(err));
-            }
-        })
-
-        .catch(err => console.log(err))
-})
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //update pass after new goals are saved
+            // passkit.updatePass(req.user.email);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
 
 //exports the router function to be used in app
 module.exports = router;

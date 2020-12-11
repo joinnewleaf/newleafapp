@@ -43,9 +43,7 @@ router.get("/foodDetails/:fdcId", ensureAuthenticated, (req, res) => {
     usda.searchFoodDetails(foodIdToLookUp, function callback(data){
         res.send(data)
     });
-
 });
-
 
 //exports the router function to be used in app
 module.exports = router;

@@ -9,6 +9,10 @@ const UserGoalsSchema = new mongoose.Schema({
         type: String,
         require: false
     },
+    username: {
+        type: String,
+        require: false
+    },
     caloriesGoal: {
         type: String,
         require: true

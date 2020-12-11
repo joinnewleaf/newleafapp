@@ -52,6 +52,10 @@ const ExerciseSchema = new mongoose.Schema({
 const DaysSchema = new mongoose.Schema({
     email: {
         type: String,
+        require: false
+    },
+    username: {
+        type: String,
         require: true
     },
     date: {
