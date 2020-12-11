@@ -2,16 +2,16 @@
 <%/* General: age, gender, height, weight, waist circumference, BMI, lean body mass */%>
 <%/* Physical activity: step count, aerobic, strength training */%>
 <%/* Hypertension: SBP, DBP, total cholesterol, smoking status BP category*/%>
-<%/* Diabetes: HbA1c, fasting blood glucose, bloog glucose, diabetes risk scores */%>
+<%/* Diabetes: HbA1c, fasting blood glucose, blood glucose, diabetes risk scores */%>
 <%/* Other: mood, pain, comments */%>
 
 <%# sidebar file and main panel%>
 <% include ./partials/navbar %>
 
-    <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+<!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
 so that you can click on it and close out the sidebar -->
 <div class="content blankPanelSidebarOpen">
-<div class="main-panel main-panel-biometricsMobile bloodPressureDesktopSettings">
+    <div class="main-panel main-panel-biometricsMobile bloodPressureDesktopSettings">
         <% include ./partials/biometricspanel %>
     </div>
 </div>

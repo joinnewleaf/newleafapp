@@ -435,7 +435,7 @@ router.post("/addBP", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.name,
             days,
           });
@@ -466,7 +466,7 @@ router.post("/deleteBP", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.email,
             days,
           });
@@ -513,7 +513,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
             }) //should properly check if either username or email match
               .then((days) => {
                 // re render the dashboard after having updated the days collection
-                res.render("biometrics", {
+                res.render("bodymetrics", {
                   name: req.user.name,
                   days,
                 });
@@ -538,7 +538,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
     }) //should properly check if either username or email match
       .then((days) => {
         // re render the dashboard after having updated the days collection
-        res.render("biometrics", {
+        res.render("bodymetrics", {
           name: req.user.name,
           days,
         });
@@ -578,7 +578,7 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.email,
             days,
           });
@@ -622,7 +622,7 @@ router.post("/addBodyWeight", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.email,
             days,
           });
@@ -653,7 +653,7 @@ router.post("/deleteBodyWeight", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match, $ne is not equal
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.email,
             days,
           });
@@ -700,7 +700,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
             }) //should properly check if either username or email match
               .then((days) => {
                 //re render the dashboard after having updated the days collection
-                res.render("biometrics", {
+                res.render("bodymetrics", {
                   name: req.user.email,
                   days,
                 });
@@ -721,7 +721,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
     }) //should properly check if either username or email match
       .then((days) => {
         // re render the dashboard after having updated the days collection
-        res.render("biometrics", {
+        res.render("bodymetrics", {
           name: req.user.email,
           days,
         });
@@ -759,7 +759,7 @@ router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
       }) //should properly check if either username or email match
         .then((days) => {
           // re render the dashboard after having updated the days collection
-          res.render("biometrics", {
+          res.render("bodymetrics", {
             name: req.user.email,
             days,
           });

@@ -365,8 +365,8 @@ router.get("/healthinsights", ensureAuthenticated, (req, res) =>
   })
 );
 
-//routes to biometrics page
-router.get("/biometrics", ensureAuthenticated, (req, res) => {
+//routes to bodymetrics page
+router.get("/bodymetrics", ensureAuthenticated, (req, res) => {
   //current datetime
   let currentDate = new Date();
 
@@ -385,7 +385,7 @@ router.get("/biometrics", ensureAuthenticated, (req, res) => {
       if (days) {
         //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
         //also pass in the goals we set earlier
-        res.render("biometrics", {
+        res.render("bodymetrics", {
           name: req.user.email,
           days: days,
         });
@@ -406,7 +406,7 @@ router.get("/biometrics", ensureAuthenticated, (req, res) => {
           //if days gets saved, render the dashboard page
           .then((days) => {
             //renders the dashboard page anytime this page gets called
-            res.render("biometrics", {
+            res.render("bodymetrics", {
               name: req.user.email,
               days: days,
             });
@@ -418,7 +418,7 @@ router.get("/biometrics", ensureAuthenticated, (req, res) => {
 });
 
 //post request on the dashboard pulls in data from the database for a certain date
-router.post("/biometrics", ensureAuthenticated, (req, res) => {
+router.post("/bodymetrics", ensureAuthenticated, (req, res) => {
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
   let dateRequest = new Date(parsedDate);
@@ -437,7 +437,7 @@ router.post("/biometrics", ensureAuthenticated, (req, res) => {
       //if this user exists with this date, render the page with both the goals AND the transactions for that date
       if (days) {
         //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
-        res.render("biometrics", {
+        res.render("bodymetrics", {
           name: req.user.email,
           days: days,
         });
@@ -458,7 +458,7 @@ router.post("/biometrics", ensureAuthenticated, (req, res) => {
           //if days gets saved, render the dashboard page
           .then((days) => {
             //renders the dashboard page anytime this page gets called
-            res.render("biometrics", {
+            res.render("bodymetrics", {
               name: req.user.email,
               days: days,
             });

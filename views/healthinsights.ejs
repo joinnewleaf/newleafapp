@@ -33,10 +33,11 @@ We also may add body composition/BP monitoring on here. */%>
         </div>
     </nav>
     <div class="content">
+        <h4 class="card-title">Health Insights Coming Soon</h4>
         <!--Row 1-->
-        <div class="row">
-            <!--Row 1 - First Card -->
-            <div class="col-md-4">
+        <!-- <div class="row"> -->
+        <!--Row 1 - First Card -->
+        <!-- <div class="col-md-4">
                 <div class="card ">
                     <div class="card-header ">
                         <h4 class="card-title">Macronutrients</h4>
@@ -51,10 +52,10 @@ We also may add body composition/BP monitoring on here. */%>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!--Row 1 - Second Card-->
-            <div class="col-md-8">
+        <!--Row 1 - Second Card-->
+        <!-- <div class="col-md-8">
                 <div class="card ">
                     <div class="card-header ">
                         <h4 class="card-title">Calories</h4>
@@ -65,15 +66,25 @@ We also may add body composition/BP monitoring on here. */%>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!--Row 2-->
         <div class="row">
             <!--Row 2 - First Card-->
             <div class="col-md-6">
                 <div class="card ">
                     <div class="card-header ">
-                        <h4 class="card-title">Exercise Minutes</h4>
-                        <p class="card-category">Past 7 Days</p>
+                        <h4 class="card-title">Exercise Minutes vs Blood Pressures</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Past Week
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="card-category dropdown-item" href="#">Past Week</a>
+                                <a class="card-category dropdown-item" href="#">Past Month</a>
+                                <a class="card-category dropdown-item" href="#">Past Year</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body ">
                         <div id="chartCalories" class="ct-chart"></div>
@@ -83,44 +94,73 @@ We also may add body composition/BP monitoring on here. */%>
             <div class="col-md-6">
                 <div class="card ">
                     <div class="card-header ">
-                        <h4 class="card-title">Exercise Minutes</h4>
-                        <p class="card-category">Past Month</p>
+                        <h4 class="card-title">Sodium Intake vs Blood Pressures</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Past Week
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="card-category dropdown-item" href="#">Past Week</a>
+                                <a class="card-category dropdown-item" href="#">Past Month</a>
+                                <a class="card-category dropdown-item" href="#">Past Year</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body ">
-                        <div id="chartCalories" class="ct-chart"></div>
+                        <div id="chartBloodPressures" class="ct-chart"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-                <!--Row 3-->
-                <div class="row">
-                    <!--Row 3 - First Card-->
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="card-header ">
-                                <h4 class="card-title">Blood Pressures</h4>
-                                <p class="card-category">Past 7 Days</p>
-                            </div>
-                            <div class="card-body ">
-                                <div id="chartCalories" class="ct-chart"></div>
+        <!--Row 3-->
+        <div class="row">
+            <!--Row 3 - First Card-->
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="card-header ">
+                        <h4 class="card-title">Calorie Intake vs Body Weight</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Past Week
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="card-category dropdown-item" href="#">Past Week</a>
+                                <a class="card-category dropdown-item" href="#">Past Month</a>
+                                <a class="card-category dropdown-item" href="#">Past Year</a>
                             </div>
                         </div>
                     </div>
-                                        <!--Row 3 - Second Card-->
-                                        <div class="col-md-6">
-                                            <div class="card ">
-                                                <div class="card-header ">
-                                                    <h4 class="card-title">Blood Pressures</h4>
-                                                    <p class="card-category">Past Month</p>
-                                                </div>
-                                                <div class="card-body ">
-                                                    <div id="chartCalories" class="ct-chart"></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="card-body ">
+                        <div id="chartBodyWeights" class="ct-chart"></div>
+                    </div>
                 </div>
-        
+            </div>
+            <!--Row 3 - Second Card-->
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="card-header ">
+                        <h4 class="card-title">Carb Intake vs Blood Sugars</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Past Week
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="card-category dropdown-item" href="#">Past Week</a>
+                                <a class="card-category dropdown-item" href="#">Past Month</a>
+                                <a class="card-category dropdown-item" href="#">Past Year</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div id="chartBloodSugars" class="ct-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -372,7 +412,7 @@ We also may add body composition/BP monitoring on here. */%>
                 var data = {
                     labels: labelNames,
                     series: [
-                        [1300, 1644, 1230, 1750, 1575, 1560, 1380, ],
+                        [1300, 1644, 1230, 1750, 1575, 1560, 1380,],
                     ]
                 };
 
@@ -400,6 +440,9 @@ We also may add body composition/BP monitoring on here. */%>
                 ];
 
                 new Chartist.Bar('#chartCalories', data, options, responsiveOptions);
+                new Chartist.Bar('#chartBloodPressures', data, options, responsiveOptions);
+                new Chartist.Bar('#chartBodyWeights', data, options, responsiveOptions);
+                new Chartist.Bar('#chartBloodSugars', data, options, responsiveOptions);
 
 
                 //var dataSales = {
@@ -745,10 +788,10 @@ JQuery MUST be loaded first so because this calls on functions in that file -->
     // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
     var searchVisible = 0;
     var transparent = true;
-    
+
     var transparentDemo = true;
     var fixedTop = false;
-    
+
     var navbar_initialized = false;
     var mobile_menu_visible = 0,
         mobile_menu_initialized = false,
@@ -756,48 +799,48 @@ JQuery MUST be loaded first so because this calls on functions in that file -->
         bootstrap_nav_initialized = false,
         $sidebar,
         isWindows;
-    
+
     //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
     $(document).ready(function () {
         window_width = $(window).width();
-    
+
         // check if there is an image set for the sidebar's background -- we dont have an image right now
         // but i kept it anyways in case we decide that we want to add one
         lbd.checkSidebarImage();
-    
+
         // Init navigation toggle for small screens
         if (window_width <= 991) {
             lbd.initRightMenu();
         }
-    
+
         //  Activate the tooltips --- I have no fucking idea what this is but if you un-comment it then it causes an error 
         // so just keep it here for now 
         // $('[rel="tooltip"]').tooltip();
-    
+
         // Activate regular switches
         if ($("[data-toggle='switch']").length != 0) {
             $("[data-toggle='switch']").bootstrapSwitch();
         }
-    
+
         $('.form-control').on("focus", function () {
             $(this).parent('.input-group').addClass("input-group-focus");
         }).on("blur", function () {
             $(this).parent(".input-group").removeClass("input-group-focus");
         });
-    
+
         // Fixes sub-nav not working as expected on IOS
         $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
             e.stopPropagation();
         });
     });
-    
-        // activate collapse right menu when the windows is resized
+
+    // activate collapse right menu when the windows is resized
     $(window).resize(function () {
         if ($(window).width() <= 991) {
             lbd.initRightMenu();
         }
     });
-    
+
     lbd = {
         misc: {
             navbar_menu_visible: 0
@@ -805,7 +848,7 @@ JQuery MUST be loaded first so because this calls on functions in that file -->
         checkSidebarImage: function () {
             $sidebar = $('.sidebar');
             image_src = $sidebar.data('image');
-    
+
             if (image_src !== undefined) {
                 sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
                 $sidebar.append(sidebar_container);
@@ -813,44 +856,44 @@ JQuery MUST be loaded first so because this calls on functions in that file -->
                 // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
                 $sidebar_wrapper.find('.navbar-form').remove();
                 $sidebar_wrapper.find('.nav-mobile-menu').remove();
-    
+
                 mobile_menu_initialized = false;
             }
         },
-    
+
         initRightMenu: function () {
             $sidebar_wrapper = $('.sidebar-wrapper');
-    
+
             if (!mobile_menu_initialized) {
-    
+
                 $navbar = $('nav').find('.navbar-collapse').first().clone(true);
-    
+
                 nav_content = '';
                 mobile_menu_content = '';
-    
+
                 //add the content from the regular header to the mobile menu
                 $navbar.children('ul').each(function () {
-    
+
                     content_buff = $(this).html();
                     nav_content = nav_content + content_buff;
                 });
-    
+
                 nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
-    
+
                 $navbar_form = $('nav').find('.navbar-form').clone(true);
-    
+
                 $sidebar_nav = $sidebar_wrapper.find(' > .nav');
-    
+
                 // insert the navbar form before the sidebar list
                 $nav_content = $(nav_content);
                 $nav_content.insertBefore($sidebar_nav);
                 $navbar_form.insertBefore($nav_content);
-    
+
                 $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
                     event.stopPropagation();
-    
+
                 });
-    
+
                 mobile_menu_initialized = true;
             } else {
                 console.log('window with:' + $(window).width());
@@ -858,66 +901,66 @@ JQuery MUST be loaded first so because this calls on functions in that file -->
                     // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
                     $sidebar_wrapper.find('.navbar-form').remove();
                     $sidebar_wrapper.find('.nav-mobile-menu').remove();
-    
+
                     mobile_menu_initialized = false;
                 }
             }
-    
+
             if (!toggle_initialized) {
                 $toggle = $('.navbar-toggler');
-    
+
                 $toggle.click(function () {
-    
+
                     if (mobile_menu_visible == 1) {
                         $('html').removeClass('nav-open');
-    
+
                         $('.close-layer').remove();
                         setTimeout(function () {
                             $toggle.removeClass('toggled');
                         }, 400);
-    
+
                         mobile_menu_visible = 0;
                     } else {
                         setTimeout(function () {
                             $toggle.addClass('toggled');
                         }, 430);
-    
-                    // This is the function that figures out the height of the main panel when in mobile and then adds
-                    // the a div at the begining of the main panel (pushing the content down on the screen) so that 
-                    // you can click on it and close out the sidebar without having to click on a link in the sidebar
+
+                        // This is the function that figures out the height of the main panel when in mobile and then adds
+                        // the a div at the begining of the main panel (pushing the content down on the screen) so that 
+                        // you can click on it and close out the sidebar without having to click on a link in the sidebar
                         main_panel_height = $('.main-panel')[0].scrollHeight;
                         $layer = $('<div class="close-layer"></div>');
                         $layer.css('height', main_panel_height + 'px');
                         $layer.prependTo(".blankPanelSidebarOpen");
-    
-    
+
+
                         setTimeout(function () {
                             $layer.addClass('visible');
                         }, 100);
-    
+
                         $layer.click(function () {
                             console.log("hi")
                             $('html').removeClass('nav-open');
                             mobile_menu_visible = 0;
-    
+
                             $layer.removeClass('visible');
-    
+
                             setTimeout(function () {
                                 $layer.remove();
                                 $toggle.removeClass('toggled');
-    
+
                             }, 400);
                         });
-    
+
                         $('html').addClass('nav-open');
                         mobile_menu_visible = 1;
-    
+
                     }
                 });
-    
+
                 toggle_initialized = true;
             }
         }
     }
-    
-    </script>
+
+</script>

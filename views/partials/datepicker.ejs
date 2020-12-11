@@ -1,13 +1,10 @@
-<%# practice displaying the date%>
-
+<%# displaying the date%>
 <div class="currentDate">
-<span>Displaying diary for:</span>
- <span><b><%= days.dateString %></b></span>
- <br>
- <br>
- </div>
-
-
+  <span>Displaying diary for:</span>
+  <span><b><%= days.dateString.substring(0,10)+","+ days.dateString.substring(10,days.dateString.length)%></b></span>
+  <br>
+  <br>
+</div>
 <%# contains the datepicker%>
 
 <div class="bootstrap-iso" style="background:transparent;">
@@ -15,7 +12,8 @@
     <div class="col-4">
       <form class="form-inline" method="post">
         <div class="form-group mx-sm-3 mb-2">
-          <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" required type="text" autocomplete="off" />
+          <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" required type="text"
+            autocomplete="off" />
           <button class="btn btn-primary" name="submit" type="submit">Change Date</button>
         </div>
       </form>
