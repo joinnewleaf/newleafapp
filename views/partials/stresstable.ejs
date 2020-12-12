@@ -24,20 +24,16 @@
           <div class="row">
             <div class="col-sm-6">
               <h4 class="tableHeadMobile">
-                <b>Body Weight Log</b>
+                <b>Stress Log</b>
               </h4>
             </div>
 
             <div class="col-sm-6 tableButtonMobile">
-              <a href="#addModal2" class="btn btn-add" data-toggle="modal">
+              <a href="#addModal3" class="btn btn-add" data-toggle="modal">
                 <i class="material-icons">&#xE147;</i>
                 <span>Add Entry</span>
               </a>
-              <a
-                href="#deleteMultipleModal"
-                class="btn btn-delete-multiple"
-                data-toggle="modal"
-              >
+              <a href="#deleteMultipleModal" class="btn btn-delete-multiple" data-toggle="modal">
                 <i class="material-icons">&#xE15C;</i>
                 <span>Delete</span>
               </a>
@@ -51,17 +47,12 @@
             <tr>
               <th>
                 <span class="custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="checkbox1"
-                    name="options[]"
-                    value="1"
-                  />
-                  <label for="checkbox1"></label>
+                  <input type="checkbox" id="checkbox3" name="options[]" value="1" />
+                  <label for="checkbox3"></label>
                 </span>
               </th>
               <th>Time</th>
-              <th class="columnHideMobile">Weight (lbs)</th>
+              <th class="columnHideMobile">Stress Level (out of 10)</th>
               <th class="blankForMobile"><br /></th>
               <th>Notes</th>
               <th></th>
@@ -71,46 +62,33 @@
           <!-- Table body is multiple rows, each row needs rendered using jquery and database requests -->
           <tbody>
             <!-- Each row gets rendered using a database request-->
-            <%if (typeof days.bodyWeights != 'undefined') { %> <%
-            days.bodyWeights.forEach(function(bodyWeights) { %>
-            <tr id="<%= bodyWeights._id %>">
+            <%if (typeof days.stressLevels != 'undefined') { %> <%
+            days.stressLevels.forEach(function(stressLevels) { %>
+            <tr id="<%= stressLevels._id %>">
               <td>
                 <span class="custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="checkbox_weights"
-                    name="options[]"
-                    value="1"
-                  />
-                  <label for="checkbox1"></label>
+                  <input type="checkbox" id="checkbox_stressLevels" name="options[]" value="1" />
+                  <label for="checkbox3"></label>
                 </span>
               </td>
               <td class="name_data">
-                <%= bodyWeights.time %>
+                <%= stressLevels.time %>
               </td>
               <!-- <td class="blankForMobile newRowMobile"><br></td> -->
-              <td
-                class="row_data newRowMobile"
-                data-label="Weight: "
-                column_name="bodyWeight_data"
-              >
-                <%if (typeof bodyWeights.bodyWeight != 'undefined') { %> <%=
-                bodyWeights.bodyWeight %> <% } else { %> <%= 'NR' %> <% } %>
+              <td class="row_data newRowMobile" data-label="Stress: " column_name="stressLevels_data">
+                <%if (typeof stressLevels.stress != 'undefined') { %> <%=
+                stressLevels.stress %> <% } else { %> <%= 'NR' %> <% } %>
               </td>
               <td class="row_data notes_data" column_name="notes_data">
-                <%if (typeof bodyWeights.notes != 'undefined') { %> <%=
-                bodyWeights.notes %> <% } else { %> <%= 'None' %> <% } %>
+                <%if (typeof stressLevels.notes != 'undefined') { %> <%=
+                stressLevels.notes %> <% } else { %> <%= 'None' %> <% } %>
               </td>
               <td>
-                <a href="#editModal2" class="edit" data-toggle="modal">
-                  <i class="material-icons" data-toggle="tooltip" title="Edit"
-                    >&#xE254;</i
-                  >
+                <a href="#editModal3" class="edit" data-toggle="modal">
+                  <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                 </a>
-                <a href="#deleteModal2" class="delete" data-toggle="modal">
-                  <i class="material-icons" data-toggle="tooltip" title="Delete"
-                    >&#xE872;</i
-                  >
+                <a href="#deleteModal3" class="delete" data-toggle="modal">
+                  <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                 </a>
               </td>
             </tr>
@@ -122,76 +100,40 @@
     </div>
 
     <!-- Add Modal HTML -->
-    <div id="addModal2" class="modal fade">
+    <div id="addModal3" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/addBodyWeight" method="POST" autocomplete="off">
+          <form action="/days/addStressLevel" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Add Entry</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <label>Time (HH:MM AM|PM)</label>
-                <input
-                  type="text"
-                  pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))"
-                  name="time"
-                  id="time2"
-                  value="12:00 PM"
-                  class="form-control"
-                  required
-                  maxlength="25"
-                  onclick="this.select()"
-                />
+                <input type="text" pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))" name="time" id="time3"
+                  value="12:00 PM" class="form-control" required maxlength="25" onclick="this.select()" />
               </div>
               <div class="form-group">
-                <label>Weight (lbs)</label>
-                <input
-                  autocomplete="off"
-                  type="text"
-                  pattern="^\d*(\.\d{0,2})?$"
-                  step="0.01"
-                  name="bodyWeight"
-                  class="form-control check-numbers4"
-                  maxlength="6"
-                  max="1000"
-                  onclick="this.select()"
-                />
+                <label>Stress (1 - 10)</label>
+                <div class="d-flex justify-content-center my-4">
+                  <input step="1" name="stress" class="form-control check-numbers4" type="range" value="5" min="1"
+                    max="10" oninput="this.nextElementSibling.value = this.value">
+                  <output class="font-weight-bold blue-text mr-2 mt-1">5</output>
+                </div>
               </div>
               <div class="form-group">
                 <label>Notes</label>
-                <textarea
-                  class="form-control"
-                  id="notes"
-                  rows="3"
-                  name="notes"
-                  class="form-control"
-                  maxlength="140"
-                  onclick="this.select()"
-                ></textarea>
+                <textarea class="form-control" id="notes" rows="3" name="notes" class="form-control" maxlength="140"
+                  onclick="this.select()"></textarea>
               </div>
               <input type="hidden" name="date" value="<%= days.date %>" />
-              <input
-                type="hidden"
-                name="dateString"
-                value="<%= days.dateString %>"
-              />
+              <input type="hidden" name="dateString" value="<%= days.dateString %>" />
             </div>
             <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
               <input type="submit" class="btn btn-success" value="Add" />
             </div>
           </form>
@@ -200,76 +142,39 @@
     </div>
 
     <!-- Edit Modal HTML -->
-    <div id="editModal2" class="modal fade">
+    <div id="editModal3" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/editBodyWeight" method="POST" autocomplete="off">
+          <form action="/days/editStressLevel" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Edit Entry</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <label>Time</label>
-                <input
-                  type="text"
-                  pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))"
-                  name="time"
-                  class="form-control name_row_data"
-                  value="new entry"
-                  maxlength="25"
-                  required
-                  onclick="this.select()"
-                />
+                <input type="text" pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))" name="time"
+                  class="form-control name_row_data" value="new entry" maxlength="25" required
+                  onclick="this.select()" />
               </div>
               <div class="form-group">
-                <label>Weight (lbs)</label>
-                <input
-                  type="text"
-                  pattern="([0-9]{,3})"
-                  name="bodyWeight"
-                  class="form-control edit_row_data check-numbers4"
-                  value="0"
-                  maxlength="3"
-                  max="180"
-                  required
-                  onclick="this.select()"
-                />
+                <label>Stress (out of 10)</label>
+                <input type="text" pattern="([0-9]{,3})" name="stress" class="form-control edit_row_data check-numbers4"
+                  value="0" maxlength="3" max="180" required onclick="this.select()" />
               </div>
               <div class="form-group">
                 <label>Notes</label>
-                <textarea
-                  name="notes"
-                  id="editNotes2"
-                  rows="3"
-                  class="form-control edit_row_data"
-                  value=""
-                  maxlength="140"
-                  onclick="this.select()"
-                ></textarea>
+                <textarea name="notes" id="editNotes3" rows="3" class="form-control edit_row_data" value=""
+                  maxlength="140" onclick="this.select()"></textarea>
               </div>
               <input type="hidden" name="date" value="<%= days.date %>" />
-              <input
-                type="hidden"
-                name="dateString"
-                value="<%= days.dateString %>"
-              />
+              <input type="hidden" name="dateString" value="<%= days.dateString %>" />
               <input class="row_id_data" type="hidden" name="row_id" value="" />
             </div>
             <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
               <input type="submit" class="btn btn-info" value="Save" />
             </div>
           </form>
@@ -278,22 +183,13 @@
     </div>
 
     <!-- Delete Modal HTML -->
-    <div id="deleteModal2" class="modal fade">
+    <div id="deleteModal3" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form
-            action="/days/deleteBodyWeight"
-            method="POST"
-            autocomplete="off"
-          >
+          <form action="/days/deleteStressLevel" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Delete Entry</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
             </div>
@@ -303,20 +199,11 @@
                 <small>This action cannot be undone.</small>
               </p>
               <input type="hidden" name="date" value="<%= days.date %>" />
-              <input
-                type="hidden"
-                name="dateString"
-                value="<%= days.dateString %>"
-              />
+              <input type="hidden" name="dateString" value="<%= days.dateString %>" />
               <input type="hidden" class="row_id_data" name="row_id" value="" />
             </div>
             <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
               <input type="submit" class="btn btn-danger" value="Delete" />
             </div>
           </form>
@@ -325,22 +212,13 @@
     </div>
 
     <!-- Delete Multiple Modal HTML -->
-    <div id="deleteMultipleModal_weights" class="modal fade">
+    <div id="deleteMultipleModal_stress" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form
-            action="/days/deleteMultipleBodyWeights"
-            method="POST"
-            autocomplete="off"
-          >
+          <form action="/days/deleteMultipleStressLevels" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Delete Entry</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 &times;
               </button>
             </div>
@@ -350,25 +228,11 @@
                 <small>This action cannot be undone.</small>
               </p>
               <input type="hidden" name="date" value="<%= days.date %>" />
-              <input
-                type="hidden"
-                name="dateString"
-                value="<%= days.dateString %>"
-              />
-              <input
-                type="hidden"
-                class="row_id_data_array"
-                name="row_id"
-                value="empty"
-              />
+              <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+              <input type="hidden" class="row_id_data_array" name="row_id" value="empty" />
             </div>
             <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
+              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
               <input type="submit" class="btn btn-danger" value="Delete" />
             </div>
           </form>
@@ -379,47 +243,49 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function($) {
+  $(document).ready(function ($) {
+
+
     //on changing the checkbox header
-    $("#checkbox1").change(function() {
+    $("#checkbox3").change(function () {
       //if the check box is checked, cycle through document and check everything
       if (this.checked == true) {
         $(document)
-          .find("input[id=checkbox_weights]")
-          .each(function(index, val) {
+          .find("input[id=checkbox_stressLevels]")
+          .each(function (index, val) {
             $(val).prop("checked", true);
           });
       } else {
         //uncheck everything
         $(document)
-          .find("input[id=checkbox_weights]")
-          .each(function(index, val) {
+          .find("input[id=checkbox_stressLevels]")
+          .each(function (index, val) {
             $(val).prop("checked", false);
           });
       }
     });
 
     //these double check that input values are valid numbers for weight; input patterns make sure the input is a certain length
-    $(".check-numbers4").keyup(function() {
+    $(".check-numbers4").keyup(function () {
       $(".check-numbers4").val(this.value.match(/[0-9]*\.?[0-9]+/g));
       console.log("in here");
     });
 
     //click the add button
-    $(document).on("click", ".btn-add", function(event) {
+    $(document).on("click", ".btn-add", function (event) {
       //add the current time in --:-- AM/PM format
       var g = new Date().toLocaleTimeString("en-US", {
         hour: "numeric",
         hour12: true,
         minute: "numeric"
       });
-      $("#time2").attr({
+      $("#time3").attr({
         value: g
       });
     });
 
     //click the edit button
-    $(document).on("click", ".edit", function(event) {
+    $(document).on("click", ".edit", function (event) {
       //may need this?
       event.preventDefault();
 
@@ -433,12 +299,12 @@
       //get new name
       var name = tbl_row.find(".name_data").html();
       name = name.trim();
-      $("#editModal2")
+      $("#editModal3")
         .find(".name_row_data")
         .attr("value", name);
 
       //get row id
-      $("#editModal2")
+      $("#editModal3")
         .find(".row_id_data")
         .attr("value", id);
 
@@ -446,7 +312,7 @@
       notes = notes.trim();
 
       //take each value in the actual row data and update the default value for the edit form
-      tbl_row.find(".row_data").each(function(index, val) {
+      tbl_row.find(".row_data").each(function (index, val) {
         //for each value of the row store to array, need to get the int out of it
         temp_row_data[i] = parseInt($(this).html());
 
@@ -466,20 +332,20 @@
       //for each value in the edit form, we update with the temporary data
       let j = 0;
       console.log(temp_row_data);
-      $("#editModal2")
+      $("#editModal3")
         .find(".edit_row_data")
-        .each(function(index, val) {
+        .each(function (index, val) {
           //update edit form
           $(this).attr("value", temp_row_data[j]);
           if (j == 3) {
-            $("#editNotes2").val(temp_row_data[j]);
+            $("#editNotes3").val(temp_row_data[j]);
           }
           j++;
         });
     });
 
     //deletes row
-    $(document).on("click", ".delete", function(event) {
+    $(document).on("click", ".delete", function (event) {
       //may need this?
       event.preventDefault();
 
@@ -488,13 +354,13 @@
       var id = tbl_row.attr("id");
 
       //update row id in the submit form
-      $("#deleteModal2")
+      $("#deleteModal3")
         .find(".row_id_data")
         .attr("value", id);
     });
 
     //deletes one row
-    $(document).on("click", ".delete", function(event) {
+    $(document).on("click", ".delete", function (event) {
       //may need this?
       event.preventDefault();
 
@@ -505,13 +371,13 @@
       var id = tbl_row.attr("id");
 
       //update row id in the submit form
-      $("#deleteModal2")
+      $("#deleteModal3")
         .find(".row_id_data")
         .attr("value", id);
     });
 
     //deletes all checked rows
-    $(document).on("click", ".btn-delete-multiple", function(event) {
+    $(document).on("click", ".btn-delete-multiple", function (event) {
       //find tbl row and its ID closest to the click, will be used to update the db
       var tbl_row_array = [];
       var id_array = [];
@@ -523,7 +389,7 @@
       //loop through checkboxes, store values and send to router
       $(document)
         .find("input[type=checkbox]")
-        .each(function(index, val) {
+        .each(function (index, val) {
           //if the box is checked, collect the row id
           if ($(val).prop("checked") && checkboxCounter > 0) {
             //find tbl row and its ID closest to the click, will be used to update the db
@@ -541,12 +407,13 @@
             console.log("id_array= " + id_array.toString());
 
             //update row id in the submit form
-            $("#deleteMultipleModal_weights")
+            $("#deleteMultipleModal_stress")
               .find(".row_id_data_array")
               .attr("value", id_array);
           }
           checkboxCounter++;
         });
     });
+
   });
 </script>

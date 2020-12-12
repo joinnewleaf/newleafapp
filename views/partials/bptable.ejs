@@ -99,7 +99,7 @@
                 column_name="systolicBP_data"
               >
                 <%if (typeof bloodPressures.systolicBP != 'undefined') { %> <%=
-                bloodPressures.systolicBP %> <% } else { %> <%= NR %> <% } %>
+                bloodPressures.systolicBP %> <% } else { %> <%= 'NR' %> <% } %>
               </td>
               <td
                 class="row_data newRowMobile"
@@ -107,7 +107,7 @@
                 column_name="diastolicBP_data"
               >
                 <%if (typeof bloodPressures.diastolicBP != 'undefined') { %> <%=
-                bloodPressures.diastolicBP %> <% } else { %> <%= NR %> <% } %>
+                bloodPressures.diastolicBP %> <% } else { %> <%= 'NR' %> <% } %>
               </td>
               <td
                 class="row_data newRowMobile"
@@ -115,11 +115,11 @@
                 column_name="heartRate_data"
               >
                 <%if (typeof bloodPressures.heartRate != 'undefined') { %> <%=
-                bloodPressures.heartRate %> <% } else { %> <%= NR %> <% } %>
+                bloodPressures.heartRate %> <% } else { %> <%= 'NR' %> <% } %>
               </td>
               <td class="row_data notes_data" column_name="notes_data">
                 <%if (typeof bloodPressures.notes != 'undefined') { %> <%=
-                bloodPressures.notes %> <% } else { %> <%= None %> <% } %>
+                bloodPressures.notes %> <% } else { %> <%= 'None' %> <% } %>
               </td>
               <td>
                 <a href="#editModal" class="edit" data-toggle="modal">
@@ -527,7 +527,7 @@
         //find what is written in the notes
         if (isNaN(temp_row_data[i])) {
           //if no value recorded, not recorded
-          temp_row_data[i] = "NR";
+          temp_row_data[i] = "N/A";
 
           //check if notes
           if (i == 3) {

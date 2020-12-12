@@ -1138,5 +1138,189 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
   }
 });
 
+//stress log diary section
+// post request on the dashboard adds in new data to diary
+router.post("/addStressLevel", ensureAuthenticated, (req, res) => {
+
+  console.log(req.body);
+  // pull important values out of the request
+  const new_row_data = {
+    time: req.body.time.toString(),
+    stress: req.body.stress,
+    notes: req.body.notes,
+  };
+
+  // insert new body weight into end of body weight array for each day
+  Days.updateOne(
+    {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    },
+    {
+      $push: { stressLevels: [new_row_data] },
+    }
+  )
+    .then(() => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// delete BP
+router.post("/deleteStressLevel", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to delete subdocuments
+  Days.updateOne(
+    { "stressLevels._id": _id },
+    { $pull: { stressLevels: { _id } } }
+  )
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match, $ne is not equal
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// delete BP
+router.post("/deleteMultipleStressLevels", ensureAuthenticated, (req, res) => {
+  // extract id from request
+  const _id = req.body.row_id;
+
+  // split into array
+  const _id_array = _id.split(",");
+
+  let arrayCounter = 0;
+
+  if (_id != "empty") {
+    // for each element, do new delete request in db
+    _id_array.forEach((element) => {
+      // have to turn string into a mongo object id
+      const _id_obj = mongoose.mongo.ObjectId(element);
+
+      // delete all subdocuments in array
+      Days.updateOne(
+        { "stressLevels._id": _id_obj },
+        { $pull: { stressLevels: { _id: _id_obj } } }
+      )
+        .then((response) => {
+          // need to update the array counter after each request is completed
+          arrayCounter++;
+
+          // check if done updating array before sending response
+          if (arrayCounter == _id_array.length) {
+            // query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
+                //re render the dashboard after having updated the days collection
+                res.render("bodymetrics", {
+                  name: req.user.email,
+                  days,
+                });
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    });
+  } else {
+    // query days
+    Days.findOne({
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
+        // re render the dashboard after having updated the days collection
+        res.render("bodymetrics", {
+          name: req.user.email,
+          days,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+// post request on the dashboard edits old data on the diary
+router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to update subdocuments within an array, finds the first element with matching id, and updates those using positional $
+  Days.updateOne(
+    { "stressLevels._id": _id },
+    {
+      $set: {
+        "stressLevels.$.time": req.body.time.toString(),
+        "stressLevels.$.stress": req.body.stress,
+        "stressLevels.$.notes": req.body.notes,
+      },
+    }
+
+    // want to query the foods for that day and pass them into the table/rerender the dashboard
+  )
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+
 // exports the router function to be used in app
 module.exports = router;
