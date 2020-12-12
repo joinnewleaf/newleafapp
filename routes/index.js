@@ -39,6 +39,7 @@ router.get("/", (req, res) => res.render("welcome"));
 //dashboard page, we pass in ensure athenticated as a second parameter middleware
 //when we render the dashboard we pass in an object to let it know the user
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
+
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({
     $or: [
@@ -220,16 +221,12 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
         let sodiumGoal = usergoals.sodiumGoal;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
-        // Days.findOne({
-        //   email: req.user.email,
-        //   dateString: dateRequest.toDateString(),
-        // })
         Days.findOne({
           $or: [
             { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
             { username: req.user.username },
           ],
-          dateString: currentDate.toDateString(),
+          dateString: dateRequest.toDateString(),
         }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
@@ -295,7 +292,7 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
             { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
             { username: req.user.username },
           ],
-          dateString: currentDate.toDateString(),
+          dateString: dateRequest.toDateString(),
         }) //should properly check if either username or email match
 
           //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
@@ -429,7 +426,7 @@ router.post("/bodymetrics", ensureAuthenticated, (req, res) => {
       { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
       { username: req.user.username },
     ],
-    dateString: currentDate.toDateString(),
+    dateString: dateRequest.toDateString(),
   }) //should properly check if either username or email match
 
     //if this user exists, and a Day exists for this date rerender the page with goals data and pass it in the Transactions for that date
