@@ -49,9 +49,22 @@ const ExerciseSchema = new mongoose.Schema({
 });
 
 //child schema needs to be in front of parent schema
+const MindfulnessSchema = new mongoose.Schema({
+    mindfulness: String,
+    minutes: String
+});
+
+//child schema needs to be in front of parent schema
 const StressLevelSchema = new mongoose.Schema({
     time: String,
     stress: String,
+    notes: String
+});
+
+//child schema needs to be in front of parent schema
+const BloodSugarSchema = new mongoose.Schema({
+    time: String,
+    bloodSugar: String,
     notes: String
 });
 
@@ -92,6 +105,14 @@ const DaysSchema = new mongoose.Schema({
     stressLevels: {
         type: [StressLevelSchema],
         require: false
+    },
+    bloodSugar: {
+        type: [BloodSugarSchema],
+        require: false
+    },
+    mindfulness: {
+        type: [MindfulnessSchema],
+        require: false
     }
 });
 
@@ -100,9 +121,10 @@ const Foods = mongoose.model('Foods', FoodSchema);
 const BloodPressures = mongoose.model('BloodPressures', BloodPressureSchema)
 const BodyWeights = mongoose.model('BodyWeights', BodyWeightSchema)
 const Exercises = mongoose.model('Exercises', ExerciseSchema)
+const Mindfulness = mongoose.model('Mindfulness', MindfulnessSchema)
 const StressLevels = mongoose.model('StressLevels', StressLevelSchema)
+const BloodSugar = mongoose.model('BloodSugar', BloodSugarSchema)
 const Days = mongoose.model('Days', DaysSchema);
-
 
 //export this to be used in other files
 module.exports = Days;

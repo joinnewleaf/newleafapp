@@ -39,7 +39,7 @@ const { MONGO_DB_URI } = process.env;
 // a promise represents a completion or a failure of an asynchronous object
 // .then returns a promise, takes a callback for a success or failure
 mongoose
-  .connect(MONGO_DB_URI, { useNewUrlParser: true })
+  .connect(MONGO_DB_URI, {  useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => console.log("Mongo DB connected"))
 
   // catch lets you handle an error

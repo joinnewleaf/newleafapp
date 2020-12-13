@@ -1322,5 +1322,565 @@ router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
 });
 
 
+
+
+
+
+//Blood Sugar log section
+// post request on the dashboard adds in new data to diary
+router.post("/addBloodSugar", ensureAuthenticated, (req, res) => {
+
+  console.log(req.body);
+  // pull important values out of the request
+  const new_row_data = {
+    time: req.body.time.toString(),
+    bloodSugar: req.body.bloodSugar,
+    notes: req.body.notes,
+  };
+
+  // insert new body weight into end of body weight array for each day
+  Days.updateOne(
+    {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    },
+    {
+      $push: { bloodSugar: [new_row_data] },
+    }
+  )
+    .then(() => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+//delete Blood Sugar
+router.post("/deleteBloodSugar", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to delete subdocuments
+  Days.updateOne(
+    { "bloodSugar._id": _id },
+    { $pull: { bloodSugar: { _id } } }
+  )
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match, $ne is not equal
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// delete blood sugar
+router.post("/deleteMultipleBloodSugar", ensureAuthenticated, (req, res) => {
+  // extract id from request
+  const _id = req.body.row_id;
+
+  // split into array
+  const _id_array = _id.split(",");
+
+  let arrayCounter = 0;
+
+  if (_id != "empty") {
+    // for each element, do new delete request in db
+    _id_array.forEach((element) => {
+      // have to turn string into a mongo object id
+      const _id_obj = mongoose.mongo.ObjectId(element);
+
+      // delete all subdocuments in array
+      Days.updateOne(
+        { "bloodSugar._id": _id_obj },
+        { $pull: { bloodSugar: { _id: _id_obj } } }
+      )
+        .then((response) => {
+          // need to update the array counter after each request is completed
+          arrayCounter++;
+
+          // check if done updating array before sending response
+          if (arrayCounter == _id_array.length) {
+            // query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
+                //re render the dashboard after having updated the days collection
+                res.render("bodymetrics", {
+                  name: req.user.email,
+                  days,
+                });
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    });
+  } else {
+    // query days
+    Days.findOne({
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
+        // re render the dashboard after having updated the days collection
+        res.render("bodymetrics", {
+          name: req.user.email,
+          days,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+// post request on the dashboard edits old data on the diary
+router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to update subdocuments within an array, finds the first element with matching id, and updates those using positional $
+  Days.updateOne(
+    { "bloodSugar._id": _id },
+    {
+      $set: {
+        "bloodSugar.$.time": req.body.time.toString(),
+        "bloodSugar.$.bloodSugar": req.body.bloodSugar,
+        "bloodSugar.$.notes": req.body.notes,
+      },
+    }
+
+    // want to query the foods for that day and pass them into the table/rerender the dashboard
+  )
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // re render the dashboard after having updated the days collection
+          res.render("bodymetrics", {
+            name: req.user.email,
+            days,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+
+
+
+//mindfulness section
+// post request on the dashboard adds in new data to diary
+router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
+  // pull important values out of the request
+  const new_row_data = {
+    mindfulness: req.body.mindfulness,
+    minutes: req.body.minutes,
+  };
+
+  // insert new exercise into end of exercise array for each day
+  // dateString needs to be trimmed because excess characters on edges
+  Days.updateOne(
+    {
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    },
+    {
+      $push: { mindfulness: [new_row_data] },
+    }
+  )
+    .then(() => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          if (days) {
+            // also need to pull user goals
+            UserGoals.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+            })
+
+              // if this user exists, we render the page with the parameters already in the db
+              .then((usergoals) => {
+                // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
+                if (usergoals) {
+                  // to update pass, need to check if we are adding data for the current date
+                  const checkcurrentDate = new Date();
+                  const checkdateString = checkcurrentDate.toDateString();
+                  // if (req.body.dateString.trim() == checkdateString) {
+                  //     passkit.updatePass(req.user.email, days)
+                  // }
+
+                  // sets goals data on the page to what's stored in the db
+                  const { caloriesGoal } = usergoals;
+                  const { carbsGoal } = usergoals;
+                  const { proteinsGoal } = usergoals;
+                  const { fatsGoal } = usergoals;
+                  const { sugarsGoal } = usergoals;
+                  const { sodiumGoal } = usergoals;
+
+                  // re render the dashboard after having updated the days collection
+                  res.render("dashboard", {
+                    name: req.user.email,
+                    caloriesGoal,
+                    carbsGoal,
+                    fatsGoal,
+                    proteinsGoal,
+                    sodiumGoal,
+                    sugarsGoal,
+                    days,
+                  });
+                }
+              })
+              .catch((err) => console.log(err));
+          } else {
+            console.log("Days is undefined");
+          }
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// post request on the dashboard edits old data on the diary
+router.post("/editMindfulness", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to update subdocuments within an array, finds the first element with matching id, and updates those using positional $
+  Days.updateOne(
+    { "mindfulness._id": _id },
+    {
+      $set: {
+        "mindfulness.$.mindfulness": req.body.mindfulness,
+        "mindfulness.$.minutes": req.body.minutes,
+      },
+    }
+
+    // want to query the foods for that day and pass them into the table/rerender the dashboard
+  )
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // also need to pull user goals
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
+
+            // if this user exists, we render the page with the parameters already in the db
+            .then((usergoals) => {
+              // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
+              if (usergoals) {
+                // to update pass, need to check if we are adding data for the current date
+                const checkcurrentDate = new Date();
+                const checkdateString = checkcurrentDate.toDateString();
+
+                // next line commented out for passkit update
+                // if (req.body.dateString.trim() == checkdateString) {
+                //     passkit.updatePass(req.user.email, days)
+                // }
+
+                // sets goals data on the page to what's stored in the db
+                const { caloriesGoal } = usergoals;
+                const { carbsGoal } = usergoals;
+                const { proteinsGoal } = usergoals;
+                const { fatsGoal } = usergoals;
+                const { sugarsGoal } = usergoals;
+                const { sodiumGoal } = usergoals;
+
+                // re render the dashboard after having updated the days collection
+                res.render("dashboard", {
+                  name: req.user.email,
+                  caloriesGoal,
+                  carbsGoal,
+                  fatsGoal,
+                  proteinsGoal,
+                  sodiumGoal,
+                  sugarsGoal,
+                  days,
+                });
+              }
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// delete row in the diary
+router.post("/deleteMindfulness", ensureAuthenticated, (req, res) => {
+  // have to turn string into a mongo object id
+  const _id = mongoose.mongo.ObjectId(req.body.row_id);
+
+  // how to delete subdocuments
+  Days.updateOne({ "mindfulness._id": _id }, { $pull: { mindfulness: { _id } } })
+    .then((response) => {
+      // query days
+      Days.findOne({
+        $or: [
+          { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+          { username: req.user.username },
+        ],
+        dateString: req.body.dateString.trim(),
+      }) //should properly check if either username or email match
+        .then((days) => {
+          // also need to pull user goals
+          UserGoals.findOne({
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          })
+
+            // if this user exists, we render the page with the parameters already in the db
+            .then((usergoals) => {
+              // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
+              if (usergoals) {
+                // to update pass, need to check if we are adding data for the current date
+                const checkcurrentDate = new Date();
+                const checkdateString = checkcurrentDate.toDateString();
+
+                // next line commented out for passkit update
+                // if (req.body.dateString.trim() == checkdateString) {
+                //     passkit.updatePass(req.user.email, days)
+                // }
+
+                // sets goals data on the page to what's stored in the db
+                const { caloriesGoal } = usergoals;
+                const { carbsGoal } = usergoals;
+                const { proteinsGoal } = usergoals;
+                const { fatsGoal } = usergoals;
+                const { sugarsGoal } = usergoals;
+                const { sodiumGoal } = usergoals;
+
+                // re render the dashboard after having updated the days collection
+                res.render("dashboard", {
+                  name: req.user.email,
+                  caloriesGoal,
+                  carbsGoal,
+                  fatsGoal,
+                  proteinsGoal,
+                  sodiumGoal,
+                  sugarsGoal,
+                  days,
+                });
+              }
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
+
+// delete Foods
+router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
+  // extract id from request
+  const _id = req.body.row_id;
+
+  // split into array
+  const _id_array = _id.split(",");
+
+  let arrayCounter = 0;
+
+  if (_id != "empty") {
+    // for each element, do new delete request in db
+    _id_array.forEach((element) => {
+      // have to turn string into a mongo object id
+      const _id_obj = mongoose.mongo.ObjectId(element);
+
+      // delete all subdocuments in array
+      Days.updateOne(
+        { "mindfulness._id": _id_obj },
+        { $pull: { mindfulness: { _id: _id_obj } } }
+      )
+        .then((response) => {
+          // need to update the array counter after each request is completed
+          arrayCounter++;
+
+          // check if done updating array before sending response
+          if (arrayCounter == _id_array.length) {
+            // query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: req.body.dateString.trim(),
+            }) //should properly check if either username or email match
+              .then((days) => {
+                // also need to pull user goals
+                UserGoals.findOne({
+                  $or: [
+                    {
+                      $and: [{ email: req.user.email }, { email: { $ne: "" } }],
+                    },
+                    { username: req.user.username },
+                  ],
+                })
+
+                  // if this user exists, we render the page with the parameters already in the db
+                  .then((usergoals) => {
+                    // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
+                    if (usergoals) {
+                      // to update pass, need to check if we are adding data for the current date
+                      const checkcurrentDate = new Date();
+                      const checkdateString = checkcurrentDate.toDateString();
+                      // if (req.body.dateString.trim() == checkdateString) {
+                      //     passkit.updatePass(req.user.email, days)
+                      // }
+
+                      // sets goals data on the page to what's stored in the db
+                      const { caloriesGoal } = usergoals;
+                      const { carbsGoal } = usergoals;
+                      const { proteinsGoal } = usergoals;
+                      const { fatsGoal } = usergoals;
+                      const { sugarsGoal } = usergoals;
+                      const { sodiumGoal } = usergoals;
+
+                      // re render the dashboard after having updated the days collection
+                      res.render("dashboard", {
+                        name: req.user.name,
+                        caloriesGoal,
+                        carbsGoal,
+                        fatsGoal,
+                        proteinsGoal,
+                        sodiumGoal,
+                        sugarsGoal,
+                        days,
+                      });
+                    }
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    });
+  } else {
+    // query days
+    Days.findOne({
+      $or: [
+        { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+        { username: req.user.username },
+      ],
+      dateString: req.body.dateString.trim(),
+    }) //should properly check if either username or email match
+      .then((days) => {
+        // also need to pull user goals
+        UserGoals.findOne({
+          $or: [
+            { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+            { username: req.user.username },
+          ],
+        })
+
+          // if this user exists, we render the page with the parameters already in the db
+          .then((usergoals) => {
+            // check if usersgoals exists in the database; if the user exists, we check if a Day exists for the current date
+            if (usergoals) {
+              // to update pass, need to check if we are adding data for the current date
+              const checkcurrentDate = new Date();
+              const checkdateString = checkcurrentDate.toDateString();
+
+              // next line commented out for passkit update
+              // if (req.body.dateString.trim() == checkdateString) {
+              //     passkit.updatePass(req.user.email, days)
+              // }
+
+              // sets goals data on the page to what's stored in the db
+              const { caloriesGoal } = usergoals;
+              const { carbsGoal } = usergoals;
+              const { proteinsGoal } = usergoals;
+              const { fatsGoal } = usergoals;
+              const { sugarsGoal } = usergoals;
+              const { sodiumGoal } = usergoals;
+
+              // re render the dashboard after having updated the days collection
+              res.render("dashboard", {
+                name: req.user.email,
+                caloriesGoal,
+                carbsGoal,
+                fatsGoal,
+                proteinsGoal,
+                sodiumGoal,
+                sugarsGoal,
+                days,
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+
 // exports the router function to be used in app
 module.exports = router;

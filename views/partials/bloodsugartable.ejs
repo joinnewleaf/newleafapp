@@ -24,12 +24,12 @@
           <div class="row">
             <div class="col-sm-6">
               <h4 class="tableHeadMobile">
-                <b>Stress Log</b>
+                <b>Blood Sugar Log</b>
               </h4>
             </div>
 
             <div class="col-sm-6 tableButtonMobile">
-              <a href="#addModal3" class="btn btn-add" data-toggle="modal">
+              <a href="#addModal4" class="btn btn-add" data-toggle="modal">
                 <i class="material-icons">&#xE147;</i>
                 <span>Add Entry</span>
               </a>
@@ -47,12 +47,12 @@
             <tr>
               <th>
                 <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox3" name="options[]" value="1" />
-                  <label for="checkbox3"></label>
+                  <input type="checkbox" id="checkbox4" name="options[]" value="1" />
+                  <label for="checkbox4"></label>
                 </span>
               </th>
               <th>Time</th>
-              <th class="columnHideMobile">Stress Level (1 - 10)</th>
+              <th class="columnHideMobile">Blood Sugar (mg/dL)</th>
               <th class="blankForMobile"><br /></th>
               <th>Notes</th>
               <th></th>
@@ -62,32 +62,32 @@
           <!-- Table body is multiple rows, each row needs rendered using jquery and database requests -->
           <tbody>
             <!-- Each row gets rendered using a database request-->
-            <%if (typeof days.stressLevels != 'undefined') { %> <%
-            days.stressLevels.forEach(function(stressLevels) { %>
-            <tr id="<%= stressLevels._id %>">
+            <%if (typeof days.bloodSugar != 'undefined') { %> <%
+            days.bloodSugar.forEach(function(bloodSugar) { %>
+            <tr id="<%= bloodSugar._id %>">
               <td>
                 <span class="custom-checkbox">
-                  <input type="checkbox" id="checkbox_stressLevels" name="options[]" value="1" />
-                  <label for="checkbox3"></label>
+                  <input type="checkbox" id="checkbox_bloodSugar" name="options[]" value="1" />
+                  <label for="checkbox4"></label>
                 </span>
               </td>
               <td class="name_data">
-                <%= stressLevels.time %>
+                <%= bloodSugar.time %>
               </td>
               <!-- <td class="blankForMobile newRowMobile"><br></td> -->
-              <td class="row_data newRowMobile" data-label="Stress: " column_name="stressLevels_data">
-                <%if (typeof stressLevels.stress != 'undefined') { %> <%=
-                stressLevels.stress %> <% } else { %> <%= 'NR' %> <% } %>
+              <td class="row_data newRowMobile" data-label="Blood Glucose: " column_name="bloodSugar_data">
+                <%if (typeof bloodSugar.bloodSugar != 'undefined') { %> <%=
+                    bloodSugar.bloodSugar %> <% } else { %> <%= 'NR' %> <% } %>
               </td>
               <td class="row_data notes_data" column_name="notes_data">
-                <%if (typeof stressLevels.notes != 'undefined') { %> <%=
-                stressLevels.notes %> <% } else { %> <%= 'None' %> <% } %>
+                <%if (typeof bloodSugar.notes != 'undefined') { %> <%=
+                    bloodSugar.notes %> <% } else { %> <%= 'None' %> <% } %>
               </td>
               <td>
-                <a href="#editModal3" class="edit" data-toggle="modal">
+                <a href="#editModal4" class="edit" data-toggle="modal">
                   <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                 </a>
-                <a href="#deleteModal3" class="delete" data-toggle="modal">
+                <a href="#deleteModal4" class="delete" data-toggle="modal">
                   <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                 </a>
               </td>
@@ -100,10 +100,10 @@
     </div>
 
     <!-- Add Modal HTML -->
-    <div id="addModal3" class="modal fade">
+    <div id="addModal4" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/addStressLevel" method="POST" autocomplete="off">
+          <form action="/days/addBloodSugar" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Add Entry</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -113,15 +113,14 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>Time (HH:MM AM|PM)</label>
-                <input type="text" pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))" name="time" id="time3"
+                <input type="text" pattern="\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))" name="time" id="time4"
                   value="12:00 PM" class="form-control" required maxlength="25" onclick="this.select()" />
               </div>
               <div class="form-group">
-                <label>Stress (1 - 10)</label>
-                <div class="d-flex justify-content-center my-4">
-                  <input step="1" name="stress" class="form-control check-numbers4" type="range" value="5" min="1"
-                    max="10" oninput="this.nextElementSibling.value = this.value">
-                  <output class="font-weight-bold blue-text mr-2 mt-1">5</output>
+                <label>Blood Sugar (mg/dL)</label>
+                <div class="form-group">
+                  <input autocomplete="off" type="text" pattern="([0-9]{,3})" name="bloodSugar"
+                    class="form-control check-numbers4" value="" maxlength="3" max="999" onclick="this.select()" />
                 </div>
               </div>
               <div class="form-group">
@@ -142,10 +141,10 @@
     </div>
 
     <!-- Edit Modal HTML -->
-    <div id="editModal3" class="modal fade">
+    <div id="editModal4" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/editStressLevel" method="POST" autocomplete="off">
+          <form action="/days/editBloodSugar" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Edit Entry</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -167,14 +166,15 @@
               />
               </div>
               <div class="form-group">
-                <label>Stress (out of 10)</label>
-                <input step="1" name="stress" class="form-control check-numbers4" type="range" value="5" min="1"
-                  max="10" oninput="this.nextElementSibling.value = this.value">
-                <output class="font-weight-bold blue-text mr-2 mt-1">5</output>
+                <label>Blood Sugar (mg/dL)</label>
+                <div class="form-group">
+                  <input autocomplete="off" type="text" pattern="([0-9]{,3})" name="bloodSugar"
+                    class="form-control check-numbers4" value="" maxlength="3" max="999" onclick="this.select()" />
+                </div>
               </div>
               <div class="form-group">
                 <label>Notes</label>
-                <textarea name="notes" id="editNotes3" rows="3" class="form-control edit_row_data" value=""
+                <textarea name="notes" id="editNotes4" rows="3" class="form-control edit_row_data" value=""
                   maxlength="140" onclick="this.select()"></textarea>
               </div>
               <input type="hidden" name="date" value="<%= days.date %>" />
@@ -191,10 +191,10 @@
     </div>
 
     <!-- Delete Modal HTML -->
-    <div id="deleteModal3" class="modal fade">
+    <div id="deleteModal4" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/deleteStressLevel" method="POST" autocomplete="off">
+          <form action="/days/deleteBloodSugar" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Delete Entry</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -220,10 +220,10 @@
     </div>
 
     <!-- Delete Multiple Modal HTML -->
-    <div id="deleteMultipleModal_stress" class="modal fade">
+    <div id="deleteMultipleModal_bloodSugar" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form action="/days/deleteMultipleStressLevels" method="POST" autocomplete="off">
+          <form action="/days/deleteMultipleBloodSugar" method="POST" autocomplete="off">
             <div class="modal-header">
               <h4 class="modal-title">Delete Entry</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -255,18 +255,18 @@
 
 
     //on changing the checkbox header
-    $("#checkbox3").change(function () {
+    $("#checkbox4").change(function () {
       //if the check box is checked, cycle through document and check everything
       if (this.checked == true) {
         $(document)
-          .find("input[id=checkbox_stressLevels]")
+          .find("input[id=checkbox_bloodSugar]")
           .each(function (index, val) {
             $(val).prop("checked", true);
           });
       } else {
         //uncheck everything
         $(document)
-          .find("input[id=checkbox_stressLevels]")
+          .find("input[id=checkbox_bloodSugar]")
           .each(function (index, val) {
             $(val).prop("checked", false);
           });
@@ -276,7 +276,6 @@
     //these double check that input values are valid numbers for weight; input patterns make sure the input is a certain length
     $(".check-numbers4").keyup(function () {
       $(".check-numbers4").val(this.value.match(/[0-9]*\.?[0-9]+/g));
-      console.log("in here");
     });
 
     //click the add button
@@ -287,7 +286,7 @@
         hour12: true,
         minute: "numeric"
       });
-      $("#time3").attr({
+      $("#time4").attr({
         value: g
       });
     });
@@ -307,12 +306,12 @@
       //get new name
       var name = tbl_row.find(".name_data").html();
       name = name.trim();
-      $("#editModal3")
+      $("#editModal4")
         .find(".name_row_data")
         .attr("value", name);
 
       //get row id
-      $("#editModal3")
+      $("#editModal4")
         .find(".row_id_data")
         .attr("value", id);
 
@@ -340,13 +339,13 @@
       //for each value in the edit form, we update with the temporary data
       let j = 0;
       console.log(temp_row_data);
-      $("#editModal3")
+      $("#editModal4")
         .find(".edit_row_data")
         .each(function (index, val) {
           //update edit form
           $(this).attr("value", temp_row_data[j]);
           if (j == 3) {
-            $("#editNotes3").val(temp_row_data[j]);
+            $("#editNotes4").val(temp_row_data[j]);
           }
           j++;
         });
@@ -362,7 +361,7 @@
       var id = tbl_row.attr("id");
 
       //update row id in the submit form
-      $("#deleteModal3")
+      $("#deleteModal4")
         .find(".row_id_data")
         .attr("value", id);
     });
@@ -379,7 +378,7 @@
       var id = tbl_row.attr("id");
 
       //update row id in the submit form
-      $("#deleteModal3")
+      $("#deleteModal4")
         .find(".row_id_data")
         .attr("value", id);
     });
@@ -415,7 +414,7 @@
             console.log("id_array= " + id_array.toString());
 
             //update row id in the submit form
-            $("#deleteMultipleModal_stress")
+            $("#deleteMultipleModal_bloodSugar")
               .find(".row_id_data_array")
               .attr("value", id_array);
           }
