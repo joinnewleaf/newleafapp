@@ -21,12 +21,12 @@ const { ensureAuthenticated } = require("../config/auth");
 router.post("/update", ensureAuthenticated, (req, res) => {
   //pulls goals from submitted form
   var {
-    caloriesGoal,
-    carbsGoal,
-    fatsGoal,
-    proteinsGoal,
-    sodiumGoal,
-    sugarsGoal,
+    caloriesGoal: caloriesGoal,
+    carbsGoal: carbsGoal,
+    fatsGoal: fatsGoal,
+    proteinsGoal: proteinsGoal,
+    sodiumGoal: sodiumGoal,
+    sugarsGoal: sugarsGoal
   } = req.body;
 
   //intialize an success message array
@@ -102,7 +102,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
               // passkit.updatePass(req.user.email, days)
 
               //render the account page
-              res.render("myaccount", {
+              res.render("customize", {
                 success_msgs,
                 name: req.user.email,
                 caloriesGoal: caloriesGoal,
@@ -171,7 +171,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                 // passkit.updatePass(req.user.email, days)
 
                 //render the account page
-                res.render("myaccount", {
+                res.render("customize", {
                   name: req.user.email,
                   caloriesGoal: caloriesGoal,
                   carbsGoal: carbsGoal,
@@ -190,7 +190,7 @@ router.post("/update", ensureAuthenticated, (req, res) => {
 });
 
 //loads the page, and gets data from db every time page is rendered
-router.get("/myaccount", ensureAuthenticated, (req, res) =>
+router.get("/customize", ensureAuthenticated, (req, res) =>
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({
     $or: [
@@ -211,8 +211,8 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
         let sugarsGoal = usergoals.sugarsGoal;
         let sodiumGoal = usergoals.sodiumGoal;
 
-        //renders the myaccount page anytime this page gets called
-        res.render("myaccount", {
+        //renders the customize page anytime this page gets called
+        res.render("customize", {
           name: req.user.email,
           caloriesGoal: caloriesGoal,
           carbsGoal: carbsGoal,
@@ -222,7 +222,7 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
           sugarsGoal: sugarsGoal,
         });
       } else {
-        //if myaccount page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
+        //if customize page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
         let caloriesGoal = 2000;
         let carbsGoal = 275;
         let proteinsGoal = 50;
@@ -265,7 +265,7 @@ router.get("/myaccount", ensureAuthenticated, (req, res) =>
                 // passkit.updatePass(req.user.email, days)
 
                 //render the account page
-                res.render("myaccount", {
+                res.render("customize", {
                   name: req.user.email,
                   caloriesGoal: caloriesGoal,
                   carbsGoal: carbsGoal,
@@ -347,7 +347,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                 success_msgs.push({ msg: "Goals set to default" });
 
                 //render the account page
-                res.render("myaccount", {
+                res.render("customize", {
                   success_msgs,
                   name: req.user.email,
                   caloriesGoal: caloriesGoal,
