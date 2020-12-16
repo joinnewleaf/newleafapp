@@ -15,7 +15,6 @@
   <%# next line includes the partial navbar file%>
     <% include ./partials/navbar %>
 
-
       <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
 so that you can click on it and close out the sidebar -->
       <div class="content blankPanelSidebarOpen">
@@ -85,111 +84,94 @@ so that you can click on it and close out the sidebar -->
                       <input type="number" class="form-control" name="sugarsGoal" maxlength="10" min=0
                         placeholder="<%= typeof sugarsGoal != 'undefined' ? sugarsGoal : '' %>" autocomplete="off">
                     </div>
-
-                    <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                    <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                      onclick="window.location='/usergoals/default';" />
-
+                    <button type="submit" class="save-goals btn btn-primary">Save</button>
+                    <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                      formaction='/usergoals/defaultFoodGoal' />
                   </form>
 
                   <div class=" ">
                     <h4 class=" edit-your-goals card-title">Exercise Goals</h4>
                   </div>
-                  <%# next line includes the partial messages file, and can be used for displaying success or failure
-                    after registration in a flash%>
-                    <% include ./partials/messages %>
                       <form class="my-account-grid" action="/usergoals/update" method="POST">
                         <div class="form-group">
                           <label for="weeklyExerciseMinuteGoal">Weekly Exercise Minutes</label>
-                          <input type="number" class="form-control" name="weeklyExerciseMinuteGoal" maxlength="10" min=1200
+                          <input type="number" class="form-control" name="weeklyExerciseMinuteGoal" maxlength="3" min=0
                             placeholder="<%= typeof weeklyExerciseMinuteGoal != 'undefined' ? weeklyExerciseMinuteGoal : '' %>"
                             autocomplete="off">
                         </div>
 
-                        <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                        <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                          onclick="window.location='/usergoals/default';" />
+                        <button type="submit" class="save-goals btn btn-primary">Save</button>
+                        <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                        formaction='/usergoals/defaultExerciseGoal' />
 
                       </form>
 
                       <div class=" ">
                         <h4 class=" edit-your-goals card-title">Mindfulness & Meditation Goals</h4>
                       </div>
-
-                      <%# next line includes the partial messages file, and can be used for displaying success or
-                        failure after registration in a flash%>
-                        <% include ./partials/messages %>
                           <form class="my-account-grid" action="/usergoals/update" method="POST">
                             <div class="form-group">
                               <label for="weeklyMindfulnessMinuteGoal">Weekly Mindfulness Minutes</label>
-                              <input type="number" class="form-control" name="weeklyMindfulnessMinuteGoal" maxlength="10"
-                                min=1200
-                                placeholder="<%= typeof weeklyMindfulnessMinuteGoal != 'undefined' ? weeklyMindfulnessMinute : '' %>"
+                              <input type="number" class="form-control" name="weeklyMindfulnessMinuteGoal" maxlength="3"
+                                min=0
+                                placeholder="<%= typeof weeklyMindfulnessMinuteGoal != 'undefined' ? weeklyMindfulnessMinuteGoal : '' %>"
                                 autocomplete="off">
                             </div>
 
-                            <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                            <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                              onclick="window.location='/usergoals/default';" />
+                            <button type="submit" class="save-goals btn btn-primary">Save</button>
+                            <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                            formaction='/usergoals/defaultMindfulnessGoal' />
 
                           </form>
 
                           <div class=" ">
                             <h4 class=" edit-your-goals card-title">Body Weight Goals</h4>
                           </div>
-
-                          <%# next line includes the partial messages file, and can be used for displaying success or
-                            failure after registration in a flash%>
-                            <% include ./partials/messages %>
                               <form class="my-account-grid" action="/usergoals/update" method="POST">
                                 <div class="form-group">
                                   <label for="goalWeight">Goal Weight (lbs)</label>
-                                  <input type="number" class="form-control" name="goalWeight" maxlength="10" min=1200
+                                  <input type="number" class="form-control" name="goalWeight" maxlength="10" min=0
                                     placeholder="<%= typeof goalWeight != 'undefined' ? goalWeight : '' %>"
                                     autocomplete="off">
                                 </div>
 
                                 <div class="form-group">
-                                  <label for="weeklyWeightChange">Weekly Weight Change (lbs)</label>
-                                  <input type="number" class="form-control" name="weeklyWeightChange" maxlength="10"
-                                    min=0
-                                    placeholder="<%= typeof weeklyWeightChange != 'undefined' ? weeklyWeightChange : '' %>"
+                                  <label for="weeklyWeightChangeGoal">Weekly Weight Change (lbs)</label>
+                                  <input type="number" class="form-control" name="weeklyWeightChangeGoal" maxlength="2"
+                                    min=-2 max=2
+                                    placeholder="<%= typeof weeklyWeightChangeGoal != 'undefined' ? weeklyWeightChangeGoal : '' %>"
                                     autocomplete="off">
                                 </div>
 
-                                <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                                <input type="button" class=" return-to-default btn btn-primary btn_default"
-                                  value="Default" onclick="window.location='/usergoals/default';" />
+                                <button type="submit" class="save-goals btn btn-primary">Save</button>
+                                <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                                formaction='/usergoals/defaultWeightGoal' />
 
                               </form>
 
                               <div class=" ">
                                 <h4 class=" edit-your-goals card-title">Blood Pressure Goals</h4>
                               </div>
-
-                              <%# next line includes the partial messages file, and can be used for displaying success
-                                or failure after registration in a flash%>
-                                <% include ./partials/messages %>
                                   <form class="my-account-grid" action="/usergoals/update" method="POST">
                                     <div class="form-group">
                                       <label for="targetSystolic">Target Systolic</label>
-                                      <input type="number" class="form-control" name="targetSystolic" maxlength="10"
-                                        min=1200
+                                      <input type="number" class="form-control" name="targetSystolic" maxlength="3"
+                                        min=0
                                         placeholder="<%= typeof targetSystolic != 'undefined' ? targetSystolic : '' %>"
                                         autocomplete="off">
                                     </div>
 
                                     <div class="form-group">
                                       <label for="targetDiastolic">Target Diastolic</label>
-                                      <input type="number" class="form-control" name="targetDiastolic" maxlength="10"
+                                      <input type="number" class="form-control" name="targetDiastolic" maxlength="3"
                                         min=0
                                         placeholder="<%= typeof targetDiastolic != 'undefined' ? targetDiastolic : '' %>"
                                         autocomplete="off">
                                     </div>
 
-                                    <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                                    <input type="button" class=" return-to-default btn btn-primary btn_default"
-                                      value="Default" onclick="window.location='/usergoals/default';" />
+                                    <button type="submit" class="save-goals btn btn-primary">Save</button>
+                                    <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                                    formaction='/usergoals/defaultBloodPressureGoal' />
 
                                   </form>
 

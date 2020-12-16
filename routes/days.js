@@ -85,6 +85,12 @@ router.post("/add", ensureAuthenticated, (req, res) => {
                   const { fatsGoal } = usergoals;
                   const { sugarsGoal } = usergoals;
                   const { sodiumGoal } = usergoals;
+                  const { weeklyExerciseMinuteGoal } = usergoals;
+                  const { weeklyMindfulnessMinuteGoal } = usergoals;
+                  const { goalWeight } = usergoals;
+                  const { weeklyWeightChangeGoal } = usergoals;
+                  const { targetSystolic } = usergoals;
+                  const { targetDiastolic } = usergoals;
 
                   // re render the dashboard after having updated the days collection
                   res.render("dashboard", {
@@ -167,6 +173,12 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
@@ -234,6 +246,12 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 //replace name with username
@@ -320,6 +338,12 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                       const { fatsGoal } = usergoals;
                       const { sugarsGoal } = usergoals;
                       const { sodiumGoal } = usergoals;
+                      const { weeklyExerciseMinuteGoal } = usergoals;
+                      const { weeklyMindfulnessMinuteGoal } = usergoals;
+                      const { goalWeight } = usergoals;
+                      const { weeklyWeightChangeGoal } = usergoals;
+                      const { targetSystolic } = usergoals;
+                      const { targetDiastolic } = usergoals;
 
                       // re render the dashboard after having updated the days collection
                       res.render("dashboard", {
@@ -379,6 +403,12 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
               const { fatsGoal } = usergoals;
               const { sugarsGoal } = usergoals;
               const { sodiumGoal } = usergoals;
+              const { weeklyExerciseMinuteGoal } = usergoals;
+              const { weeklyMindfulnessMinuteGoal } = usergoals;
+              const { goalWeight } = usergoals;
+              const { weeklyWeightChangeGoal } = usergoals;
+              const { targetSystolic } = usergoals;
+              const { targetDiastolic } = usergoals;
 
               // re render the dashboard after having updated the days collection
               res.render("dashboard", {
@@ -829,6 +859,12 @@ router.post("/addExercise", ensureAuthenticated, (req, res) => {
                   const { fatsGoal } = usergoals;
                   const { sugarsGoal } = usergoals;
                   const { sodiumGoal } = usergoals;
+                  const { weeklyExerciseMinuteGoal } = usergoals;
+                  const { weeklyMindfulnessMinuteGoal } = usergoals;
+                  const { goalWeight } = usergoals;
+                  const { weeklyWeightChangeGoal } = usergoals;
+                  const { targetSystolic } = usergoals;
+                  const { targetDiastolic } = usergoals;
 
                   // re render the dashboard after having updated the days collection
                   res.render("dashboard", {
@@ -908,6 +944,12 @@ router.post("/editExercise", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
@@ -974,6 +1016,12 @@ router.post("/deleteExercise", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
@@ -1059,6 +1107,12 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
                       const { fatsGoal } = usergoals;
                       const { sugarsGoal } = usergoals;
                       const { sodiumGoal } = usergoals;
+                      const { weeklyExerciseMinuteGoal } = usergoals;
+                      const { weeklyMindfulnessMinuteGoal } = usergoals;
+                      const { goalWeight } = usergoals;
+                      const { weeklyWeightChangeGoal } = usergoals;
+                      const { targetSystolic } = usergoals;
+                      const { targetDiastolic } = usergoals;
 
                       // re render the dashboard after having updated the days collection
                       res.render("dashboard", {
@@ -1118,6 +1172,12 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
               const { fatsGoal } = usergoals;
               const { sugarsGoal } = usergoals;
               const { sodiumGoal } = usergoals;
+              const { weeklyExerciseMinuteGoal } = usergoals;
+              const { weeklyMindfulnessMinuteGoal } = usergoals;
+              const { goalWeight } = usergoals;
+              const { weeklyWeightChangeGoal } = usergoals;
+              const { targetSystolic } = usergoals;
+              const { targetDiastolic } = usergoals;
 
               // re render the dashboard after having updated the days collection
               res.render("dashboard", {
@@ -1141,7 +1201,6 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
 //stress log diary section
 // post request on the dashboard adds in new data to diary
 router.post("/addStressLevel", ensureAuthenticated, (req, res) => {
-
   console.log(req.body);
   // pull important values out of the request
   const new_row_data = {
@@ -1321,15 +1380,9 @@ router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-
-
-
-
-
 //Blood Sugar log section
 // post request on the dashboard adds in new data to diary
 router.post("/addBloodSugar", ensureAuthenticated, (req, res) => {
-
   console.log(req.body);
   // pull important values out of the request
   const new_row_data = {
@@ -1378,10 +1431,7 @@ router.post("/deleteBloodSugar", ensureAuthenticated, (req, res) => {
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
 
   // how to delete subdocuments
-  Days.updateOne(
-    { "bloodSugar._id": _id },
-    { $pull: { bloodSugar: { _id } } }
-  )
+  Days.updateOne({ "bloodSugar._id": _id }, { $pull: { bloodSugar: { _id } } })
     .then((response) => {
       // query days
       Days.findOne({
@@ -1509,9 +1559,6 @@ router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-
-
-
 //mindfulness section
 // post request on the dashboard adds in new data to diary
 router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
@@ -1572,6 +1619,12 @@ router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
                   const { fatsGoal } = usergoals;
                   const { sugarsGoal } = usergoals;
                   const { sodiumGoal } = usergoals;
+                  const { weeklyExerciseMinuteGoal } = usergoals;
+                  const { weeklyMindfulnessMinuteGoal } = usergoals;
+                  const { goalWeight } = usergoals;
+                  const { weeklyWeightChangeGoal } = usergoals;
+                  const { targetSystolic } = usergoals;
+                  const { targetDiastolic } = usergoals;
 
                   // re render the dashboard after having updated the days collection
                   res.render("dashboard", {
@@ -1651,6 +1704,12 @@ router.post("/editMindfulness", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
@@ -1678,7 +1737,10 @@ router.post("/deleteMindfulness", ensureAuthenticated, (req, res) => {
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
 
   // how to delete subdocuments
-  Days.updateOne({ "mindfulness._id": _id }, { $pull: { mindfulness: { _id } } })
+  Days.updateOne(
+    { "mindfulness._id": _id },
+    { $pull: { mindfulness: { _id } } }
+  )
     .then((response) => {
       // query days
       Days.findOne({
@@ -1717,6 +1779,12 @@ router.post("/deleteMindfulness", ensureAuthenticated, (req, res) => {
                 const { fatsGoal } = usergoals;
                 const { sugarsGoal } = usergoals;
                 const { sodiumGoal } = usergoals;
+                const { weeklyExerciseMinuteGoal } = usergoals;
+                const { weeklyMindfulnessMinuteGoal } = usergoals;
+                const { goalWeight } = usergoals;
+                const { weeklyWeightChangeGoal } = usergoals;
+                const { targetSystolic } = usergoals;
+                const { targetDiastolic } = usergoals;
 
                 // re render the dashboard after having updated the days collection
                 res.render("dashboard", {
@@ -1802,6 +1870,12 @@ router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
                       const { fatsGoal } = usergoals;
                       const { sugarsGoal } = usergoals;
                       const { sodiumGoal } = usergoals;
+                      const { weeklyExerciseMinuteGoal } = usergoals;
+                      const { weeklyMindfulnessMinuteGoal } = usergoals;
+                      const { goalWeight } = usergoals;
+                      const { weeklyWeightChangeGoal } = usergoals;
+                      const { targetSystolic } = usergoals;
+                      const { targetDiastolic } = usergoals;
 
                       // re render the dashboard after having updated the days collection
                       res.render("dashboard", {
@@ -1861,6 +1935,12 @@ router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
               const { fatsGoal } = usergoals;
               const { sugarsGoal } = usergoals;
               const { sodiumGoal } = usergoals;
+              const { weeklyExerciseMinuteGoal } = usergoals;
+              const { weeklyMindfulnessMinuteGoal } = usergoals;
+              const { goalWeight } = usergoals;
+              const { weeklyWeightChangeGoal } = usergoals;
+              const { targetSystolic } = usergoals;
+              const { targetDiastolic } = usergoals;
 
               // re render the dashboard after having updated the days collection
               res.render("dashboard", {
@@ -1880,7 +1960,6 @@ router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
       .catch((err) => console.log(err));
   }
 });
-
 
 // exports the router function to be used in app
 module.exports = router;

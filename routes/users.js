@@ -127,6 +127,12 @@ router.post("/register", (req, res) => {
                   let fatsGoal = 78;
                   let sugarsGoal = 50;
                   let sodiumGoal = 2300;
+                  let weeklyExerciseMinuteGoal= 150;
+                  let weeklyMindfulnessMinuteGoal= 70;
+                  let goalWeight= "";
+                  let weeklyWeightChangeGoal = 0;
+                  let targetSystolic= 120;
+                  let targetDiastolic= 80;
 
                   //if the user is new, we add new goals
                   const newUserGoals = new UserGoals({
@@ -138,6 +144,12 @@ router.post("/register", (req, res) => {
                     proteinsGoal,
                     sodiumGoal,
                     sugarsGoal,
+                    weeklyExerciseMinuteGoal,
+                    weeklyMindfulnessMinuteGoal,
+                    goalWeight,
+                    weeklyWeightChangeGoal,
+                    targetSystolic,
+                    targetDiastolic,
                   });
 
                   //save new goals in the db
@@ -171,7 +183,6 @@ router.post("/register", (req, res) => {
 
 //when logging in need to create a login route
 router.post("/login", (req, res, next) => {
-
   //using the local strategy (passing in local)
   passport.authenticate("local", {
     successRedirect: "/dashboard",
