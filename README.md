@@ -6,7 +6,7 @@ New Leaf
 
 II.	General description
 
-New Leaf is a web application capable of delivering remote health monitoring for management of chronic diseases like diabetes and hypertension. New Leaf was built using Internet of Things technology and will soon support tracking blood pressure and heart rate for chronic disease prevention. Features include goal setting, personalized feedback, and a focus on alleviating data entry burden. Additionally, it provides physicians with data analytics on patients’ habits between visits. Our primary tool reduced data-entry burden associated with dietary. The tool is a digital wallet card, which writes health data to a web-based food diary during food purchases in real-time. This tool won an honorable mention in the 2nd round of last year’s Smart Cities competition, and has been substantially expanded into a product focused on chronic disease control and education. A demo of our MVP can be seen in the video.
+New Leaf is a web application capable of delivering remote health monitoring for management of chronic diseases like diabetes and hypertension. New Leaf was built using Internet of Things technology and will soon support tracking blood pressure and heart rate for chronic disease prevention. Features include goal setting, personalized feedback, and a focus on alleviating data entry burden. Additionally, it provides physicians with data analytics on patients’ habits between visits.
 
 III.	Why is it needed?
 
@@ -14,4 +14,4 @@ III.	Why is it needed?
  
 
 IV. What are the risks associated with your concept? 
-Data security and data loss is our biggest risk, which we will prevent using industry standard security practices. This will include user authentication, defining user roles privileges, and encrypting health data. We will never share or sell user information.
+Data security and data loss is our biggest risk, which we will prevent using industry standard security practices. This will include user authentication, defining user roles and privileges, and encrypting health data. We will never share or sell user information.
