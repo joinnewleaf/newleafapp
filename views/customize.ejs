@@ -1,409 +1,578 @@
-<% /* this is going to be the myaccount page in the dashboard this will allow users to edit their goals with an inline
-  editing table will include calories, proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
-  editable form, similar to inline edited table, updates database, and passkit api after saving placeholders will
-  contain default fda values*/%>
-  <style>
-    /* This styling is needed to allow the numbers inputs to not use text */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      margin: 0;
-    }
-  </style>
-  <%# next line includes the partial navbar file%>
-    <% include ./partials/navbar %>
+<% /* this is going to be the myaccount page in the dashboard this will allow
+users to edit their goals with an inline editing table will include calories,
+proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
+editable form, similar to inline edited table, updates database, and passkit api
+after saving placeholders will contain default fda values*/%>
+<style>
+  /* This styling is needed to allow the numbers inputs to not use text */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+</style>
+<%# next line includes the partial navbar file%> <% include ./partials/navbar %>
 
-
-      <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+<!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
 so that you can click on it and close out the sidebar -->
-      <div class="content blankPanelSidebarOpen">
-        <div class="main-panel myaccount customizeMobileSettings customizeDesktopSettings">
-          <!-- Top Navbar -->
-          <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-              aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-bar burger-lines"></span>
-              <span class="navbar-toggler-bar burger-lines"></span>
-              <span class="navbar-toggler-bar burger-lines"></span>
+<div class="content blankPanelSidebarOpen">
+  <div
+    class="main-panel myaccount customizeMobileSettings customizeDesktopSettings"
+  >
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg" color-on-scroll="500">
+      <button
+        href=""
+        class="navbar-toggler navbar-toggler-right"
+        type="button"
+        data-toggle="collapse"
+        aria-controls="navigation-index"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-bar burger-lines"></span>
+        <span class="navbar-toggler-bar burger-lines"></span>
+        <span class="navbar-toggler-bar burger-lines"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <span class="no-icon"> <%= name %> </span>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--this is the main body of the page, it is all wrapped in the class "conent"
+             to keep it centered on the main section of the page-->
+    <div class="content">
+        <h2 class="my-daily-goals">My Goals</h2>
+        <div>
+          <h4 class="edit-your-goals">Daily Nutrition Goals</h4>
+          <%# next line includes the partial messages file, and can be used for
+          displaying success or failure after registration in a flash%> <%
+          include ./partials/messages %>
+          <form
+            class="my-account-grid"
+            action="/usergoals/update"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="calorieGoal">Calorie Limit</label>
+              <input
+                type="number"
+                class="form-control"
+                name="caloriesGoal"
+                maxlength="10"
+                min="1200"
+                placeholder="<%= typeof caloriesGoal != 'undefined' ? caloriesGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="carbGoal">Carbs (g)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="carbsGoal"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof carbsGoal != 'undefined' ? carbsGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="fatsGoal">Fats (g)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="fatsGoal"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof fatsGoal != 'undefined' ? fatsGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="proteinsGoal">Proteins (g)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="proteinsGoal"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof proteinsGoal != 'undefined' ? proteinsGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="sodiumGoal">Sodium (mg)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="sodiumGoal"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof sodiumGoal != 'undefined' ? sodiumGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="sugarGoal">Sugars (g)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="sugarsGoal"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof sugarsGoal != 'undefined' ? sugarsGoal : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <button type="submit" class="save-goals btn btn-primary">
+              Save Goals
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navigation">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <span class="no-icon">
-                    <%= name %>
-                  </span>
-                </li>
-              </ul>
+            <input
+              type="button"
+              class="return-to-default btn btn-primary btn_default"
+              value="Default"
+              onclick="window.location='/usergoals/default';"
+            />
+          </form>
+
+          <div class=" ">
+            <h4 class="edit-your-goals">Exercise Goals</h4>
+          </div>
+          <%# next line includes the partial messages file, and can be used for
+          displaying success or failure after registration in a flash%> <%
+          include ./partials/messages %>
+          <form
+            class="my-account-grid"
+            action="/usergoals/update"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="weeklyExerciseMinuteGoal"
+                >Weekly Exercise Minutes</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="weeklyExerciseMinuteGoal"
+                maxlength="10"
+                min="1200"
+                placeholder="<%= typeof weeklyExerciseMinuteGoal != 'undefined' ? weeklyExerciseMinuteGoal : '' %>"
+                autocomplete="off"
+              />
             </div>
-          </nav>
+            <!-- These empty divs are needed because we want to keep the columns the same size throughhout the page and each of the forms 
+            that the grids are built from have a different number of grid items, so to make them all havae 6 grid items (like the nutrition
+            goals has) we have to add these empty divs. Without them the size of the columns would vary for each of the grids on the page
+          because some have only 1 or 2 items and the grids are built using "auto" which determines the column width based on the max number
+        of grid items that it can fit in a row -->
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
 
-          <!--this is the main body of the page, all contained in .my-account-grid-->
-          <div>
-            <div>
-              <h2 class="my-daily-goals">My Goals</h2>
-              <div class="content">
-                <h4 class="edit-your-goals card-title">Daily Nutrition Goals</h4>
-              </div>
-              <%# next line includes the partial messages file, and can be used for displaying success or failure after
-                registration in a flash%>
-                <% include ./partials/messages %>
-                  <form class="my-account-grid" action="/usergoals/update" method="POST">
-                    <div class="form-group">
-                      <label for="calorieGoal">Calorie Limit</label>
-                      <input type="number" class="form-control" name="caloriesGoal" maxlength="10" min=1200
-                        placeholder="<%= typeof caloriesGoal != 'undefined' ? caloriesGoal : '' %>" autocomplete="off">
-                    </div>
+            <button type="submit" class="save-goals btn btn-primary">
+              Save Goals
+            </button>
+            <input
+              type="button"
+              class="return-to-default btn btn-primary btn_default"
+              value="Default"
+              onclick="window.location='/usergoals/default';"
+            />
+          </form>
 
-                    <div class="form-group">
-                      <label for="carbGoal">Carbs (g)</label>
-                      <input type="number" class="form-control" name="carbsGoal" maxlength="10" min=0
-                        placeholder="<%= typeof carbsGoal != 'undefined' ? carbsGoal : '' %>" autocomplete="off">
-                    </div>
+          <div class=" ">
+            <h4 class="edit-your-goals">
+              Mindfulness & Meditation Goals
+            </h4>
+          </div>
 
-                    <div class="form-group">
-                      <label for="fatsGoal">Fats (g)</label>
-                      <input type="number" class="form-control" name="fatsGoal" maxlength="10" min=0
-                        placeholder="<%= typeof fatsGoal != 'undefined' ? fatsGoal : '' %>" autocomplete="off">
-                    </div>
+          <%# next line includes the partial messages file, and can be used for
+          displaying success or failure after registration in a flash%> <%
+          include ./partials/messages %>
+          <form
+            class="my-account-grid"
+            action="/usergoals/update"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="weeklyMindfulnessMinuteGoal"
+                >Weekly Mindfulness Minutes</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="weeklyMindfulnessMinuteGoal"
+                maxlength="10"
+                min="1200"
+                placeholder="<%= typeof weeklyMindfulnessMinuteGoal != 'undefined' ? weeklyMindfulnessMinute : '' %>"
+                autocomplete="off"
+              />
+            </div>
+            <!-- see above comment, these empty divs are needed  -->
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
 
-                    <div class="form-group">
-                      <label for="proteinsGoal">Proteins (g)</label>
-                      <input type="number" class="form-control" name="proteinsGoal" maxlength="10" min=0
-                        placeholder="<%= typeof proteinsGoal != 'undefined' ? proteinsGoal : '' %>" autocomplete="off">
-                    </div>
+            <button type="submit" class="save-goals btn btn-primary">
+              Save Goals
+            </button>
+            <input
+              type="button"
+              class="return-to-default btn btn-primary btn_default"
+              value="Default"
+              onclick="window.location='/usergoals/default';"
+            />
+          </form>
 
-                    <div class="form-group">
-                      <label for="sodiumGoal">Sodium (mg)</label>
-                      <input type="number" class="form-control" name="sodiumGoal" maxlength="10" min=0
-                        placeholder="<%= typeof sodiumGoal != 'undefined' ? sodiumGoal : '' %>" autocomplete="off">
-                    </div>
+          <div class=" ">
+            <h4 class="edit-your-goals">Body Weight Goals</h4>
+          </div>
 
-                    <div class="form-group">
-                      <label for="sugarGoal">Sugars (g)</label>
-                      <input type="number" class="form-control" name="sugarsGoal" maxlength="10" min=0
-                        placeholder="<%= typeof sugarsGoal != 'undefined' ? sugarsGoal : '' %>" autocomplete="off">
-                    </div>
-
-                    <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                    <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                      onclick="window.location='/usergoals/default';" />
-
-                  </form>
-
-                  <div class=" ">
-                    <h4 class=" edit-your-goals card-title">Exercise Goals</h4>
-                  </div>
-                  <%# next line includes the partial messages file, and can be used for displaying success or failure
-                    after registration in a flash%>
-                    <% include ./partials/messages %>
-                      <form class="my-account-grid" action="/usergoals/update" method="POST">
-                        <div class="form-group">
-                          <label for="weeklyExerciseMinuteGoal">Weekly Exercise Minutes</label>
-                          <input type="number" class="form-control" name="weeklyExerciseMinuteGoal" maxlength="10" min=1200
-                            placeholder="<%= typeof weeklyExerciseMinuteGoal != 'undefined' ? weeklyExerciseMinuteGoal : '' %>"
-                            autocomplete="off">
-                        </div>
-
-                        <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                        <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                          onclick="window.location='/usergoals/default';" />
-
-                      </form>
-
-                      <div class=" ">
-                        <h4 class=" edit-your-goals card-title">Mindfulness & Meditation Goals</h4>
-                      </div>
-
-                      <%# next line includes the partial messages file, and can be used for displaying success or
-                        failure after registration in a flash%>
-                        <% include ./partials/messages %>
-                          <form class="my-account-grid" action="/usergoals/update" method="POST">
-                            <div class="form-group">
-                              <label for="weeklyMindfulnessMinuteGoal">Weekly Mindfulness Minutes</label>
-                              <input type="number" class="form-control" name="weeklyMindfulnessMinuteGoal" maxlength="10"
-                                min=1200
-                                placeholder="<%= typeof weeklyMindfulnessMinuteGoal != 'undefined' ? weeklyMindfulnessMinute : '' %>"
-                                autocomplete="off">
-                            </div>
-
-                            <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                            <input type="button" class=" return-to-default btn btn-primary btn_default" value="Default"
-                              onclick="window.location='/usergoals/default';" />
-
-                          </form>
-
-                          <div class=" ">
-                            <h4 class=" edit-your-goals card-title">Body Weight Goals</h4>
-                          </div>
-
-                          <%# next line includes the partial messages file, and can be used for displaying success or
-                            failure after registration in a flash%>
-                            <% include ./partials/messages %>
-                              <form class="my-account-grid" action="/usergoals/update" method="POST">
-                                <div class="form-group">
-                                  <label for="goalWeight">Goal Weight (lbs)</label>
-                                  <input type="number" class="form-control" name="goalWeight" maxlength="10" min=1200
-                                    placeholder="<%= typeof goalWeight != 'undefined' ? goalWeight : '' %>"
-                                    autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                  <label for="weeklyWeightChange">Weekly Weight Change (lbs)</label>
-                                  <input type="number" class="form-control" name="weeklyWeightChange" maxlength="10"
-                                    min=0
-                                    placeholder="<%= typeof weeklyWeightChange != 'undefined' ? weeklyWeightChange : '' %>"
-                                    autocomplete="off">
-                                </div>
-
-                                <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                                <input type="button" class=" return-to-default btn btn-primary btn_default"
-                                  value="Default" onclick="window.location='/usergoals/default';" />
-
-                              </form>
-
-                              <div class=" ">
-                                <h4 class=" edit-your-goals card-title">Blood Pressure Goals</h4>
-                              </div>
-
-                              <%# next line includes the partial messages file, and can be used for displaying success
-                                or failure after registration in a flash%>
-                                <% include ./partials/messages %>
-                                  <form class="my-account-grid" action="/usergoals/update" method="POST">
-                                    <div class="form-group">
-                                      <label for="targetSystolic">Target Systolic</label>
-                                      <input type="number" class="form-control" name="targetSystolic" maxlength="10"
-                                        min=1200
-                                        placeholder="<%= typeof targetSystolic != 'undefined' ? targetSystolic : '' %>"
-                                        autocomplete="off">
-                                    </div>
-
-                                    <div class="form-group">
-                                      <label for="targetDiastolic">Target Diastolic</label>
-                                      <input type="number" class="form-control" name="targetDiastolic" maxlength="10"
-                                        min=0
-                                        placeholder="<%= typeof targetDiastolic != 'undefined' ? targetDiastolic : '' %>"
-                                        autocomplete="off">
-                                    </div>
-
-                                    <button type="submit" class="save-goals btn btn-primary">Save Goals</button>
-                                    <input type="button" class=" return-to-default btn btn-primary btn_default"
-                                      value="Default" onclick="window.location='/usergoals/default';" />
-
-                                  </form>
-
-                                  <h2 class="my-daily-goals">Set Reminders and Alerts - Coming Soon</h2>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Body Weight Reminders and Alerts</h4>
-                                  </div>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Blood Pressure Reminders and Alerts</h4>
-                                  </div>
-
-                                  <h2 class="my-daily-goals">Connect Digital Devices - Coming Soon</h2>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Digital Body Scales</h4>
-                                  </div>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Digital Blood Pressure Cuffs</h4>
-                                  </div>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Digital Glucometers</h4>
-                                  </div>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Smart Medication Management Devices</h4>
-                                  </div>
-                                  <div class=" ">
-                                    <h4 class=" edit-your-goals card-title">Fitness and Nutrition Trackers</h4>
-                                  </div>
-
+          <%# next line includes the partial messages file, and can be used for
+          displaying success or failure after registration in a flash%> <%
+          include ./partials/messages %>
+          <form
+            class="my-account-grid"
+            action="/usergoals/update"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="goalWeight">Goal Weight (lbs)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="goalWeight"
+                maxlength="10"
+                min="1200"
+                placeholder="<%= typeof goalWeight != 'undefined' ? goalWeight : '' %>"
+                autocomplete="off"
+              />
             </div>
 
-            <!-- End Navbar -->
-            <% include ./partials/footer.ejs %>
+            <div class="form-group">
+              <label for="weeklyWeightChange">Weekly Weight Change (lbs)</label>
+              <input
+                type="number"
+                class="form-control"
+                name="weeklyWeightChange"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof weeklyWeightChange != 'undefined' ? weeklyWeightChange : '' %>"
+                autocomplete="off"
+              />
+            </div>
+<!-- do not delete these empty grid items, see above comment for explanation -->
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+
+            <button type="submit" class="save-goals btn btn-primary">
+              Save Goals
+            </button>
+            <input
+              type="button"
+              class="return-to-default btn btn-primary btn_default"
+              value="Default"
+              onclick="window.location='/usergoals/default';"
+            />
+          </form>
+
+          <div class=" ">
+            <h4 class="edit-your-goals">Blood Pressure Goals</h4>
+          </div>
+
+          <%# next line includes the partial messages file, and can be used for
+          displaying success or failure after registration in a flash%> <%
+          include ./partials/messages %>
+          <form
+            class="my-account-grid"
+            action="/usergoals/update"
+            method="POST"
+          >
+            <div class="form-group">
+              <label for="targetSystolic">Target Systolic</label>
+              <input
+                type="number"
+                class="form-control"
+                name="targetSystolic"
+                maxlength="10"
+                min="1200"
+                placeholder="<%= typeof targetSystolic != 'undefined' ? targetSystolic : '' %>"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="targetDiastolic">Target Diastolic</label>
+              <input
+                type="number"
+                class="form-control"
+                name="targetDiastolic"
+                maxlength="10"
+                min="0"
+                placeholder="<%= typeof targetDiastolic != 'undefined' ? targetDiastolic : '' %>"
+                autocomplete="off"
+              />
+            </div>
+<!-- do not delete emmpty grid items, they are needed to keep the column sizees uniform throughout the page -->
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+
+            <button type="submit" class="save-goals btn btn-primary">
+              Save Goals
+            </button>
+            <input
+              type="button"
+              class="return-to-default btn btn-primary btn_default"
+              value="Default"
+              onclick="window.location='/usergoals/default';"
+            />
+          </form>
+
+          <h2 class="my-daily-goals">Set Reminders and Alerts - Coming Soon</h2>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">
+              Body Weight Reminders and Alerts
+            </h4>
+          </div>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">
+              Blood Pressure Reminders and Alerts
+            </h4>
+          </div>
+
+          <h2 class="my-daily-goals">Connect Digital Devices - Coming Soon</h2>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">Digital Body Scales</h4>
+          </div>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">
+              Digital Blood Pressure Cuffs
+            </h4>
+          </div>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">Digital Glucometers</h4>
+          </div>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">
+              Smart Medication Management Devices
+            </h4>
+          </div>
+          <div class=" ">
+            <h4 class="edit-your-goals card-title">
+              Fitness and Nutrition Trackers
+            </h4>
           </div>
         </div>
+      <!-- End Navbar -->
+      <!-- End div for Content -->
+    </div>
+    <% include ./partials/footer.ejs %>
 
-        <!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
-        <!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
+    <!-- End div for Main Panel -->
+  </div>
+
+  <!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
+  <!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
 JQuery MUST be loaded first so because this calls on functions in that file -->
-        <script type="text/javascript">
-          // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
-          var searchVisible = 0;
-          var transparent = true;
+  <script type="text/javascript">
+    // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
+    var searchVisible = 0;
+    var transparent = true;
 
-          var transparentDemo = true;
-          var fixedTop = false;
+    var transparentDemo = true;
+    var fixedTop = false;
 
-          var navbar_initialized = false;
-          var mobile_menu_visible = 0,
-            mobile_menu_initialized = false,
-            toggle_initialized = false,
-            bootstrap_nav_initialized = false,
-            $sidebar,
-            isWindows;
+    var navbar_initialized = false;
+    var mobile_menu_visible = 0,
+      mobile_menu_initialized = false,
+      toggle_initialized = false,
+      bootstrap_nav_initialized = false,
+      $sidebar,
+      isWindows;
 
-          //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
-          $(document).ready(function () {
-            window_width = $(window).width();
+    //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
+    $(document).ready(function () {
+      window_width = $(window).width();
 
-            // check if there is an image set for the sidebar's background -- we dont have an image right now
-            // but i kept it anyways in case we decide that we want to add one
-            lbd.checkSidebarImage();
+      // check if there is an image set for the sidebar's background -- we dont have an image right now
+      // but i kept it anyways in case we decide that we want to add one
+      lbd.checkSidebarImage();
 
-            // Init navigation toggle for small screens
-            if (window_width <= 991) {
-              lbd.initRightMenu();
-            }
+      // Init navigation toggle for small screens
+      if (window_width <= 991) {
+        lbd.initRightMenu();
+      }
 
-            //  Activate the tooltips --- I have no idea what this is but if you un-comment it then it causes an error 
-            // so just keep it here for now 
-            // $('[rel="tooltip"]').tooltip();
+      //  Activate the tooltips --- I have no idea what this is but if you un-comment it then it causes an error
+      // so just keep it here for now
+      // $('[rel="tooltip"]').tooltip();
 
-            // Activate regular switches
-            if ($("[data-toggle='switch']").length != 0) {
-              $("[data-toggle='switch']").bootstrapSwitch();
-            }
+      // Activate regular switches
+      if ($("[data-toggle='switch']").length != 0) {
+        $("[data-toggle='switch']").bootstrapSwitch();
+      }
 
-            $('.form-control').on("focus", function () {
-              $(this).parent('.input-group').addClass("input-group-focus");
-            }).on("blur", function () {
-              $(this).parent(".input-group").removeClass("input-group-focus");
-            });
+      $(".form-control")
+        .on("focus", function () {
+          $(this).parent(".input-group").addClass("input-group-focus");
+        })
+        .on("blur", function () {
+          $(this).parent(".input-group").removeClass("input-group-focus");
+        });
 
-            // Fixes sub-nav not working as expected on IOS
-            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
-              e.stopPropagation();
-            });
+      // Fixes sub-nav not working as expected on IOS
+      $("body").on("touchstart.dropdown", ".dropdown-menu", function (e) {
+        e.stopPropagation();
+      });
+    });
+
+    // activate collapse right menu when the windows is resized
+    $(window).resize(function () {
+      if ($(window).width() <= 991) {
+        lbd.initRightMenu();
+      }
+    });
+
+    lbd = {
+      misc: {
+        navbar_menu_visible: 0,
+      },
+      checkSidebarImage: function () {
+        $sidebar = $(".sidebar");
+        image_src = $sidebar.data("image");
+
+        if (image_src !== undefined) {
+          sidebar_container =
+            '<div class="sidebar-background" style="background-image: url(' +
+            image_src +
+            ') "/>';
+          $sidebar.append(sidebar_container);
+        } else if (mobile_menu_initialized == true) {
+          // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+          $sidebar_wrapper.find(".navbar-form").remove();
+          $sidebar_wrapper.find(".nav-mobile-menu").remove();
+
+          mobile_menu_initialized = false;
+        }
+      },
+
+      initRightMenu: function () {
+        $sidebar_wrapper = $(".sidebar-wrapper");
+
+        if (!mobile_menu_initialized) {
+          $navbar = $("nav").find(".navbar-collapse").first().clone(true);
+
+          nav_content = "";
+          mobile_menu_content = "";
+
+          //add the content from the regular header to the mobile menu
+          $navbar.children("ul").each(function () {
+            content_buff = $(this).html();
+            nav_content = nav_content + content_buff;
           });
 
-          // activate collapse right menu when the windows is resized
-          $(window).resize(function () {
-            if ($(window).width() <= 991) {
-              lbd.initRightMenu();
+          nav_content =
+            '<ul class="nav nav-mobile-menu">' + nav_content + "</ul>";
+
+          $navbar_form = $("nav").find(".navbar-form").clone(true);
+
+          $sidebar_nav = $sidebar_wrapper.find(" > .nav");
+
+          // insert the navbar form before the sidebar list
+          $nav_content = $(nav_content);
+          $nav_content.insertBefore($sidebar_nav);
+          $navbar_form.insertBefore($nav_content);
+
+          $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(
+            function (event) {
+              event.stopPropagation();
             }
-          });
+          );
 
-          lbd = {
-            misc: {
-              navbar_menu_visible: 0
-            },
-            checkSidebarImage: function () {
-              $sidebar = $('.sidebar');
-              image_src = $sidebar.data('image');
+          mobile_menu_initialized = true;
+        } else {
+          console.log("window with:" + $(window).width());
+          if ($(window).width() > 991) {
+            // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+            $sidebar_wrapper.find(".navbar-form").remove();
+            $sidebar_wrapper.find(".nav-mobile-menu").remove();
 
-              if (image_src !== undefined) {
-                sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
-                $sidebar.append(sidebar_container);
-              } else if (mobile_menu_initialized == true) {
-                // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
-                $sidebar_wrapper.find('.navbar-form').remove();
-                $sidebar_wrapper.find('.nav-mobile-menu').remove();
-
-                mobile_menu_initialized = false;
-              }
-            },
-
-            initRightMenu: function () {
-              $sidebar_wrapper = $('.sidebar-wrapper');
-
-              if (!mobile_menu_initialized) {
-
-                $navbar = $('nav').find('.navbar-collapse').first().clone(true);
-
-                nav_content = '';
-                mobile_menu_content = '';
-
-                //add the content from the regular header to the mobile menu
-                $navbar.children('ul').each(function () {
-
-                  content_buff = $(this).html();
-                  nav_content = nav_content + content_buff;
-                });
-
-                nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
-
-                $navbar_form = $('nav').find('.navbar-form').clone(true);
-
-                $sidebar_nav = $sidebar_wrapper.find(' > .nav');
-
-                // insert the navbar form before the sidebar list
-                $nav_content = $(nav_content);
-                $nav_content.insertBefore($sidebar_nav);
-                $navbar_form.insertBefore($nav_content);
-
-                $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(function (event) {
-                  event.stopPropagation();
-
-                });
-
-                mobile_menu_initialized = true;
-              } else {
-                console.log('window with:' + $(window).width());
-                if ($(window).width() > 991) {
-                  // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
-                  $sidebar_wrapper.find('.navbar-form').remove();
-                  $sidebar_wrapper.find('.nav-mobile-menu').remove();
-
-                  mobile_menu_initialized = false;
-                }
-              }
-
-              if (!toggle_initialized) {
-                $toggle = $('.navbar-toggler');
-
-                $toggle.click(function () {
-
-                  if (mobile_menu_visible == 1) {
-                    $('html').removeClass('nav-open');
-
-                    $('.close-layer').remove();
-                    setTimeout(function () {
-                      $toggle.removeClass('toggled');
-                    }, 400);
-
-                    mobile_menu_visible = 0;
-                  } else {
-                    setTimeout(function () {
-                      $toggle.addClass('toggled');
-                    }, 430);
-
-                    // This is the function that figures out the height of the main panel when in mobile and then adds
-                    // the a div at the begining of the main panel (pushing the content down on the screen) so that 
-                    // you can click on it and close out the sidebar without having to click on a link in the sidebar
-                    main_panel_height = $('.main-panel')[0].scrollHeight;
-                    $layer = $('<div class="close-layer"></div>');
-                    $layer.css('height', main_panel_height + 'px');
-                    $layer.prependTo(".blankPanelSidebarOpen");
-
-
-                    setTimeout(function () {
-                      $layer.addClass('visible');
-                    }, 100);
-
-                    $layer.click(function () {
-                      console.log("hi")
-                      $('html').removeClass('nav-open');
-                      mobile_menu_visible = 0;
-
-                      $layer.removeClass('visible');
-
-                      setTimeout(function () {
-                        $layer.remove();
-                        $toggle.removeClass('toggled');
-
-                      }, 400);
-                    });
-
-                    $('html').addClass('nav-open');
-                    mobile_menu_visible = 1;
-
-                  }
-                });
-
-                toggle_initialized = true;
-              }
-            }
+            mobile_menu_initialized = false;
           }
-        </script>
+        }
+
+        if (!toggle_initialized) {
+          $toggle = $(".navbar-toggler");
+
+          $toggle.click(function () {
+            if (mobile_menu_visible == 1) {
+              $("html").removeClass("nav-open");
+
+              $(".close-layer").remove();
+              setTimeout(function () {
+                $toggle.removeClass("toggled");
+              }, 400);
+
+              mobile_menu_visible = 0;
+            } else {
+              setTimeout(function () {
+                $toggle.addClass("toggled");
+              }, 430);
+
+              // This is the function that figures out the height of the main panel when in mobile and then adds
+              // the a div at the begining of the main panel (pushing the content down on the screen) so that
+              // you can click on it and close out the sidebar without having to click on a link in the sidebar
+              main_panel_height = $(".main-panel")[0].scrollHeight;
+              $layer = $('<div class="close-layer"></div>');
+              $layer.css("height", main_panel_height + "px");
+              $layer.prependTo(".blankPanelSidebarOpen");
+
+              setTimeout(function () {
+                $layer.addClass("visible");
+              }, 100);
+
+              $layer.click(function () {
+                console.log("hi");
+                $("html").removeClass("nav-open");
+                mobile_menu_visible = 0;
+
+                $layer.removeClass("visible");
+
+                setTimeout(function () {
+                  $layer.remove();
+                  $toggle.removeClass("toggled");
+                }, 400);
+              });
+
+              $("html").addClass("nav-open");
+              mobile_menu_visible = 1;
+            }
+          });
+
+          toggle_initialized = true;
+        }
+      },
+    };
+  </script>
+</div>

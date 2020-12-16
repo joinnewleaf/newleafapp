@@ -237,13 +237,13 @@ input:focus {
 .wrapper {
     position: relative;
     top: 0;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* margin settings for the sidebar container */
 .documentation .wrapper {
     margin-top: -61px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* this sets the navbar on the top to be under the sidebar */ 
@@ -255,7 +255,7 @@ input:focus {
 /* Sidebar settings */
 .sidebar,
 body>.navbar-collapse {
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;

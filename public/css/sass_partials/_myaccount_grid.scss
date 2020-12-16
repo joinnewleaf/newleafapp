@@ -2,21 +2,24 @@
 // this sets up the grid for the main login page
 // we need this to make the page responsive
 
-
+//this sets up the grid that keeps the form boxes aligned and responsive
 .my-account-grid {
+    grid-row: row 2; 
     display: grid;
     justify-items: left;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     grid-template-rows: repeat(auto-fit, minmax(50px, 100px));
-    height: 100vh;
     padding: 10px;
     column-gap: 10px;
+    row-gap: 10px;
 }
 
+// aligns the left side of the page header "My Goals" with the reste of the page 
 .my-daily-goals {
     padding-left: 10px; 
 }
 
+// correctly alligns the subheadings "Daily Nutrition Goals", "Exericise Goals', etc. with the overall layout 
 .edit-your-goals {
     padding-left: 10px; 
     padding-right: 10px;
@@ -24,12 +27,13 @@
     padding-top: 0px; 
 }
 
+// formats the buttons to be the same size and alignment wiht the rest of the form boxes
 .save-goals {
     height: 37px;
     width: 150px;
     align-self: center;
+    grid-column-start: 1;
 }
-
 .return-to-default {
     height: 37px; 
     width: 150px;

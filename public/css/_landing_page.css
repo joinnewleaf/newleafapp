@@ -6,6 +6,11 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
+.body_movin {
+	height: 150px;
+	background-color: orange;
+}
+
 /* Reset */
 
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -1949,7 +1954,7 @@
 			input[type="button"].special:hover,
 			button.special:hover,
 			.button.special:hover {
-				background-color: #f44066;
+				background-color: #7bb695;
 			}
 
 			input[type="submit"].special:active,
@@ -1957,7 +1962,7 @@
 			input[type="button"].special:active,
 			button.special:active,
 			.button.special:active {
-				background-color: #f21040;
+				background-color: #486b57;
 			}
 
 		@media screen and (max-width: 480px) {
@@ -2001,7 +2006,7 @@
 
 				.feature-grid .feature .image img {
 					display: inline;
-					max-width: 100%;
+					max-width: 100%; 
 				}
 
 			.feature-grid .feature:nth-child(odd) .content, .feature-grid .feature:nth-child(odd) .image {
@@ -2329,14 +2334,6 @@
 				width: 100%;
 			}
 
-		.image.rounded {
-			border-radius: 100%;
-		}
-
-			.image.rounded img {
-				border: solid 0.5em rgba(144, 144, 144, 0.25);
-				border-radius: 100%;
-			}
 
 		.image.captioned {
 			border-radius: 0;
@@ -2556,7 +2553,7 @@
 	}
 
 	header p {
-		color: #aaa;
+		color: rgb(150, 150, 150);
 		position: relative;
 		margin: 0 0 1.5em 0;
 		text-transform: uppercase;
@@ -2743,7 +2740,7 @@
 			}
 
 				.wrapper.style3 header.major h2 {
-					color: #ffffff;
+					color: #484848;
 				}
 
 				@media screen and (max-width: 1280px) {
@@ -2893,17 +2890,22 @@
 					color: #FFF;
 				}
 
+				#header h1 img {
+					width: 50px;
+					height: 50px; 
+				}
+
 			#header.alt nav {
 				right: 2em;
 				top: 2em;
 			}
 
 				#header.alt nav a {
-					color: rgba(221, 221, 221, 0.623);
+					color: rgb(100, 100, 100);
 				}
 
 					#header.alt nav a:active, #header.alt nav a:hover {
-						color: rgba(221, 221, 221, 0.623);
+						color: rgba(100, 100, 100);
 					}
 
 			#header.alt .button {
@@ -3088,7 +3090,7 @@
 	#banner {
 		padding: 16em 0 13em 0;
 		background-attachment: fixed;
-		background-image: url("images/overlay.png"), url("../../images/banner.jpg");
+		background-image: url("/images/"), /* url("../../images/banner.jpg") */;
 		background-position: center top;
 		background-size: cover;
 		line-height: 1.75;
