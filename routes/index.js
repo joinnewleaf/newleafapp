@@ -39,7 +39,6 @@ router.get("/", (req, res) => res.render("welcome"));
 //dashboard page, we pass in ensure athenticated as a second parameter middleware
 //when we render the dashboard we pass in an object to let it know the user
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
-
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({
     $or: [
@@ -59,6 +58,12 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         let fatsGoal = usergoals.fatsGoal;
         let sugarsGoal = usergoals.sugarsGoal;
         let sodiumGoal = usergoals.sodiumGoal;
+        let weeklyExerciseMinuteGoal = usergoals.weeklyExerciseMinuteGoal;
+        let weeklyMindfulnessMinuteGoal = usergoals.weeklyMindfulnessMinuteGoal;
+        let goalWeight = usergoals.goalWeight;
+        let weeklyWeightChangeGoal = usergoals.weeklyWeightChangeGoal;
+        let targetSystolic = usergoals.targetSystolic;
+        let targetDiastolic = usergoals.targetDiastolic;
 
         //current datetime
         let currentDate = new Date();
@@ -131,6 +136,12 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         let fatsGoal = 78;
         let sugarsGoal = 37.5;
         let sodiumGoal = 2300;
+        let weeklyExerciseMinuteGoal= 150;
+        let weeklyMindfulnessMinuteGoal= 70;
+        let goalWeight= "";
+        let weeklyWeightChangeGoal = 0;
+        let targetSystolic= 120;
+        let targetDiastolic= 80;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
         Days.findOne({
@@ -219,6 +230,12 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
         let fatsGoal = usergoals.fatsGoal;
         let sugarsGoal = usergoals.sugarsGoal;
         let sodiumGoal = usergoals.sodiumGoal;
+        let weeklyExerciseMinuteGoal= 150;
+        let weeklyMindfulnessMinuteGoal= 70;
+        let goalWeight= "";
+        let weeklyWeightChangeGoal = 0;
+        let targetSystolic= 120;
+        let targetDiastolic= 80;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
         Days.findOne({
@@ -285,6 +302,12 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
         let fatsGoal = 78;
         let sugarsGoal = 37.5;
         let sodiumGoal = 2300;
+        let weeklyExerciseMinuteGoal= 150;
+        let weeklyMindfulnessMinuteGoal= 70;
+        let goalWeight= "";
+        let weeklyWeightChangeGoal = 0;
+        let targetSystolic= 120;
+        let targetDiastolic= 80;
 
         //we need to pull data from the requested date (or create a new Days instance), matches to both date AND email
         Days.findOne({

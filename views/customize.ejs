@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <% /* this is going to be the myaccount page in the dashboard this will allow
 users to edit their goals with an inline editing table will include calories,
 proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
@@ -16,6 +17,26 @@ after saving placeholders will contain default fda values*/%>
 <%# next line includes the partial navbar file%> <% include ./partials/navbar %>
 
 <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+=======
+<% /* this is going to be the myaccount page in the dashboard this will allow users to edit their goals with an inline
+  editing table will include calories, proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
+  editable form, similar to inline edited table, updates database, and passkit api after saving placeholders will
+  contain default fda values*/%>
+  <style>
+    /* This styling is needed to allow the numbers inputs to not use text */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  </style>
+  <%# next line includes the partial navbar file%>
+    <% include ./partials/navbar %>
+
+      <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+>>>>>>> bf873689caf52a3eeea7dd5994fd70a7c0b7116b
 so that you can click on it and close out the sidebar -->
 <div class="content blankPanelSidebarOpen">
   <div
@@ -71,6 +92,172 @@ so that you can click on it and close out the sidebar -->
                 autocomplete="off"
               />
             </div>
+<<<<<<< HEAD
+=======
+          </nav>
+
+          <!--this is the main body of the page, all contained in .my-account-grid-->
+          <div>
+            <div>
+              <h2 class="my-daily-goals">My Goals</h2>
+              <div class="content">
+                <h4 class="edit-your-goals card-title">Daily Nutrition Goals</h4>
+              </div>
+              <%# next line includes the partial messages file, and can be used for displaying success or failure after
+                registration in a flash%>
+                <% include ./partials/messages %>
+                  <form class="my-account-grid" action="/usergoals/update" method="POST">
+                    <div class="form-group">
+                      <label for="calorieGoal">Calorie Limit</label>
+                      <input type="number" class="form-control" name="caloriesGoal" maxlength="10" min=1200
+                        placeholder="<%= typeof caloriesGoal != 'undefined' ? caloriesGoal : '' %>" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="carbGoal">Carbs (g)</label>
+                      <input type="number" class="form-control" name="carbsGoal" maxlength="10" min=0
+                        placeholder="<%= typeof carbsGoal != 'undefined' ? carbsGoal : '' %>" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="fatsGoal">Fats (g)</label>
+                      <input type="number" class="form-control" name="fatsGoal" maxlength="10" min=0
+                        placeholder="<%= typeof fatsGoal != 'undefined' ? fatsGoal : '' %>" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="proteinsGoal">Proteins (g)</label>
+                      <input type="number" class="form-control" name="proteinsGoal" maxlength="10" min=0
+                        placeholder="<%= typeof proteinsGoal != 'undefined' ? proteinsGoal : '' %>" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="sodiumGoal">Sodium (mg)</label>
+                      <input type="number" class="form-control" name="sodiumGoal" maxlength="10" min=0
+                        placeholder="<%= typeof sodiumGoal != 'undefined' ? sodiumGoal : '' %>" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="sugarGoal">Sugars (g)</label>
+                      <input type="number" class="form-control" name="sugarsGoal" maxlength="10" min=0
+                        placeholder="<%= typeof sugarsGoal != 'undefined' ? sugarsGoal : '' %>" autocomplete="off">
+                    </div>
+                    <button type="submit" class="save-goals btn btn-primary">Save</button>
+                    <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                      formaction='/usergoals/defaultFoodGoal' />
+                  </form>
+
+                  <div class=" ">
+                    <h4 class=" edit-your-goals card-title">Exercise Goals</h4>
+                  </div>
+                      <form class="my-account-grid" action="/usergoals/update" method="POST">
+                        <div class="form-group">
+                          <label for="weeklyExerciseMinuteGoal">Weekly Exercise Minutes</label>
+                          <input type="number" class="form-control" name="weeklyExerciseMinuteGoal" maxlength="3" min=0
+                            placeholder="<%= typeof weeklyExerciseMinuteGoal != 'undefined' ? weeklyExerciseMinuteGoal : '' %>"
+                            autocomplete="off">
+                        </div>
+
+                        <button type="submit" class="save-goals btn btn-primary">Save</button>
+                        <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                        formaction='/usergoals/defaultExerciseGoal' />
+
+                      </form>
+
+                      <div class=" ">
+                        <h4 class=" edit-your-goals card-title">Mindfulness & Meditation Goals</h4>
+                      </div>
+                          <form class="my-account-grid" action="/usergoals/update" method="POST">
+                            <div class="form-group">
+                              <label for="weeklyMindfulnessMinuteGoal">Weekly Mindfulness Minutes</label>
+                              <input type="number" class="form-control" name="weeklyMindfulnessMinuteGoal" maxlength="3"
+                                min=0
+                                placeholder="<%= typeof weeklyMindfulnessMinuteGoal != 'undefined' ? weeklyMindfulnessMinuteGoal : '' %>"
+                                autocomplete="off">
+                            </div>
+
+                            <button type="submit" class="save-goals btn btn-primary">Save</button>
+                            <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                            formaction='/usergoals/defaultMindfulnessGoal' />
+
+                          </form>
+
+                          <div class=" ">
+                            <h4 class=" edit-your-goals card-title">Body Weight Goals</h4>
+                          </div>
+                              <form class="my-account-grid" action="/usergoals/update" method="POST">
+                                <div class="form-group">
+                                  <label for="goalWeight">Goal Weight (lbs)</label>
+                                  <input type="number" class="form-control" name="goalWeight" maxlength="10" min=0
+                                    placeholder="<%= typeof goalWeight != 'undefined' ? goalWeight : '' %>"
+                                    autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="weeklyWeightChangeGoal">Weekly Weight Change (lbs)</label>
+                                  <input type="number" class="form-control" name="weeklyWeightChangeGoal" maxlength="2"
+                                    min=-2 max=2
+                                    placeholder="<%= typeof weeklyWeightChangeGoal != 'undefined' ? weeklyWeightChangeGoal : '' %>"
+                                    autocomplete="off">
+                                </div>
+
+                                <button type="submit" class="save-goals btn btn-primary">Save</button>
+                                <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                                formaction='/usergoals/defaultWeightGoal' />
+
+                              </form>
+
+                              <div class=" ">
+                                <h4 class=" edit-your-goals card-title">Blood Pressure Goals</h4>
+                              </div>
+                                  <form class="my-account-grid" action="/usergoals/update" method="POST">
+                                    <div class="form-group">
+                                      <label for="targetSystolic">Target Systolic</label>
+                                      <input type="number" class="form-control" name="targetSystolic" maxlength="3"
+                                        min=0
+                                        placeholder="<%= typeof targetSystolic != 'undefined' ? targetSystolic : '' %>"
+                                        autocomplete="off">
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label for="targetDiastolic">Target Diastolic</label>
+                                      <input type="number" class="form-control" name="targetDiastolic" maxlength="3"
+                                        min=0
+                                        placeholder="<%= typeof targetDiastolic != 'undefined' ? targetDiastolic : '' %>"
+                                        autocomplete="off">
+                                    </div>
+
+                                    <button type="submit" class="save-goals btn btn-primary">Save</button>
+                                    <input type="submit" class=" return-to-default btn btn-primary btn_default" value="Default"
+                                    formaction='/usergoals/defaultBloodPressureGoal' />
+
+                                  </form>
+
+                                  <h2 class="my-daily-goals">Set Reminders and Alerts - Coming Soon</h2>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Body Weight Reminders and Alerts</h4>
+                                  </div>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Blood Pressure Reminders and Alerts</h4>
+                                  </div>
+
+                                  <h2 class="my-daily-goals">Connect Digital Devices - Coming Soon</h2>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Digital Body Scales</h4>
+                                  </div>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Digital Blood Pressure Cuffs</h4>
+                                  </div>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Digital Glucometers</h4>
+                                  </div>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Smart Medication Management Devices</h4>
+                                  </div>
+                                  <div class=" ">
+                                    <h4 class=" edit-your-goals card-title">Fitness and Nutrition Trackers</h4>
+                                  </div>
+>>>>>>> bf873689caf52a3eeea7dd5994fd70a7c0b7116b
 
             <div class="form-group">
               <label for="carbGoal">Carbs (g)</label>

@@ -26,8 +26,52 @@ router.post("/update", ensureAuthenticated, (req, res) => {
     fatsGoal: fatsGoal,
     proteinsGoal: proteinsGoal,
     sodiumGoal: sodiumGoal,
-    sugarsGoal: sugarsGoal
+    sugarsGoal: sugarsGoal,
+    weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+    weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+    goalWeight: goalWeight,
+    weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+    targetSystolic: targetSystolic,
+    targetDiastolic: targetDiastolic,
   } = req.body;
+
+  //if undefined, set length to 0
+  if (caloriesGoal === undefined) {
+    caloriesGoal = "";
+  }
+  if (carbsGoal === undefined) {
+    carbsGoal = "";
+  }
+  if (fatsGoal === undefined) {
+    fatsGoal = "";
+  }
+  if (proteinsGoal === undefined) {
+    proteinsGoal = "";
+  }
+  if (sodiumGoal === undefined) {
+    sodiumGoal = "";
+  }
+  if (sugarsGoal === undefined) {
+    sugarsGoal = "";
+  }
+  if (weeklyExerciseMinuteGoal === undefined) {
+    weeklyExerciseMinuteGoal = "";
+  }
+  if (weeklyMindfulnessMinuteGoal === undefined) {
+    weeklyMindfulnessMinuteGoal = "";
+  }
+  if (goalWeight === undefined) {
+    goalWeight = "";
+  }
+  if (weeklyWeightChangeGoal === undefined) {
+    weeklyWeightChangeGoal = "";
+  }
+  if (targetSystolic === undefined) {
+    targetSystolic = "";
+  }
+  if (targetDiastolic === undefined) {
+    targetDiastolic = "";
+  }
 
   //intialize an success message array
   let success_msgs = [];
@@ -62,6 +106,24 @@ router.post("/update", ensureAuthenticated, (req, res) => {
         if (sodiumGoal.length == 0) {
           sodiumGoal = usergoals.sodiumGoal;
         }
+        if (weeklyExerciseMinuteGoal.length == 0) {
+          weeklyExerciseMinuteGoal = usergoals.weeklyExerciseMinuteGoal;
+        }
+        if (weeklyMindfulnessMinuteGoal.length == 0) {
+          weeklyMindfulnessMinuteGoal = usergoals.weeklyMindfulnessMinuteGoal;
+        }
+        if (goalWeight.length == 0) {
+          goalWeight = usergoals.goalWeight;
+        }
+        if (weeklyWeightChangeGoal.length == 0) {
+          weeklyWeightChangeGoal = usergoals.weeklyWeightChangeGoal;
+        }
+        if (targetSystolic.length == 0) {
+          targetSystolic = usergoals.targetSystolic;
+        }
+        if (targetDiastolic.length == 0) {
+          targetDiastolic = usergoals.targetDiastolic;
+        }
 
         // if user already exists, we update
         UserGoals.updateOne(
@@ -78,6 +140,12 @@ router.post("/update", ensureAuthenticated, (req, res) => {
             proteinsGoal: proteinsGoal,
             sodiumGoal: sodiumGoal,
             sugarsGoal: sugarsGoal,
+            weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+            weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+            goalWeight: goalWeight,
+            weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+            targetSystolic: targetSystolic,
+            targetDiastolic: targetDiastolic,
           }
         ).then(function () {
           //function runs asynchronously, so wait to render
@@ -111,6 +179,12 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                 proteinsGoal: proteinsGoal,
                 sodiumGoal: sodiumGoal,
                 sugarsGoal: sugarsGoal,
+                weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+                weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                goalWeight: goalWeight,
+                weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+                targetSystolic: targetSystolic,
+                targetDiastolic: targetDiastolic,
               });
             })
             .catch((err) => console.log(err));
@@ -135,6 +209,24 @@ router.post("/update", ensureAuthenticated, (req, res) => {
         if (sodiumGoal.length == 0) {
           sodiumGoal = 2300;
         }
+        if (weeklyExerciseMinuteGoal.length == 0) {
+          weeklyExerciseMinuteGoal = 150;
+        }
+        if (weeklyMindfulnessMinuteGoal.length == 0) {
+          weeklyMindfulnessMinuteGoal = 70;
+        }
+        if (goalWeight.length == 0) {
+          goalWeight = "";
+        }
+        if (weeklyWeightChangeGoal.length == 0) {
+          weeklyWeightChangeGoal = 0;
+        }
+        if (targetSystolic.length == 0) {
+          targetSystolic = 120;
+        }
+        if (targetDiastolic.length == 0) {
+          targetDiastolic = 80;
+        }
 
         //if the user is new, we add new goals
         const newUserGoals = new UserGoals({
@@ -146,6 +238,12 @@ router.post("/update", ensureAuthenticated, (req, res) => {
           proteinsGoal,
           sodiumGoal,
           sugarsGoal,
+          weeklyExerciseMinuteGoal,
+          weeklyMindfulnessMinuteGoal,
+          goalWeight,
+          weeklyWeightChangeGoal,
+          targetSystolic,
+          targetDiastolic,
         });
 
         //save new goals in the db
@@ -179,6 +277,12 @@ router.post("/update", ensureAuthenticated, (req, res) => {
                   proteinsGoal: proteinsGoal,
                   sodiumGoal: sodiumGoal,
                   sugarsGoal: sugarsGoal,
+                  weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                  goalWeight: goalWeight,
+                  weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+                  targetSystolic: targetSystolic,
+                  targetDiastolic: targetDiastolic,
                 });
               })
               .catch((err) => console.log(err));
@@ -210,6 +314,12 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
         let fatsGoal = usergoals.fatsGoal;
         let sugarsGoal = usergoals.sugarsGoal;
         let sodiumGoal = usergoals.sodiumGoal;
+        let weeklyExerciseMinuteGoal = usergoals.weeklyExerciseMinuteGoal;
+        let weeklyMindfulnessMinuteGoal = usergoals.weeklyMindfulnessMinuteGoal;
+        let goalWeight = usergoals.goalWeight;
+        let weeklyWeightChangeGoal = usergoals.weeklyWeightChangeGoal;
+        let targetSystolic = usergoals.targetSystolic;
+        let targetDiastolic = usergoals.targetDiastolic;
 
         //renders the customize page anytime this page gets called
         res.render("customize", {
@@ -220,6 +330,12 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
           proteinsGoal: proteinsGoal,
           sodiumGoal: sodiumGoal,
           sugarsGoal: sugarsGoal,
+          weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+          weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+          goalWeight: goalWeight,
+          weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+          targetSystolic: targetSystolic,
+          targetDiastolic: targetDiastolic,
         });
       } else {
         //if customize page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
@@ -229,6 +345,12 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
         let fatsGoal = 78;
         let sugarsGoal = 50;
         let sodiumGoal = 2300;
+        let weeklyExerciseMinuteGoal = 150;
+        let weeklyMindfulnessMinuteGoal = 70;
+        let goalWeight = "";
+        let weeklyWeightChangeGoal = 0;
+        let targetSystolic = 120;
+        let targetDiastolic = 80;
 
         //if the user is new, we add new goals
         const newUserGoals = new UserGoals({
@@ -240,6 +362,12 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
           proteinsGoal,
           sodiumGoal,
           sugarsGoal,
+          weeklyExerciseMinuteGoal,
+          weeklyMindfulnessMinuteGoal,
+          goalWeight,
+          weeklyWeightChangeGoal,
+          targetSystolic,
+          targetDiastolic,
         });
 
         //save new goals in the db
@@ -273,6 +401,12 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
                   proteinsGoal: proteinsGoal,
                   sodiumGoal: sodiumGoal,
                   sugarsGoal: sugarsGoal,
+                  weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                  goalWeight: goalWeight,
+                  weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+                  targetSystolic: targetSystolic,
+                  targetDiastolic: targetDiastolic,
                 });
               })
               .catch((err) => console.log(err));
@@ -284,9 +418,19 @@ router.get("/customize", ensureAuthenticated, (req, res) =>
 );
 
 //sets the default goals on first registration and on default button pressed
-router.get("/default", ensureAuthenticated, (req, res) => {
+router.post("/defaultFoodGoal", ensureAuthenticated, (req, res) => {
   //intialize an success message array
   let success_msgs = [];
+
+  //pull all data out of request, some will be undefined
+  var {
+    caloriesGoal: caloriesGoal,
+    carbsGoal: carbsGoal,
+    fatsGoal: fatsGoal,
+    proteinsGoal: proteinsGoal,
+    sodiumGoal: sodiumGoal,
+    sugarsGoal: sugarsGoal,
+  } = req.body;
 
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({
@@ -330,6 +474,7 @@ router.get("/default", ensureAuthenticated, (req, res) => {
             //to update pass, need to check if we are adding data for the current date
             let checkcurrentDate = new Date();
             let checkdateString = checkcurrentDate.toDateString();
+            console.log("success");
 
             //query days
             Days.findOne({
@@ -356,6 +501,13 @@ router.get("/default", ensureAuthenticated, (req, res) => {
                   proteinsGoal: proteinsGoal,
                   sodiumGoal: sodiumGoal,
                   sugarsGoal: sugarsGoal,
+                  weeklyExerciseMinuteGoal: usergoals.weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal:
+                    usergoals.weeklyMindfulnessMinuteGoal,
+                  goalWeight: usergoals.goalWeight,
+                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  targetSystolic: usergoals.targetSystolic,
+                  targetDiastolic: usergoals.targetDiastolic,
                 });
               })
               .catch((err) => console.log(err));
@@ -380,6 +532,437 @@ router.get("/default", ensureAuthenticated, (req, res) => {
           proteinsGoal,
           sodiumGoal,
           sugarsGoal,
+        });
+
+        //save new goals in the db
+        newUserGoals
+          .save()
+
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //update pass after new goals are saved
+            // passkit.updatePass(req.user.email);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//sets the default goals on first registration and on default button pressed
+router.post("/defaultExerciseGoal", ensureAuthenticated, (req, res) => {
+  //intialize an success message array
+  let success_msgs = [];
+
+  //pull all data out of request, some will be undefined
+  var { weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal } = req.body;
+
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
+
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals already exists in the database
+      if (usergoals) {
+        //sets goals data on the page to default values
+        let weeklyExerciseMinuteGoal = 150;
+
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+          }
+        )
+          .then(function () {
+            //function runs asynchronously, so wait to render
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
+            console.log("success");
+
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
+
+                //push flash message to screen to show it is updated, need to also pass in as we render
+                success_msgs.push({ msg: "Goals set to default" });
+
+                //render the account page
+                res.render("customize", {
+                  success_msgs,
+                  name: req.user.email,
+                  caloriesGoal: usergoals.caloriesGoal,
+                  carbsGoal: usergoals.carbsGoal,
+                  fatsGoal: usergoals.fatsGoal,
+                  proteinsGoal: usergoals.proteinsGoal,
+                  sodiumGoal: usergoals.sodiumGoal,
+                  sugarsGoal: usergoals.sugarsGoal,
+                  weeklyExerciseMinuteGoal: weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal:
+                    usergoals.weeklyMindfulnessMinuteGoal,
+                  goalWeight: usergoals.goalWeight,
+                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  targetSystolic: usergoals.targetSystolic,
+                  targetDiastolic: usergoals.targetDiastolic,
+                });
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      } else {
+        //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
+        let weeklyExerciseMinuteGoal = 150;
+
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          weeklyExerciseMinuteGoal,
+        });
+
+        //save new goals in the db
+        newUserGoals
+          .save()
+
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //update pass after new goals are saved
+            // passkit.updatePass(req.user.email);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//sets the default goals on first registration and on default button pressed
+router.post("/defaultMindfulnessGoal", ensureAuthenticated, (req, res) => {
+  //intialize an success message array
+  let success_msgs = [];
+
+  //pull all data out of request, some will be undefined
+  var { weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal } = req.body;
+
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
+
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals already exists in the database
+      if (usergoals) {
+        //sets goals data on the page to default values
+        let weeklyMindfulnessMinuteGoal = 70;
+
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+          }
+        )
+          .then(function () {
+            //function runs asynchronously, so wait to render
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
+            console.log("success");
+
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
+
+                //push flash message to screen to show it is updated, need to also pass in as we render
+                success_msgs.push({ msg: "Goals set to default" });
+
+                //render the account page
+                res.render("customize", {
+                  success_msgs,
+                  name: req.user.email,
+                  caloriesGoal: usergoals.caloriesGoal,
+                  carbsGoal: usergoals.carbsGoal,
+                  fatsGoal: usergoals.fatsGoal,
+                  proteinsGoal: usergoals.proteinsGoal,
+                  sodiumGoal: usergoals.sodiumGoal,
+                  sugarsGoal: usergoals.sugarsGoal,
+                  weeklyExerciseMinuteGoal: usergoals.weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                  goalWeight: usergoals.goalWeight,
+                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  targetSystolic: usergoals.targetSystolic,
+                  targetDiastolic: usergoals.targetDiastolic,
+                });
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      } else {
+        //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
+        let weeklyMindfulnessMinuteGoal = 70;
+
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          weeklyMindfulnessMinuteGoal,
+        });
+
+        //save new goals in the db
+        newUserGoals
+          .save()
+
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //update pass after new goals are saved
+            // passkit.updatePass(req.user.email);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//sets the default goals on first registration and on default button pressed
+router.post("/defaultWeightGoal", ensureAuthenticated, (req, res) => {
+  //intialize an success message array
+  let success_msgs = [];
+
+  //pull all data out of request, some will be undefined
+  var {
+    goalWeight: goalWeight,
+    weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+  } = req.body;
+
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
+
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals already exists in the database
+      if (usergoals) {
+        //sets goals data on the page to default values
+        let goalWeight = "";
+        let weeklyWeightChangeGoal = 0;
+
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            goalWeight: goalWeight,
+            weeklyWeightChangeGoal: weeklyWeightChangeGoal,
+          }
+        )
+          .then(function () {
+            //function runs asynchronously, so wait to render
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
+
+                //push flash message to screen to show it is updated, need to also pass in as we render
+                success_msgs.push({ msg: "Goals set to default" });
+
+                //render the account page
+                res.render("customize", {
+                  success_msgs,
+                  name: req.user.email,
+                  caloriesGoal: usergoals.caloriesGoal,
+                  carbsGoal: usergoals.carbsGoal,
+                  fatsGoal: usergoals.fatsGoal,
+                  proteinsGoal: usergoals.proteinsGoal,
+                  sodiumGoal: usergoals.sodiumGoal,
+                  sugarsGoal: usergoals.sugarsGoal,
+                  weeklyExerciseMinuteGoal: usergoals.weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                  goalWeight: goalWeight,
+                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  targetSystolic: usergoals.targetSystolic,
+                  targetDiastolic: usergoals.targetDiastolic,
+                });
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      } else {
+        //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
+        let goalWeight = "";
+        let weeklyWeightChangeGoal = 0;
+
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          goalWeight,
+          weeklyWeightChangeGoal,
+        });
+
+        //save new goals in the db
+        newUserGoals
+          .save()
+
+          //if user gets saved, render the page again, with updated information
+          .then((user) => {
+            //update pass after new goals are saved
+            // passkit.updatePass(req.user.email);
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//sets the default goals on first registration and on default button pressed
+router.post("/defaultBloodPressureGoal", ensureAuthenticated, (req, res) => {
+  //intialize an success message array
+  let success_msgs = [];
+
+  //pull all data out of request, some will be undefined
+  var {
+    targetSystolic: targetSystolic,
+    targetDiastolic: targetDiastolic,
+  } = req.body;
+
+  //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
+  UserGoals.findOne({
+    $or: [
+      { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+      { username: req.user.username },
+    ],
+  }) //should properly check if either username or email match
+
+    //if this user exists, we render the page with the parameters already in the db
+    .then((usergoals) => {
+      //check if usersgoals already exists in the database
+      if (usergoals) {
+        //sets goals data on the page to default values
+        let targetSystolic = 120;
+        let targetDiastolic = 80;
+
+        // if user already exists, we update
+        UserGoals.updateOne(
+          {
+            $or: [
+              { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+              { username: req.user.username },
+            ],
+          },
+          {
+            targetSystolic: targetSystolic,
+            targetDiastolic: targetDiastolic,
+          }
+        )
+          .then(function () {
+            //function runs asynchronously, so wait to render
+            //to update pass, need to check if we are adding data for the current date
+            let checkcurrentDate = new Date();
+            let checkdateString = checkcurrentDate.toDateString();
+            console.log("success");
+
+            //query days
+            Days.findOne({
+              $or: [
+                { $and: [{ email: req.user.email }, { email: { $ne: "" } }] },
+                { username: req.user.username },
+              ],
+              dateString: checkdateString,
+            })
+              .then((days) => {
+                //update pass using current days data
+                // passkit.updatePass(req.user.email, days)
+
+                //push flash message to screen to show it is updated, need to also pass in as we render
+                success_msgs.push({ msg: "Goals set to default" });
+
+                //render the account page
+                res.render("customize", {
+                  success_msgs,
+                  name: req.user.email,
+                  caloriesGoal: usergoals.caloriesGoal,
+                  carbsGoal: usergoals.carbsGoal,
+                  fatsGoal: usergoals.fatsGoal,
+                  proteinsGoal: usergoals.proteinsGoal,
+                  sodiumGoal: usergoals.sodiumGoal,
+                  sugarsGoal: usergoals.sugarsGoal,
+                  weeklyExerciseMinuteGoal: usergoals.weeklyExerciseMinuteGoal,
+                  weeklyMindfulnessMinuteGoal:
+                    usergoals.weeklyMindfulnessMinuteGoal,
+                  goalWeight: usergoals.goalWeight,
+                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  targetSystolic: targetSystolic,
+                  targetDiastolic: targetDiastolic,
+                });
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      } else {
+        //if user is new, we create a new user and set these goals, THIS SHOULD ONLY HAPPEN ONCE FOR EACH USER REGISTRATION
+        let targetSystolic = 120;
+        let targetDiastolic = 80;
+
+        //if the user is new, we add new goals
+        const newUserGoals = new UserGoals({
+          email: req.user.email,
+          username: req.user.username,
+          targetSystolic,
+          targetDiastolic,
         });
 
         //save new goals in the db

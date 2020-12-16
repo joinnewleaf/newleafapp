@@ -37,19 +37,19 @@ const UserGoalsSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  weeklyExerciseMinute: {
+  weeklyExerciseMinuteGoal: {
     type: String,
     require: true,
   },
-  weeklyMindfulnessMinute: {
+  weeklyMindfulnessMinuteGoal: {
     type: String,
     require: true,
   },
   goalWeight: {
     type: String,
-    require: true,
+    require: false,
   },
-  weeklyWeightChange: {
+  weeklyWeightChangeGoal: {
     type: String,
     require: true,
   },
