@@ -41,9 +41,12 @@ file that allows you to format all of your html pages%>
         overflow-x: hidden;
       }
 
+      /* the main-panel describes the area of the page that includes the content of the body outside of the sidebar
+      need to have the height set to 100vh in order to keep the footer located at the bottom of the page */
       .main-panel {
         overflow-x: hidden;
         margin-top: 11px;
+        height: 100vh; 
       }
 
       .center-progressbar {
@@ -61,18 +64,22 @@ file that allows you to format all of your html pages%>
         margin-bottom: 5px;
       }
 
+      /* aligns the progress bars for the macros to the left */
       .progress-bar {
         text-align: left;
       }
 
+      /* gives the protein progress bar its color */
       .progress-bar-protein {
         background-color: #F08080;
       }
 
+      /* gives the fats progress bar its color */
       .progress-bar-fats {
         background-color: #8FBC8B;
       }
 
+      /* gives the carbs progress bar its color */
       .progress-bar-carbs {
         background-color: #FFE4B5;
       }

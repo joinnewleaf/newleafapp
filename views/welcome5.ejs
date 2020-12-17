@@ -1,18 +1,21 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="/css/web-app-styling.css" />
+	<link rel="stylesheet" href="/css/_landing_page.css" />
 </head>
 
+<body class="landing">
 
 	<!-- Header -->
 	<header id="header" class="alt">
-		<h1><strong><a href="index.html">Spatial</a></strong> by Templated</h1>
+		<h1><a href="index.html">
+			<img src="/images/logo.jpg" class="tiny_logo" />
+		</a></h1>
 		<nav id="nav">
 			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="generic.html">Generic</a></li>
-				<li><a href="elements.html">Elements</a></li>
+				<li><a href="#">Home</a></li>
+				<li><a href="#three">Features</a></li>
+				<li><a href="#four">Contact Us</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -26,6 +29,7 @@
 		<ul class="actions">
 			<li><a href="#" class="button special big">Get Started</a></li>
 		</ul>
+		<!-- <div class="body-movin-class" data-file="girl_biking"></div> -->
 	</section>
 
 	<!-- One -->
@@ -51,20 +55,20 @@
 	<section id="two" class="wrapper style2 special">
 		<div class="container">
 			<header class="major">
-				<h2>Fusce ultrices fringilla</h2>
-				<p>Maecenas vitae tellus feugiat eleifend</p>
+				<h2>Chronic Disease Management</h2>
+				<p>Track your habits and health data with wireless technology.</p>
 			</header>
 			<div class="row 150%">
 				<div class="6u 12u$(xsmall)">
 					<div class="image fit captioned">
 						<img src="images/pic02.jpg" alt="" />
-						<h3>Lorem ipsum dolor sit amet.</h3>
+						<h3>Diabetes</h3>
 					</div>
 				</div>
 				<div class="6u$ 12u$(xsmall)">
 					<div class="image fit captioned">
 						<img src="images/pic03.jpg" alt="" />
-						<h3>Illum, maiores tempora cupid?</h3>
+						<h3>Hypertension</h3>
 					</div>
 				</div>
 			</div>
@@ -84,7 +88,7 @@
 			</header>
 			<div class="feature-grid">
 				<div class="feature">
-					<div class="image rounded"><img src="/images/goal_icon.png" alt="" /></div>
+					<div class="image"><img src="/images/goals_icon.png" alt="" /></div>
 					<div class="content">
 						<header>
 							<h4>Goal Setting</h4>
@@ -94,7 +98,7 @@
 					</div>
 				</div>
 				<div class="feature">
-					<div class="image rounded"><img src="" alt="" /></div>
+					<div class="image"><img src="/images/information_icon.png" alt="" /></div>
 					<div class="content">
 						<header>
 							<h4>Education</h4>
@@ -104,7 +108,7 @@
 					</div>
 				</div>
 				<div class="feature">
-					<div class="image rounded"><img src="images/pic06.jpg" alt="" /></div>
+					<div class="image"><img src="/images/graphs_icon.png" alt="" /></div>
 					<div class="content">
 						<header>
 							<h4>Personalized Feedback</h4>
@@ -114,7 +118,7 @@
 					</div>
 				</div>
 				<div class="feature">
-					<div class="image rounded"><img src="images/pic07.jpg" alt="" /></div>
+					<div class="image"><img src="/images/stethoscope_icon.png" alt="" /></div>
 					<div class="content">
 						<header>
 							<h4>Physician Portal</h4>
@@ -131,11 +135,11 @@
 	<section id="four" class="wrapper style3 special">
 		<div class="container">
 			<header class="major">
-				<h2>Aenean elementum ligula</h2>
-				<p>Feugiat sed lorem ipsum magna</p>
+				<h2>Want to try the app for free?</h2>
+				<p></p>
 			</header>
 			<ul class="actions">
-				<li><a href="#" class="button special big">Get in touch</a></li>
+				<li><a href="#" class="button special big">Sign Up Now!</a></li>
 			</ul>
 		</div>
 	</section>
@@ -160,12 +164,18 @@
 	<script src="/js/skel.min.js"></script>
 	<script src="/js/util.js"></script>
 	<script src="/js/main.js"></script>
-	</script>
-	</script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
+	<script>
+		var bodyMovin = document.getElementsByClassName('body-movin-class'); 
+		Array.prototype.forEach.call(bodyMovin, icon =>)
+		var anim = bodyMovin.loadAnimation({
+			container: bodyMovin, 
+			path: 'js/girl_biking.json',
+			renderer: 'svg',
+			loop: true,
+			autoplay: true
+		})
+	</script> -->
 </body>
 
-<<<<<<< HEAD:views/welcome2.ejs
 </html>
-=======
-</html>
->>>>>>> 4e7039fb882763cb3eab28fea544a796cb905a7d:views/welcome1.ejs

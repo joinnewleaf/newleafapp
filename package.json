@@ -5,13 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "build": "node tasks/build.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@primer/octicons": "^9.1.1",
+    "add": "^2.0.6",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.0.0-beta",
     "btoa": "^1.2.1",
@@ -22,11 +24,15 @@
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.16.1",
+    "jsdom": "^16.4.0",
     "mongoose": "^5.5.3",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
-    "tether": "^1.4.7"
+    "tether": "^1.4.7",
+    "cheerio": "^1.0.0-rc.2",
+    "uglify-js": "^3.4.9",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"

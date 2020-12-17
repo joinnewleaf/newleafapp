@@ -155,9 +155,10 @@ so that you can click on it and close out the sidebar -->
           </div>
         </section>
       </div>
-      <% include ./partials/footer.ejs %>
     </div>
-  </div>
+    <!-- keep the footer partial outside of the content div in order to keep it fixed at the bottom of the page -->
+       <% include ./partials/footer.ejs %> 
+      </div>
 
   <!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
   <!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
