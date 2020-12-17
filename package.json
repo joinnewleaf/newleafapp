@@ -1,10 +1,13 @@
 {
-  "name": "cicowebapp",
+  "name": "new-leaf-app",
   "version": "1.0.0",
   "description": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/cicohealth/cicowebapp.git"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "main": "app.js",
   "scripts": {
@@ -21,6 +24,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.0.0-beta",
     "btoa": "^1.2.1",
+    "cheerio": "^1.0.0-rc.2",
     "connect-flash": "^0.1.1",
     "crypto-js": "^3.1.9-1",
     "dotenv": "^8.2.0",
@@ -30,11 +34,11 @@
     "express-session": "^1.16.1",
     "jsdom": "^16.4.0",
     "mongoose": "^5.5.3",
+    "node": "^15.4.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0",
     "tether": "^1.4.7",
-    "cheerio": "^1.0.0-rc.2",
     "uglify-js": "^3.4.9",
     "watch": "^1.0.2"
   },
