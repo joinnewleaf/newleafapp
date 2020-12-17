@@ -830,9 +830,9 @@ router.post("/defaultWeightGoal", ensureAuthenticated, (req, res) => {
                   sodiumGoal: usergoals.sodiumGoal,
                   sugarsGoal: usergoals.sugarsGoal,
                   weeklyExerciseMinuteGoal: usergoals.weeklyExerciseMinuteGoal,
-                  weeklyMindfulnessMinuteGoal: weeklyMindfulnessMinuteGoal,
+                  weeklyMindfulnessMinuteGoal: usergoals.weeklyMindfulnessMinuteGoal,
                   goalWeight: goalWeight,
-                  weeklyWeightChangeGoal: usergoals.weeklyWeightChangeGoal,
+                  weeklyWeightChangeGoal: weeklyWeightChangeGoal,
                   targetSystolic: usergoals.targetSystolic,
                   targetDiastolic: usergoals.targetDiastolic,
                 });
