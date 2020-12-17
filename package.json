@@ -2,6 +2,10 @@
   "name": "node-passport-login",
   "version": "1.0.0",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cicohealth/cicowebapp.git"
+  },
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
