@@ -66,7 +66,7 @@
                         <tbody>
 
                             <!-- Each row gets rendered using a database request-->
-                            <%if (typeof days.mindfulness != 'undefined') { %>
+                            <%if (typeof days.mindfulness !='undefined' ) { %>
                                 <% days.mindfulness.forEach(function(mindfulness) { %>
                                     <tr id="<%= mindfulness._id %>">
                                         <td>
@@ -79,7 +79,7 @@
                                             <%= mindfulness.mindfulness %>
                                         </td>
                                         <td class="row_data" column_name="">
-                                            <%if (typeof mindfulness.minutes != 'undefined') { %>
+                                            <%if (typeof mindfulness.minutes !='undefined' ) { %>
                                                 <%= mindfulness.minutes %>
                                                     <% } else { %>
                                                         <%= 0 %>
@@ -97,10 +97,12 @@
 
                                         <td class="editEntryMobile2">
                                             <a href="#editModal3" class="edit" data-toggle="modal">
-                                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                                <i class="material-icons" data-toggle="tooltip"
+                                                    title="Edit">&#xE254;</i>
                                             </a>
                                             <a href="#deleteModal3" class="delete" data-toggle="modal">
-                                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                                <i class="material-icons" data-toggle="tooltip"
+                                                    title="Delete">&#xE872;</i>
                                             </a>
                                         </td>
                                     </tr>
@@ -119,7 +121,8 @@
                         <form action="/days/deleteMindfulness" method="POST" autocomplete="off">
                             <div class="modal-header">
                                 <h4 class="modal-title">Delete Food</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <p>Are you sure you want to delete this entry?</p>
@@ -146,7 +149,8 @@
                         <form action="/days/deleteMultipleMindfulnesss" method="POST" autocomplete="off">
                             <div class="modal-header">
                                 <h4 class="modal-title">Delete Entry</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <p>Are you sure you want to delete this entry?</p>
@@ -172,16 +176,19 @@
                         <form action="/days/editMindfulness" method="POST" autocomplete="off">
                             <div class="modal-header">
                                 <h4 class="modal-title">Edit Activity</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Activity</label>
-                                    <input type="text" name="mindfulness" class="form-control name_row_data" value="new entry" maxlength="25" required onclick="this.select()">
+                                    <input type="text" name="mindfulness" class="form-control name_row_data"
+                                        value="new entry" maxlength="25" required onclick="this.select()">
                                 </div>
                                 <div class="form-group">
                                     <label>Minutes</label>
-                                    <input type="number" name="minutes" class="form-control edit_row_data" value="0" maxlength="10" required onclick="this.select()">
+                                    <input type="number" name="minutes" class="form-control edit_row_data" value="0"
+                                        maxlength="10" required onclick="this.select()">
                                 </div>
                                 <input type="hidden" name="date" value="<%= days.date %>" />
                                 <input type="hidden" name="dateString" value="<%= days.dateString %>" />
@@ -203,16 +210,19 @@
                         <form action="/days/addMindfulness" method="POST" autocomplete="off">
                             <div class="modal-header">
                                 <h4 class="modal-title">Add Activity</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Activity</label>
-                                    <input type="text" name="mindfulness" class="form-control add_row_data" value="" required maxlength="20" onclick="this.select()">
+                                    <input type="text" name="mindfulness" class="form-control add_row_data" value=""
+                                        required maxlength="20" onclick="this.select()">
                                 </div>
                                 <div class="form-group">
                                     <label>Minutes</label>
-                                    <input type="number" name="minutes" class="form-control add_row_data" value="0" required maxlength="10" onclick="this.select()">
+                                    <input type="number" name="minutes" class="form-control add_row_data" value="0"
+                                        required maxlength="10" onclick="this.select()">
                                 </div>
                                 <input type="hidden" name="date" value="<%= days.date %>" />
                                 <input type="hidden" name="dateString" value="<%= days.dateString %>" />
@@ -221,229 +231,240 @@
                                     <input type="submit" class="btn btn-success" value="Add">
                                 </div>
                         </form>
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Add Modal HTML -->
-                <div id="addModal3" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form action="/days/addMindfulness" method="POST" autocomplete="off">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Add Activity</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <!-- Add Modal HTML -->
+            <div id="addModal3" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/days/addMindfulness" method="POST" autocomplete="off">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add Activity</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Activity</label>
+                                    <input list="result" name="mindfulness" placeholder="search" class="form-control"
+                                        id="search" type="text" required maxlength="50" onclick="this.select()">
+                                    <datalist id="result">
+                                        <option class="searchResultOptions" value="Quick Add">
+                                    </datalist>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label>Activity</label>
-                                        <input list="result" name="mindfulness" placeholder="search" class="form-control" id="search" type="text" required maxlength="50"
-                                            onclick="this.select()">
-                                        <datalist id="result">
-                                            <option class="searchResultOptions" value="Quick Add">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="units" class="formText">Units</label>
+                                        <input list="unitsList" type="text" class="form-control" id="units"
+                                            name="units">
+                                        <datalist id="unitsList">
+                                            <option class="ResultOptions" value="Grams">
+                                            <option class="ResultOptions" value="Cups">
+                                            <option class="ResultOptions" value="Ounces">
                                         </datalist>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="units" class="formText">Units</label>
-                                            <input list="unitsList" type="text" class="form-control" id="units" name="units">
-                                            <datalist id="unitsList">
-                                                <option class="ResultOptions" value="Grams">
-                                                    <option class="ResultOptions" value="Cups">
-                                                        <option class="ResultOptions" value="Ounces">
-                                            </datalist>
-                                        </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label for="quantity" class="formText">Quantity</label>
-                                            <input type="text" class="form-control" id="quantity" name="quantity">
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="quantity" class="formText">Quantity</label>
+                                        <input type="text" class="form-control" id="quantity" name="quantity">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Calories</label>
-                                        <input type="number" name="calories" class="form-control add_row_data calories_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <input type="hidden" name="date" value="<%= days.date %>" />
-                                    <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Add">
-                                    </div>
-                            </form>
-                            </div>
-                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Calories</label>
+                                    <input type="number" name="calories" class="form-control add_row_data calories_data"
+                                        value="0" required maxlength="10" onclick="this.select()">
+                                </div>
+                                <input type="hidden" name="date" value="<%= days.date %>" />
+                                <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-success" value="Add">
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 
 
-<script type="text/javascript">
-    $(document).ready(function ($) {
+    <script type="text/javascript">
+        $(document).ready(function ($) {
 
-        //on changing the checkbox header
-        $('#checkbox3').change(function () {
+            //on changing the checkbox header
+            $('#checkbox3').change(function () {
 
-            //if the check box is checked, cycle through document and check everything
-            if (this.checked == true) {
-                $(document).find('input[type=checkbox]').each(function (index, val) {
-                    $(val).prop("checked", true);
-                })
-            } else { //uncheck everything
-                $(document).find('input[type=checkbox]').each(function (index, val) {
-                    $(val).prop("checked", false);
-                })
-            }
-        })
+                //if the check box is checked, cycle through document and check everything
+                if (this.checked == true) {
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", true);
+                    })
+                } else { //uncheck everything
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", false);
+                    })
+                }
+            })
 
-        //these double check that input values are valid numbers for blood pressures and heart rate; input patterns make sure the input is a certain length
-        $(".check-numbers1").keyup(function () {
-            $(".check-numbers1").val(this.value.match(/[0-9]*/));
-        });
-        $(".check-numbers2").keyup(function () {
-            $(".check-numbers2").val(this.value.match(/[0-9]*/));
-        });
-        $(".check-numbers3").keyup(function () {
-            $(".check-numbers3").val(this.value.match(/[0-9]*/));
-        });
-
-        //click the add button
-        $(document).on('click', '.btn-add', function (event) {
-
-            //add the current time in --:-- AM/PM format
-            var g = new Date().toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                hour12: true,
-                minute: 'numeric'
+            //these double check that input values are valid numbers for blood pressures and heart rate; input patterns make sure the input is a certain length
+            $(".check-numbers1").keyup(function () {
+                $(".check-numbers1").val(this.value.match(/[0-9]*/));
             });
-            $('#time').attr({
-                'value': g
+            $(".check-numbers2").keyup(function () {
+                $(".check-numbers2").val(this.value.match(/[0-9]*/));
             });
-        });
+            $(".check-numbers3").keyup(function () {
+                $(".check-numbers3").val(this.value.match(/[0-9]*/));
+            });
 
-        //click the edit button
-        $(document).on('click', '.edit', function (event) {
+            //click the add button
+            $(document).on('click', '.btn-add', function (event) {
 
-            //may need this?
-            event.preventDefault();
+                //add the current time in --:-- AM/PM format
+                var g = new Date().toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    hour12: true,
+                    minute: 'numeric'
+                });
+                $('#time').attr({
+                    'value': g
+                });
+                //makes scroll work after click
+                $(window).scrollTop(0);
+            });
 
-            //find tbl row and its ID closest to the click, will be used to update the db
-            var tbl_row = $(this).closest('tr');
-            var id = tbl_row.attr('id');
+            //click the edit button
+            $(document).on('click', '.edit', function (event) {
 
-            var temp_row_data = [];
-            let i = 0;
+                //may need this?
+                event.preventDefault();
 
-            //get new name
-            var name = tbl_row.find('.name_data').html();
-            name = name.trim();
-            $("#editModal3").find('.name_row_data').attr("value", name);
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row = $(this).closest('tr');
+                var id = tbl_row.attr('id');
 
-            //get row id
-            $("#editModal3").find('.row_id_data').attr("value", id);
+                var temp_row_data = [];
+                let i = 0;
 
-            let notes = tbl_row.find('.notes_data').html();
-            notes = notes.trim();
+                //get new name
+                var name = tbl_row.find('.name_data').html();
+                name = name.trim();
+                $("#editModal3").find('.name_row_data').attr("value", name);
 
-            //take each value in the actual row data and update the default value for the edit form
-            tbl_row.find('.row_data').each(function (index, val) {
+                //get row id
+                $("#editModal3").find('.row_id_data').attr("value", id);
 
-                //for each value of the row store to array, need to get the int out of it
-                temp_row_data[i] = parseInt(($(this).html()));
+                let notes = tbl_row.find('.notes_data').html();
+                notes = notes.trim();
 
-                //find what is written in the notes
-                if (isNaN(temp_row_data[i])) {
+                //take each value in the actual row data and update the default value for the edit form
+                tbl_row.find('.row_data').each(function (index, val) {
 
-                    //if no value recorded, not recorded
-                    temp_row_data[i] = "NR";
+                    //for each value of the row store to array, need to get the int out of it
+                    temp_row_data[i] = parseInt(($(this).html()));
 
-                    //check if notes
-                    if (i == 3) {
-                        temp_row_data[i] = notes;
+                    //find what is written in the notes
+                    if (isNaN(temp_row_data[i])) {
+
+                        //if no value recorded, not recorded
+                        temp_row_data[i] = "NR";
+
+                        //check if notes
+                        if (i == 3) {
+                            temp_row_data[i] = notes;
+                        }
                     }
-                }
-                i++;
+                    i++;
 
+                });
+
+                //for each value in the edit form, we update with the temporary data
+                let j = 0;
+                console.log(temp_row_data)
+                $("#editModal3").find('.edit_row_data').each(function (index, val) {
+
+                    //update edit form
+                    $(this).attr("value", temp_row_data[j]);
+                    if (j == 3) {
+                        $("#editNotes").val(temp_row_data[j]);
+                    }
+                    j++;
+
+                });
+                //makes scroll work after click
+                $(window).scrollTop(0);
             });
 
-            //for each value in the edit form, we update with the temporary data
-            let j = 0;
-            console.log(temp_row_data)
-            $("#editModal3").find('.edit_row_data').each(function (index, val) {
+            //deletes row
+            $(document).on('click', '.delete', function (event) {
 
-                //update edit form
-                $(this).attr("value", temp_row_data[j]);
-                if (j == 3) {
-                    $("#editNotes").val(temp_row_data[j]);
-                }
-                j++;
+                //may need this?
+                event.preventDefault();
 
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row = $(this).closest('tr');
+                var id = tbl_row.attr('id');
+
+                //update row id in the submit form
+                $("#deleteModal3").find('.row_id_data').attr("value", id);
+            });
+
+            //deletes one row
+            $(document).on('click', '.delete', function (event) {
+
+                //may need this?
+                event.preventDefault();
+
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row = $(this).closest('tr');
+                var id = tbl_row.attr('id');
+
+                //update row id in the submit form
+                $("#deleteModal3").find('.row_id_data').attr("value", id);
+                //makes scroll work after click
+                $(window).scrollTop(0);
+            });
+
+            //deletes all checked rows
+            $(document).on('click', '.btn-delete-multiple', function (event) {
+
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row_array = [];
+                var id_array = [];
+
+                //checkbox counter
+                let checkboxCounter = 0;
+                let arrayIndex = 0;
+
+                //loop through checkboxes, store values and send to router
+                $(document).find('input[type=checkbox]').each(function (index, val) {
+
+                    //if the box is checked, collect the row id
+                    if ($(val).prop('checked') && checkboxCounter > 0) {
+
+                        //find tbl row and its ID closest to the click, will be used to update the db
+                        var tbl_row = $(this).closest('tr');
+                        var id = tbl_row.attr('id');
+                        id_array[arrayIndex] = id;
+                        arrayIndex++;
+                    }
+
+                    //check if end of checkbox coounter, then submit request
+                    if (checkboxCounter == $(document).find('input[type=checkbox]').length - 1) {
+                        console.log("id_array= " + id_array.toString());
+
+                        //update row id in the submit form
+                        $("#deleteMultipleModal3").find('.row_id_data_array').attr("value",
+                            id_array);
+                    }
+                    checkboxCounter++;
+                });
+                //makes scroll work after click
+                $(window).scrollTop(0);
             });
         });
-
-        //deletes row
-        $(document).on('click', '.delete', function (event) {
-
-            //may need this?
-            event.preventDefault();
-
-            //find tbl row and its ID closest to the click, will be used to update the db
-            var tbl_row = $(this).closest('tr');
-            var id = tbl_row.attr('id');
-
-            //update row id in the submit form
-            $("#deleteModal3").find('.row_id_data').attr("value", id);
-        });
-
-        //deletes one row
-        $(document).on('click', '.delete', function (event) {
-
-            //may need this?
-            event.preventDefault();
-
-            //find tbl row and its ID closest to the click, will be used to update the db
-            var tbl_row = $(this).closest('tr');
-            var id = tbl_row.attr('id');
-
-            //update row id in the submit form
-            $("#deleteModal3").find('.row_id_data').attr("value", id);
-        });
-
-        //deletes all checked rows
-        $(document).on('click', '.btn-delete-multiple', function (event) {
-
-            //find tbl row and its ID closest to the click, will be used to update the db
-            var tbl_row_array = [];
-            var id_array = [];
-
-            //checkbox counter
-            let checkboxCounter = 0;
-            let arrayIndex = 0;
-
-            //loop through checkboxes, store values and send to router
-            $(document).find('input[type=checkbox]').each(function (index, val) {
-
-                //if the box is checked, collect the row id
-                if ($(val).prop('checked') && checkboxCounter > 0) {
-
-                    //find tbl row and its ID closest to the click, will be used to update the db
-                    var tbl_row = $(this).closest('tr');
-                    var id = tbl_row.attr('id');
-                    id_array[arrayIndex] = id;
-                    arrayIndex++;
-                }
-
-                //check if end of checkbox coounter, then submit request
-                if (checkboxCounter == $(document).find('input[type=checkbox]').length - 1) {
-                    console.log("id_array= " + id_array.toString());
-
-                    //update row id in the submit form
-                    $("#deleteMultipleModal3").find('.row_id_data_array').attr("value",
-                        id_array);
-                }
-                checkboxCounter++;
-            });
-        });
-    });
-</script>
+    </script>
