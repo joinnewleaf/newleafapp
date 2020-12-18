@@ -16,83 +16,83 @@
     </style>
 
     <!-- <div class="panel panel-default panel-default-Mobile"> -->
-       <!-- <div class="panel-body"> -->
-            <div class="tbl_day_data"></div>
+    <!-- <div class="panel-body"> -->
+    <div class="tbl_day_data"></div>
 
-            <div id="food-diary" class="container">
-                <div id="food-diary" class="table-wrapper">
-                    <div id="food-diary" class="table-title">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h4 class="tableHeadMobile">
-                                    <b>Food Journal</b>
-                                </h4>
-                            </div>
-
-                            <div class="col-sm-6 tableButtonMobile">
-                                <a href="#addModal" class="btn btn-add" data-toggle="modal">
-                                    <i class="material-icons">&#xE147;</i>
-                                    <span>Add Food</span>
-                                </a>
-                                <a href="#deleteMultipleModal" class="btn btn-delete-multiple" data-toggle="modal">
-                                    <i class="material-icons">&#xE15C;</i>
-                                    <span>Delete</span>
-                                </a>
-                            </div>
-                        </div>
+    <div id="food-diary" class="container">
+        <div id="food-diary" class="table-wrapper">
+            <div id="food-diary" class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4 class="tableHeadMobile">
+                            <b>Food Journal</b>
+                        </h4>
                     </div>
 
-                    <table id="food_table" class="table table-striped table-hover">
+                    <div class="col-sm-6 tableButtonMobile">
+                        <a href="#addModal" class="btn btn-add" data-toggle="modal">
+                            <i class="material-icons">&#xE147;</i>
+                            <span>Add Food</span>
+                        </a>
+                        <a href="#deleteMultipleModal" class="btn btn-delete-multiple" data-toggle="modal">
+                            <i class="material-icons">&#xE15C;</i>
+                            <span>Delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- The head of the table is one row, does not need to be rendered -->
-                        <thead>
-                            <tr>
-                                <th>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                                        <label for="checkbox2"></label>
-                                    </span>
+            <table id="food_table" class="table table-striped table-hover">
 
-                                    <!-- The columns labeled with the class columnHideMobile will be hidden on mobile,
+                <!-- The head of the table is one row, does not need to be rendered -->
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="checkbox2" name="options[]" value="1">
+                                <label for="checkbox2"></label>
+                            </span>
+
+                            <!-- The columns labeled with the class columnHideMobile will be hidden on mobile,
                                     instead these labels will be added as data-labels when you are on mobile and the 
                                     data that was included here is populated as one cell of grouped rows -->
-                                </th>
-                                <th>Food</th>
-                                <th>Calories (kcal)</th>
-                                <th scope="col" class="columnHideMobile">Carbs (g)</th>
-                                <th scope="col" class="columnHideMobile">Fats (g)</th>
-                                <th scope="col" class="columnHideMobile">Protein (g)</th>
-                                <th scope="col" class="columnHideMobile">Sugar (g)</th>
-                                <th scope="col" class="columnHideMobile">Sodium (mg)</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                        </th>
+                        <th>Food</th>
+                        <th>Calories (kcal)</th>
+                        <th scope="col" class="columnHideMobile">Carbs (g)</th>
+                        <th scope="col" class="columnHideMobile">Fats (g)</th>
+                        <th scope="col" class="columnHideMobile">Protein (g)</th>
+                        <th scope="col" class="columnHideMobile">Sugar (g)</th>
+                        <th scope="col" class="columnHideMobile">Sodium (mg)</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                        <!-- Table body is multiple rows, each row needs rendered using jquery and database requests -->
-                        <tbody>
+                <!-- Table body is multiple rows, each row needs rendered using jquery and database requests -->
+                <tbody>
 
-                            <!-- Each row gets rendered using a database request-->
-                            <%if (typeof days.foods != 'undefined') { %>
-                                <% days.foods.forEach(function(foods) { %>
-                                    <tr id="<%= foods._id %>">
-                                        <td>
-                                            <span class="custom-checkbox">
-                                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                                <label for="checkbox1"></label>
-                                            </span>
-                                        </td>
-                                        <td class="name_data">
-                                            <%= foods.name %>
-                                        </td>
-                                        <td class="row_data" column_name="calorie_data">
-                                            <%if (typeof foods.calories != 'undefined') { %>
-                                                <%= foods.calories %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
+                    <!-- Each row gets rendered using a database request-->
+                    <%if (typeof days.foods !='undefined' ) { %>
+                        <% days.foods.forEach(function(foods) { %>
+                            <tr id="<%= foods._id %>">
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
+                                </td>
+                                <td class="name_data">
+                                    <%= foods.name %>
+                                </td>
+                                <td class="row_data" column_name="calorie_data">
+                                    <%if (typeof foods.calories !='undefined' ) { %>
+                                        <%= foods.calories %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
 
-                                        <!-- The class newRowMobile takes this data and displays it as a grouped set of 
+                                <!-- The class newRowMobile takes this data and displays it as a grouped set of 
                                         rows displayed in a single cell of the table with the data-label giving it the 
                                         name that is displayed to the left when viewed on mobile 
                                     
@@ -100,559 +100,584 @@
                                         makes it so that the column headers are not shown on mobile while the 
                                         newRowMobile class tells the data to be displayed but differently than  if it 
                                         were viewed on desktop -->
-                                        <td class="row_data newRowMobile" data-label="Carbs: " column_name="carbs_data">
-                                            <%if (typeof foods.carbs != 'undefined') { %>
-                                                <%= foods.carbs %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
-                                        <td class="row_data newRowMobile" data-label="Fats: " column_name="fats_data">
-                                            <%if (typeof foods.fats != 'undefined') { %>
-                                                <%= foods.fats %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
-                                        <td class="row_data newRowMobile" data-label="Proteins: " column_name="proteins_data">
-                                            <%if (typeof foods.proteins != 'undefined') { %>
-                                                <%= foods.proteins %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
-                                        <td class="row_data newRowMobile" data-label="Sugars: " column_name="sugars_data">
-                                            <%if (typeof foods.sugar != 'undefined') { %>
-                                                <%= foods.sugar %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
-                                        <td class="row_data newRowMobile" data-label="Sodium: " column_name="sodium_data">
-                                            <%if (typeof foods.sodium != 'undefined') { %>
-                                                <%= foods.sodium %>
-                                                    <% } else { %>
-                                                        <%= 0 %>
-                                                            <% } %>
-                                        </td>
+                                <td class="row_data newRowMobile" data-label="Carbs: " column_name="carbs_data">
+                                    <%if (typeof foods.carbs !='undefined' ) { %>
+                                        <%= foods.carbs %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
+                                <td class="row_data newRowMobile" data-label="Fats: " column_name="fats_data">
+                                    <%if (typeof foods.fats !='undefined' ) { %>
+                                        <%= foods.fats %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
+                                <td class="row_data newRowMobile" data-label="Proteins: " column_name="proteins_data">
+                                    <%if (typeof foods.proteins !='undefined' ) { %>
+                                        <%= foods.proteins %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
+                                <td class="row_data newRowMobile" data-label="Sugars: " column_name="sugars_data">
+                                    <%if (typeof foods.sugar !='undefined' ) { %>
+                                        <%= foods.sugar %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
+                                <td class="row_data newRowMobile" data-label="Sodium: " column_name="sodium_data">
+                                    <%if (typeof foods.sodium !='undefined' ) { %>
+                                        <%= foods.sodium %>
+                                            <% } else { %>
+                                                <%= 0 %>
+                                                    <% } %>
+                                </td>
 
-                                        <td class="editEntryMobile">
-                                            <a href="#editModal" class="edit" data-toggle="modal">
-                                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                            </a>
-                                            <a href="#deleteModal" class="delete" data-toggle="modal">
-                                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
-                                        <% } %>
-                                            <tr id="totals_row"></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                <td class="editEntryMobile">
+                                    <a href="#editModal" class="edit" data-toggle="modal">
+                                        <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                    </a>
+                                    <a href="#deleteModal" class="delete" data-toggle="modal">
+                                        <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } %>
+                                    <tr id="totals_row"></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            <!-- Delete Modal HTML -->
-            <div id="deleteModal" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="/days/delete" method="POST" autocomplete="off">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Delete Food</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete this entry?</p>
-                                <p class="text-warning">
-                                    <small>This action cannot be undone.</small>
-                                </p>
-                                <input type="hidden" name="date" value="<%= days.date %>" />
-                                <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                                <input class="row_id_data" type="hidden" name="row_id" value="" />
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </div>
-                        </form>
+    <!-- Delete Modal HTML -->
+    <div id="deleteModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/days/delete" method="POST" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Food</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- Delete Multiple Modal HTML -->
-            <div id="deleteMultipleModal" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="/days/deleteMultipleFoods" method="POST" autocomplete="off">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Delete Entry</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete this entry?</p>
-                                <p class="text-warning">
-                                    <small>This action cannot be undone.</small>
-                                </p>
-                                <input type="hidden" name="date" value="<%= days.date %>" />
-                                <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                                <input type="hidden" class="row_id_data_array" name="row_id" value="" />
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </div>
-                        </form>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this entry?</p>
+                        <p class="text-warning">
+                            <small>This action cannot be undone.</small>
+                        </p>
+                        <input type="hidden" name="date" value="<%= days.date %>" />
+                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                        <input class="row_id_data" type="hidden" name="row_id" value="" />
                     </div>
-                </div>
-            </div>
-
-            <div id="editModal" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="/days/edit" method="POST" autocomplete="off">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Edit Food</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Food</label>
-                                    <input type="text" name="food" class="form-control name_row_data" value="new entry" maxlength="25" required onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Calories</label>
-                                    <input type="number" name="calories" class="form-control edit_row_data" value="0" maxlength="10" required onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Carbs</label>
-                                    <input type="number" name="carbs" class="form-control edit_row_data" value="0" maxlength="10" required onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fats</label>
-                                    <input type="number" name="fats" class="form-control edit_row_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Protein</label>
-                                    <input type="number" name="proteins" class="form-control edit_row_data" value="0" maxlength="10" required onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sugar</label>
-                                    <input type="number" name="sugar" class="form-control edit_row_data" value="0" required onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sodium</label>
-                                    <input type="number" name="sodium" class="form-control edit_row_data" value="0" maxlength="10" required onclick="this.select()">
-                                </div>
-                                <input type="hidden" name="date" value="<%= days.date %>" />
-                                <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-
-                                <input class="row_id_data" type="hidden" name="row_id" value="" />
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-info" value="Save">
-                            </div>
-                        </form>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" value="Delete">
                     </div>
-                </div>
+                </form>
             </div>
+        </div>
+    </div>
 
-            <!-- Add Modal HTML -->
-            <div id="addModal" class="modal fade">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <form action="/days/add" method="POST" autocomplete="off">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Food</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Food</label>
-                                    <input list="result" name="food" placeholder="search" class="form-control" id="search" type="text" required maxlength="50"
-                                        onclick="this.select()">
-                                    <datalist id="result">
-                                        <option class="searchResultOptions" value="Quick Add">
-                                    </datalist>
-                                </div>
-                                <div class="form-group">
-                                    <label>Calories</label>
-                                    <input type="number" name="calories" class="form-control add_row_data calories_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Carbs</label>
-                                    <input type="number" name="carbs" class="form-control add_row_data carbs_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Fats</label>
-                                    <input type="number" name="fats" class="form-control add_row_data fats_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Protein</label>
-                                    <input type="number" name="proteins" class="form-control add_row_data proteins_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sugar</label>
-                                    <input type="number" name="sugar" class="form-control add_row_data sugars_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <div class="form-group">
-                                    <label>Sodium</label>
-                                    <input type="number" name="sodium" class="form-control add_row_data sodium_data" value="0" required maxlength="10" onclick="this.select()">
-                                </div>
-                                <input type="hidden" name="date" value="<%= days.date %>" />
-                                <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                                <div class="modal-footer">
-                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                    <input type="submit" class="btn btn-success" value="Add">
-                                </div>
-                        </form>
+    <!-- Delete Multiple Modal HTML -->
+    <div id="deleteMultipleModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/days/deleteMultipleFoods" method="POST" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Entry</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this entry?</p>
+                        <p class="text-warning">
+                            <small>This action cannot be undone.</small>
+                        </p>
+                        <input type="hidden" name="date" value="<%= days.date %>" />
+                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                        <input type="hidden" class="row_id_data_array" name="row_id" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/days/edit" method="POST" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Food</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Food</label>
+                            <input type="text" name="food" class="form-control name_row_data" value="new entry"
+                                maxlength="25" required onclick="this.select()">
                         </div>
+                        <div class="form-group">
+                            <label>Calories</label>
+                            <input type="number" name="calories" class="form-control edit_row_data" value="0"
+                                maxlength="10" required onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Carbs</label>
+                            <input type="number" name="carbs" class="form-control edit_row_data" value="0"
+                                maxlength="10" required onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Fats</label>
+                            <input type="number" name="fats" class="form-control edit_row_data" value="0" required
+                                maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Protein</label>
+                            <input type="number" name="proteins" class="form-control edit_row_data" value="0"
+                                maxlength="10" required onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sugar</label>
+                            <input type="number" name="sugar" class="form-control edit_row_data" value="0" required
+                                onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sodium</label>
+                            <input type="number" name="sodium" class="form-control edit_row_data" value="0"
+                                maxlength="10" required onclick="this.select()">
+                        </div>
+                        <input type="hidden" name="date" value="<%= days.date %>" />
+                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+
+                        <input class="row_id_data" type="hidden" name="row_id" value="" />
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-info" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                <!-- Add Modal HTML -->
-                <div id="addModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form action="/days/add" method="POST" autocomplete="off">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Add Food</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label>Food</label>
-                                        <input list="result" name="food" placeholder="search" class="form-control" id="search" type="text" required maxlength="50"
-                                            onclick="this.select()">
-                                        <datalist id="result">
-                                            <option class="searchResultOptions" value="Quick Add">
-                                        </datalist>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="units" class="formText">Units</label>
-                                            <input list="unitsList" type="text" class="form-control" id="units" name="units">
-                                            <datalist id="unitsList">
-                                                <option class="ResultOptions" value="Grams">
-                                                    <option class="ResultOptions" value="Cups">
-                                                        <option class="ResultOptions" value="Ounces">
-                                            </datalist>
-                                        </div>
+    <!-- Add Modal HTML -->
+    <div id="addModal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/days/add" method="POST" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Food</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Food</label>
+                            <input list="result" name="food" placeholder="search" class="form-control" id="search"
+                                type="text" required maxlength="50" onclick="this.select()">
+                            <datalist id="result">
+                                <option class="searchResultOptions" value="Quick Add">
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label>Calories</label>
+                            <input type="number" name="calories" class="form-control add_row_data calories_data"
+                                value="0" required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Carbs</label>
+                            <input type="number" name="carbs" class="form-control add_row_data carbs_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Fats</label>
+                            <input type="number" name="fats" class="form-control add_row_data fats_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Protein</label>
+                            <input type="number" name="proteins" class="form-control add_row_data proteins_data"
+                                value="0" required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sugar</label>
+                            <input type="number" name="sugar" class="form-control add_row_data sugars_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sodium</label>
+                            <input type="number" name="sodium" class="form-control add_row_data sodium_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <input type="hidden" name="date" value="<%= days.date %>" />
+                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Add">
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label for="quantity" class="formText">Quantity</label>
-                                            <input type="text" class="form-control" id="quantity" name="quantity">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Calories</label>
-                                        <input type="number" name="calories" class="form-control add_row_data calories_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Carbs</label>
-                                        <input type="number" name="carbs" class="form-control add_row_data carbs_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Fats</label>
-                                        <input type="number" name="fats" class="form-control add_row_data fats_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Protein</label>
-                                        <input type="number" name="proteins" class="form-control add_row_data proteins_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Sugar</label>
-                                        <input type="number" name="sugar" class="form-control add_row_data sugars_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Sodium</label>
-                                        <input type="number" name="sodium" class="form-control add_row_data sodium_data" value="0" required maxlength="10" onclick="this.select()">
-                                    </div>
-                                    <input type="hidden" name="date" value="<%= days.date %>" />
-                                    <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Add">
-                                    </div>
-                            </form>
+    <!-- Add Modal HTML -->
+    <div id="addModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/days/add" method="POST" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Food</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Food</label>
+                            <input list="result" name="food" placeholder="search" class="form-control" id="search"
+                                type="text" required maxlength="50" onclick="this.select()">
+                            <datalist id="result">
+                                <option class="searchResultOptions" value="Quick Add">
+                            </datalist>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="units" class="formText">Units</label>
+                                <input list="unitsList" type="text" class="form-control" id="units" name="units">
+                                <datalist id="unitsList">
+                                    <option class="ResultOptions" value="Grams">
+                                    <option class="ResultOptions" value="Cups">
+                                    <option class="ResultOptions" value="Ounces">
+                                </datalist>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="quantity" class="formText">Quantity</label>
+                                <input type="text" class="form-control" id="quantity" name="quantity">
                             </div>
                         </div>
-                    </div>
-
-
-                </div>
+                        <div class="form-group">
+                            <label>Calories</label>
+                            <input type="number" name="calories" class="form-control add_row_data calories_data"
+                                value="0" required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Carbs</label>
+                            <input type="number" name="carbs" class="form-control add_row_data carbs_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Fats</label>
+                            <input type="number" name="fats" class="form-control add_row_data fats_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Protein</label>
+                            <input type="number" name="proteins" class="form-control add_row_data proteins_data"
+                                value="0" required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sugar</label>
+                            <input type="number" name="sugar" class="form-control add_row_data sugars_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <div class="form-group">
+                            <label>Sodium</label>
+                            <input type="number" name="sodium" class="form-control add_row_data sodium_data" value="0"
+                                required maxlength="10" onclick="this.select()">
+                        </div>
+                        <input type="hidden" name="date" value="<%= days.date %>" />
+                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Add">
+                        </div>
+                </form>
             </div>
+        </div>
+    </div>
 
 
-            <script type="text/javascript">
-                $(document).ready(function ($) {
-                    //on changing the checkbox header
-                    $('#checkbox2').change(function () {
-                        //if the check box is checked, cycle through document and check everything
-                        if (this.checked == true) {
-                            $(document).find('input[type=checkbox]').each(function (index, val) {
-                                $(val).prop("checked", true);
-                            })
-                        } else { //uncheck everything
-                            $(document).find('input[type=checkbox]').each(function (index, val) {
-                                $(val).prop("checked", false);
-                            })
-                        }
+    </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+            //on changing the checkbox header
+            $('#checkbox2').change(function () {
+                //if the check box is checked, cycle through document and check everything
+                if (this.checked == true) {
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", true);
                     })
-                    var recheckInput = true;
-                    //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
-                    $("#search").on("input", function (event) {
-                        //the text the user entered
-                        var userText = $(this).val();
-                        //we need to replace first option with the exact clicked option
-                        var firstOption = true;
-                        //if the user selected an option from the list, make an ajax call to the ingredients db
-                        $("#result").find("option").each(function () {
-                            //check if the value entered is in the list
-                            if (($(this).val() == userText) && firstOption) {
-                                //only select the first of the matched values
-                                firstOption = false;
-                                //store event as input
-                                var input = event.target,
-                                    list = input.getAttribute('list'); //get the list attribute from the event
-                                //check if the input element has the attribute list
-                                if (list) {
-                                    input.removeAttribute('list'); //remove it so we don't see the dropdown
-                                }
-                                var inputCounter = 0;
-                                //pull the fdcId from the DOM
-                                var fdcId = $(this).attr('fdcId');
-                                //ajax call with fdcId as param
-                                $.ajax({
-                                    url: "/foods/foodDetails/" + fdcId,
-                                    type: "GET",
-                                    dataType: "json",
-                                    cache: false,
-                                    success: (data) => {
-                                        if (typeof data != undefined) {
-                                            //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
-                                            recheckInput = false;
-                                            //once we get the data find the elements that need updated, loop and update
-                                            $("#addModal").find('.add_row_data').each(function (index, val) {
-                                                if ($(this).hasClass('calories_data')) {
-                                                    $(this).attr("value", data['details'][0]['calories']);
-                                                } else if ($(this).hasClass('carbs_data')) {
-                                                    $(this).attr("value", data['details'][0]['carbs']);
-                                                } else if ($(this).hasClass('proteins_data')) {
-                                                    $(this).attr("value", data['details'][0]['proteins']);
-                                                } else if ($(this).hasClass('fats_data')) {
-                                                    $(this).attr("value", data['details'][0]['fats']);
-                                                } else if ($(this).hasClass('sugars_data')) {
-                                                    $(this).attr("value", data['details'][0]['sugars']);
-                                                } else if ($(this).hasClass('sodium_data')) {
-                                                    $(this).attr("value", data['details'][0]['sodium']);
-                                                }
-                                                inputCounter++;
-                                                //check if at end of loop, if at end we need to be allowed to recheck if input changes
-                                                if (inputCounter == $("#addModal").find('.add_row_data').length) {
-                                                    recheckInput = true;//we are at the end of the loop so we can now recheck any keystrokes
-                                                }
-                                            });
-                                        } else {
-                                            console.log("No matches");
-                                        }
-                                    }
-                                })
-                            }
-                        })
-                    });
-                    //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
-                    $('#search').keyup(function (event) {
-                        //result is stored in an unordered list which we wish to write to after retrieving query
-                        $('#result').html('');
-                        //if we need to start rechecking for new dropdowns
-                        if (recheckInput == true) {
-                            //reset because we won't need to recheck Inputs until we select another dropdown option
-                            recheckInput = false;
-                            //store event as input
-                            var input = event.target,
-                                list = input.getAttribute('list'); //get the list attribute from the event
-                            //if there is no value to list
-                            if (list == null) {
-                                input.setAttribute('list', 'result'); //allow us to display options as a list again
-                            }
+                } else { //uncheck everything
+                    $(document).find('input[type=checkbox]').each(function (index, val) {
+                        $(val).prop("checked", false);
+                    })
+                }
+            })
+            var recheckInput = true;
+            //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
+            $("#search").on("input", function (event) {
+                //the text the user entered
+                var userText = $(this).val();
+                //we need to replace first option with the exact clicked option
+                var firstOption = true;
+                //if the user selected an option from the list, make an ajax call to the ingredients db
+                $("#result").find("option").each(function () {
+                    //check if the value entered is in the list
+                    if (($(this).val() == userText) && firstOption) {
+                        //only select the first of the matched values
+                        firstOption = false;
+                        //store event as input
+                        var input = event.target,
+                            list = input.getAttribute('list'); //get the list attribute from the event
+                        //check if the input element has the attribute list
+                        if (list) {
+                            input.removeAttribute('list'); //remove it so we don't see the dropdown
                         }
-                        //get the text box search value and store it into a variable
-                        var searchField = $('#search').val();
-                        //makes call to foods/: with the search field we enter
-                        //need to set the url manually to be absolute
+                        var inputCounter = 0;
+                        //pull the fdcId from the DOM
+                        var fdcId = $(this).attr('fdcId');
+                        //ajax call with fdcId as param
                         $.ajax({
-                            url: "/foods/" + searchField,
+                            url: "/foods/foodDetails/" + fdcId,
                             type: "GET",
                             dataType: "json",
                             cache: false,
                             success: (data) => {
-                                // console.log(data['foods']);
-                                if (data['foods']) {
-                                    //loop through all the returned results
-                                    data['foods'].forEach(function (data) {
-                                        //Appends the data to a dropdown menu, when we click the dropdown menu, it should fire another event
-                                        $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + data.description + '"></option>');
+                                if (typeof data != undefined) {
+                                    //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
+                                    recheckInput = false;
+                                    //once we get the data find the elements that need updated, loop and update
+                                    $("#addModal").find('.add_row_data').each(function (index, val) {
+                                        if ($(this).hasClass('calories_data')) {
+                                            $(this).attr("value", data['details'][0]['calories']);
+                                        } else if ($(this).hasClass('carbs_data')) {
+                                            $(this).attr("value", data['details'][0]['carbs']);
+                                        } else if ($(this).hasClass('proteins_data')) {
+                                            $(this).attr("value", data['details'][0]['proteins']);
+                                        } else if ($(this).hasClass('fats_data')) {
+                                            $(this).attr("value", data['details'][0]['fats']);
+                                        } else if ($(this).hasClass('sugars_data')) {
+                                            $(this).attr("value", data['details'][0]['sugars']);
+                                        } else if ($(this).hasClass('sodium_data')) {
+                                            $(this).attr("value", data['details'][0]['sodium']);
+                                        }
+                                        inputCounter++;
+                                        //check if at end of loop, if at end we need to be allowed to recheck if input changes
+                                        if (inputCounter == $("#addModal").find('.add_row_data').length) {
+                                            recheckInput = true;//we are at the end of the loop so we can now recheck any keystrokes
+                                        }
                                     });
                                 } else {
-                                    console.log("No response returned");
-                                    recheckInput = true;
+                                    console.log("No matches");
                                 }
                             }
-                        });
-                    });
-                    //we will place the goal data, to be imported from the database within each day here
-                    var caloriesGoal = "<%= caloriesGoal %>";
-                    var carbsGoal = "<%= carbsGoal %>";
-                    var fatsGoal = "<%= fatsGoal %>";
-                    var proteinsGoal = "<%= proteinsGoal %>";
-                    var sodiumGoal = "<%= sodiumGoal %>";
-                    var sugarsGoal = "<%= sugarsGoal %>";
-                    //initialize total sums as global vars
-                    var totalCalories = 0;
-                    var totalCarbs = 0;
-                    var totalFats = 0;
-                    var totalProteins = 0;
-                    var totalSodium = 0;
-                    var totalSugars = 0;
-                    //this function will calculate the totals row, and update it. Will use function in .save and .delete, as well as page load
-                    function calculateTotal() {
-                        //need to loop through all rows and keep a running sum
-                        $(document).find('.row_data').each(function (index, val) {
-                            let column_name = $(this).attr('column_name');
-                            let column_value = $(this).html();
-                            //switch case using the column header, add to the running sum for each column
-                            switch (column_name) {
-                                case "calorie_data":
-                                    totalCalories += parseInt(column_value);
-                                    break;
-                                case "carbs_data":
-                                    totalCarbs += parseInt(column_value);
-                                    break;
-                                case "fats_data":
-                                    totalFats += parseInt(column_value);
-                                    break;
-                                case "proteins_data":
-                                    totalProteins += parseInt(column_value);
-                                    break;
-                                case "sodium_data":
-                                    totalSodium += parseInt(column_value);
-                                    break;
-                                case "sugars_data":
-                                    totalSugars += parseInt(column_value);
-                            }
-                        });
-                        //new row
-                        let totals_row = '';
-                        //append totals rows to end of table, all in one row, which calculated during loop, table row must be set to id (not id) to use the jquery functions
-                        totals_row += '<tr id="totals_row">';
-                        totals_row += '<td></td>';
-                        totals_row += '<td>Totals</td>';
-                        totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
-                        totals_row += '<td class="row_data newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs + '</td>';
-                        totals_row += '<td class="row_data newRowMobile" data-label="Fats: " total_type="Fats">' + totalFats + '</td>';
-                        totals_row += '<td class="row_data newRowMobile" data-label="Proteins: " total_type="Proteins">' + totalProteins + '</td>';
-                        totals_row += '<td class="row_data newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars + '</td>';
-                        totals_row += '<td class="row_data newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium + '</td>';
-                        totals_row += '<td></td>';
-                        totals_row += '</tr>';
-                        //removes the previous totals row, and appends the new one
-                        $("#totals_row").remove();
-                        $("#food_table").append(totals_row);
-                        //call function to recalculate goals
-                        calculateGoal()
-                    };
-                    //this function will calculate the goals and update them at the top of the table
-                    function calculateGoal() {
-                        //uses goals object imported from database
-                        var updatedCaloriesGoal = caloriesGoal - totalCalories;
-                        var updatedCarbsGoal = carbsGoal - totalCarbs;
-                        var updatedProteinsGoal = proteinsGoal - totalProteins;
-                        var updatedFatsGoal = fatsGoal - totalFats;
-                        //updates html page
-                        $(document).find('.goals').html(updatedCaloriesGoal);
-                        $(document).find('.proteins').html(updatedProteinsGoal + ' g');
-                        $(document).find('.fats').html(updatedFatsGoal + ' g');
-                        $(document).find('.carbs').html(updatedCarbsGoal + ' g');
-                        //update progress bar using a percentage
-                        var updatedProgressBar_calories = Math.floor((totalCalories / caloriesGoal) * 100);
-                        var updatedProgressBar_proteins = Math.floor((totalProteins / proteinsGoal) * 100);
-                        var updatedProgressBar_carbs = Math.floor((totalCarbs / carbsGoal) * 100);
-                        var updatedProgressBar_fats = Math.floor((totalFats / fatsGoal) * 100);
-                        //finds progress-bar-calories id, selects style attribute and sets to new value
-                        $('#progress-bar-calories').attr('style', "width: " + updatedProgressBar_calories + "%");
-                        $('#progress-bar-fats').attr('style', "width: " + updatedProgressBar_fats + "%");
-                        $('#progress-bar-carbs').attr('style', "width: " + updatedProgressBar_carbs + "%");
-                        $('#progress-bar-proteins').attr('style', "width: " + updatedProgressBar_proteins + "%");
+                        })
                     }
-                    $(document).on('click', '.edit', function (event) {
-                        console.log("edit")
-                        //find tbl row and its ID closest to the click, will be used to update the db
-                        var tbl_row = $(this).closest('tr');
-                        var id = tbl_row.attr('id');
-                        var temp_row_data = [];
-                        let i = 0;
-                        //get new name
-                        var name = tbl_row.find('.name_data').html();
-                        name = name.trim();
-                        $("#editModal").find('.name_row_data').attr("value", name);
-                        //get row id
-                        $("#editModal").find('.row_id_data').attr("value", id);
-                        //take each value in the actual row data and update the default value for the edit form
-                        tbl_row.find('.row_data').each(function (index, val) {
-                            //for each value of the row store to array, need to get the int out of it
-                            temp_row_data[i] = parseInt(($(this).html()));
-                            i++;
-                        });
-                        //for each value in the edit form, we update with the temporary data
-                        let j = 0;
-                        $("#editModal").find('.edit_row_data').each(function (index, val) {
-                            //update edit form
-                            $(this).attr("value", temp_row_data[j]);
-                            j++;
-                        });
-                    });
-                    $(document).on('click', '.delete', function (event) {
-                        console.log("delete one")
-                        //find tbl row and its ID closest to the click, will be used to update the db
-                        var tbl_row = $(this).closest('tr');
-                        var id = tbl_row.attr('id');
-                        console.log(id);
-                        //update row id in the submit form
-                        $("#deleteModal").find('.row_id_data').attr("value", id);
-                    });
-                    calculateTotal();
-                    //deletes all checked rows
-                    $(document).on('click', '.btn-delete-multiple', function (event) {
-                        console.log("delete multiple")
-                        //find tbl row and its ID closest to the click, will be used to update the db
-                        var tbl_row_array = [];
-                        var id_array = [];
-                        //checkbox counter
-                        let checkboxCounter = 0;
-                        let arrayIndex = 0;
-                        //loop through checkboxes, store values and send to router
-                        $(document).find('input[type=checkbox]').each(function (index, val) {
-                            //if the box is checked, collect the row id
-                            if ($(val).prop('checked') && checkboxCounter > 0) {
-                                //find tbl row and its ID closest to the click, will be used to update the db
-                                var tbl_row = $(this).closest('tr');
-                                var id = tbl_row.attr('id');
-                                id_array[arrayIndex] = id;
-                                arrayIndex++;
-                            }
-                            //check if end of checkbox coounter, then submit request
-                            if (checkboxCounter == $(document).find('input[type=checkbox]').length - 1) {
-                                console.log("id_array= " + id_array.toString());
-                                //update row id in the submit form
-                                $("#deleteMultipleModal").find('.row_id_data_array').attr("value", id_array);
-                            }
-                            checkboxCounter++;
-                        });
-                    });
+                })
+            });
+            //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
+            $('#search').keyup(function (event) {
+                //result is stored in an unordered list which we wish to write to after retrieving query
+                $('#result').html('');
+                //if we need to start rechecking for new dropdowns
+                if (recheckInput == true) {
+                    //reset because we won't need to recheck Inputs until we select another dropdown option
+                    recheckInput = false;
+                    //store event as input
+                    var input = event.target,
+                        list = input.getAttribute('list'); //get the list attribute from the event
+                    //if there is no value to list
+                    if (list == null) {
+                        input.setAttribute('list', 'result'); //allow us to display options as a list again
+                    }
+                }
+                //get the text box search value and store it into a variable
+                var searchField = $('#search').val();
+                //makes call to foods/: with the search field we enter
+                //need to set the url manually to be absolute
+                $.ajax({
+                    url: "/foods/" + searchField,
+                    type: "GET",
+                    dataType: "json",
+                    cache: false,
+                    success: (data) => {
+                        // console.log(data['foods']);
+                        if (data['foods']) {
+                            //loop through all the returned results
+                            data['foods'].forEach(function (data) {
+                                //Appends the data to a dropdown menu, when we click the dropdown menu, it should fire another event
+                                $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + data.description + '"></option>');
+                            });
+                        } else {
+                            console.log("No response returned");
+                            recheckInput = true;
+                        }
+                    }
                 });
-            </script>
+            });
+            //we will place the goal data, to be imported from the database within each day here
+            var caloriesGoal = "<%= caloriesGoal %>";
+            var carbsGoal = "<%= carbsGoal %>";
+            var fatsGoal = "<%= fatsGoal %>";
+            var proteinsGoal = "<%= proteinsGoal %>";
+            var sodiumGoal = "<%= sodiumGoal %>";
+            var sugarsGoal = "<%= sugarsGoal %>";
+            //initialize total sums as global vars
+            var totalCalories = 0;
+            var totalCarbs = 0;
+            var totalFats = 0;
+            var totalProteins = 0;
+            var totalSodium = 0;
+            var totalSugars = 0;
+            //this function will calculate the totals row, and update it. Will use function in .save and .delete, as well as page load
+            function calculateTotal() {
+                //need to loop through all rows and keep a running sum
+                $(document).find('.row_data').each(function (index, val) {
+                    let column_name = $(this).attr('column_name');
+                    let column_value = $(this).html();
+                    //switch case using the column header, add to the running sum for each column
+                    switch (column_name) {
+                        case "calorie_data":
+                            totalCalories += parseInt(column_value);
+                            break;
+                        case "carbs_data":
+                            totalCarbs += parseInt(column_value);
+                            break;
+                        case "fats_data":
+                            totalFats += parseInt(column_value);
+                            break;
+                        case "proteins_data":
+                            totalProteins += parseInt(column_value);
+                            break;
+                        case "sodium_data":
+                            totalSodium += parseInt(column_value);
+                            break;
+                        case "sugars_data":
+                            totalSugars += parseInt(column_value);
+                    }
+                });
+                //new row
+                let totals_row = '';
+                //append totals rows to end of table, all in one row, which calculated during loop, table row must be set to id (not id) to use the jquery functions
+                totals_row += '<tr id="totals_row">';
+                totals_row += '<td></td>';
+                totals_row += '<td>Totals</td>';
+                totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Fats: " total_type="Fats">' + totalFats + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Proteins: " total_type="Proteins">' + totalProteins + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium + '</td>';
+                totals_row += '<td></td>';
+                totals_row += '</tr>';
+                //removes the previous totals row, and appends the new one
+                $("#totals_row").remove();
+                $("#food_table").append(totals_row);
+                //call function to recalculate goals
+                calculateGoal()
+            };
+            //this function will calculate the goals and update them at the top of the table
+            function calculateGoal() {
+                //uses goals object imported from database
+                var updatedCaloriesGoal = caloriesGoal - totalCalories;
+                var updatedCarbsGoal = carbsGoal - totalCarbs;
+                var updatedProteinsGoal = proteinsGoal - totalProteins;
+                var updatedFatsGoal = fatsGoal - totalFats;
+                //updates html page
+                $(document).find('.goals').html(updatedCaloriesGoal);
+                $(document).find('.proteins').html(updatedProteinsGoal + ' g');
+                $(document).find('.fats').html(updatedFatsGoal + ' g');
+                $(document).find('.carbs').html(updatedCarbsGoal + ' g');
+                //update progress bar using a percentage
+                var updatedProgressBar_calories = Math.floor((totalCalories / caloriesGoal) * 100);
+                var updatedProgressBar_proteins = Math.floor((totalProteins / proteinsGoal) * 100);
+                var updatedProgressBar_carbs = Math.floor((totalCarbs / carbsGoal) * 100);
+                var updatedProgressBar_fats = Math.floor((totalFats / fatsGoal) * 100);
+                //finds progress-bar-calories id, selects style attribute and sets to new value
+                $('#progress-bar-calories').attr('style', "width: " + updatedProgressBar_calories + "%");
+                $('#progress-bar-fats').attr('style', "width: " + updatedProgressBar_fats + "%");
+                $('#progress-bar-carbs').attr('style', "width: " + updatedProgressBar_carbs + "%");
+                $('#progress-bar-proteins').attr('style', "width: " + updatedProgressBar_proteins + "%");
+            }
+            $(document).on('click', '.edit', function (event) {
+                console.log("edit")
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row = $(this).closest('tr');
+                var id = tbl_row.attr('id');
+                var temp_row_data = [];
+                let i = 0;
+                //get new name
+                var name = tbl_row.find('.name_data').html();
+                name = name.trim();
+                $("#editModal").find('.name_row_data').attr("value", name);
+                //get row id
+                $("#editModal").find('.row_id_data').attr("value", id);
+                //take each value in the actual row data and update the default value for the edit form
+                tbl_row.find('.row_data').each(function (index, val) {
+                    //for each value of the row store to array, need to get the int out of it
+                    temp_row_data[i] = parseInt(($(this).html()));
+                    i++;
+                });
+                //for each value in the edit form, we update with the temporary data
+                let j = 0;
+                $("#editModal").find('.edit_row_data').each(function (index, val) {
+                    //update edit form
+                    $(this).attr("value", temp_row_data[j]);
+                    j++;
+                });
+                //makes scroll work after click
+                $(window).scrollTop(0);
+            });
+            $(document).on('click', '.delete', function (event) {
+                console.log("delete one")
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row = $(this).closest('tr');
+                var id = tbl_row.attr('id');
+                console.log(id);
+                //update row id in the submit form
+                $("#deleteModal").find('.row_id_data').attr("value", id);
+                //makes scroll work after click
+                $(window).scrollTop(0);
+            });
+            calculateTotal();
+            //deletes all checked rows
+            $(document).on('click', '.btn-delete-multiple', function (event) {
+                console.log("delete multiple")
+                //find tbl row and its ID closest to the click, will be used to update the db
+                var tbl_row_array = [];
+                var id_array = [];
+                //checkbox counter
+                let checkboxCounter = 0;
+                let arrayIndex = 0;
+                //loop through checkboxes, store values and send to router
+                $(document).find('input[type=checkbox]').each(function (index, val) {
+                    //if the box is checked, collect the row id
+                    if ($(val).prop('checked') && checkboxCounter > 0) {
+                        //find tbl row and its ID closest to the click, will be used to update the db
+                        var tbl_row = $(this).closest('tr');
+                        var id = tbl_row.attr('id');
+                        id_array[arrayIndex] = id;
+                        arrayIndex++;
+                    }
+                    //check if end of checkbox coounter, then submit request
+                    if (checkboxCounter == $(document).find('input[type=checkbox]').length - 1) {
+                        console.log("id_array= " + id_array.toString());
+                        //update row id in the submit form
+                        $("#deleteMultipleModal").find('.row_id_data_array').attr("value", id_array);
+                    }
+                    checkboxCounter++;
+                });
+                //makes scroll work after click
+                $(window).scrollTop(0);
+            });
+        });
+    </script>
 
-       <!-- </div> -->
-   <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
