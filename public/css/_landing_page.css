@@ -6,11 +6,6 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-.body_movin {
-	height: 150px;
-	background-color: orange;
-}
-
 /* Reset */
 
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -165,6 +160,10 @@
 			width: 90%;
 		}
 
+		.product-description-image {
+			width: 80% !important; 
+		}
+
 	}
 
 	@media screen and (max-width: 736px) {
@@ -191,6 +190,10 @@
 			width: 90% !important;
 		}
 
+		.product-description-image {
+			width: 80% !important; 
+		}
+
 	}
 
 	@media screen and (max-width: 480px) {
@@ -215,6 +218,10 @@
 
 		.container {
 			width: 90% !important;
+		}
+
+		.product-description-image {
+			width: 95% !important; 
 		}
 
 	}
@@ -1945,7 +1952,7 @@
 		input[type="button"].special,
 		button.special,
 		.button.special {
-			background-color: #649278;
+			background-color: #0f926e;
 			color: #ffffff !important;
 		}
 
@@ -1954,7 +1961,7 @@
 			input[type="button"].special:hover,
 			button.special:hover,
 			.button.special:hover {
-				background-color: #7bb695;
+				background-color: #18bb8f;
 			}
 
 			input[type="submit"].special:active,
@@ -1962,7 +1969,7 @@
 			input[type="button"].special:active,
 			button.special:active,
 			.button.special:active {
-				background-color: #486b57;
+				background-color: #0b7458;
 			}
 
 		@media screen and (max-width: 480px) {
@@ -2006,7 +2013,7 @@
 
 				.feature-grid .feature .image img {
 					display: inline;
-					max-width: 100%; 
+					max-width: 75%; 
 				}
 
 			.feature-grid .feature:nth-child(odd) .content, .feature-grid .feature:nth-child(odd) .image {
@@ -2715,8 +2722,27 @@
 		background-attachment: scroll;
 	}
 
-	.wrapper {
+	/* .wrapper {
 		padding: 6em 0 4em 0;
+	} */
+
+	.take-control-section{
+		padding-bottom: 6em;
+	}
+	
+	.features-section {
+		padding-top: 6em;
+	}
+
+	.chronic-disease-management {
+		padding-top: 6em;
+		padding-bottom: 6em;
+	}
+
+	.try-app-now{
+		padding-top: 6em;
+		padding-bottom: 6em;
+		min-height: fit-content !important;
 	}
 
 		.wrapper > .inner {
@@ -3081,14 +3107,47 @@
 			visibility: visible;
 		}
 
+
+/* Product Description */
+
+.product-desctiption-container {
+	text-align: center;
+}
+
+.product-description-image {
+	width: 60%; 
+	display: inline;
+}
+
+.product-description {
+	text-align: left; 
+	width: 80%; 
+	margin-right: auto; 
+	margin-left: auto;
+}
+
 /* Banner */
+
+	/* Banner Grid */
+	
+	.banner-grid {
+		display: grid; 
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		align-items: center;
+		justify-items: center;
+		padding-left: 15px; 
+	}
+
+	.banner-heading {
+		padding-right: 15px;
+	}
 
 	body.is-touch #banner {
 		background-attachment: scroll;
 	}
 
 	#banner {
-		padding: 16em 0 13em 0;
+		padding: 12em 0 13em 0;
 		background-attachment: fixed;
 		background-image: url("/images/"), /* url("../../images/banner.jpg") */;
 		background-position: center top;
@@ -3102,7 +3161,7 @@
 		}
 
 		#banner h2 {
-			color: #649278; 
+			color: #0b7458; 
 			display: inline-block;
 			font-size: 3.5em;
 			line-height: 1.35;
@@ -3119,7 +3178,7 @@
 		@media screen and (max-width: 1280px) {
 
 			#banner {
-				padding: 14em 0 11em 0;
+				padding: 12em 0 11em 0;
 			}
 
 				#banner h2 {

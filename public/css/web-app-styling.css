@@ -2137,20 +2137,9 @@ input:focus {
   -webkit-overflow-scrolling: touch;
 }
 
-.main-panel {
-  overflow: unset !important;
-}
-
 .modal .modal-content .modal-body + .modal-footer {
   padding-top: 0;
 }
-
-<<<<<<< HEAD
-.modal {
-  overflow: unset !important; 
-}
-=======
->>>>>>> 8434bf3a983c73a70417401ae862fb208789fb78
 
 .modal .modal-content .modal-footer {
   border-top: none;
