@@ -1,346 +1,342 @@
-<%/* this is going to be the myaccount page in the dashboard this will allow
-users to edit their goals with an inline editing table will include calories,
-proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
-editable form, similar to inline edited table, updates database, and passkit api
-after saving placeholders will contain default fda values*/%> <%# next line
-includes the partial navbar file%> <% include ./partials/navbar %>
+<% /* this is going to be the myaccount page in the dashboard this will allow users to edit their goals with an inline
+  editing table will include calories, proteins, fats, carbs, sodium, fiber, sugars should take everything in as an
+  editable form, similar to inline edited table, updates database, and passkit api after saving placeholders will
+  contain default fda values*/%>
+  <%# next line includes the partial navbar file%>
+    <% include ./partials/navbar %>
 
-<!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
+      <!-- The class blankPanelSidebarOpen calls the JS function to add a blank section at the top of the main panel
 so that you can click on it and close out the sidebar -->
-<div class="content blankPanelSidebarOpen">
-  <div class="main-panel faqDesktopSettings">
-    <!-- Top Navbar -->
-    <nav class="navbar navbar-expand-lg" color-on-scroll="500">
-      <button
-        href=""
-        class="navbar-toggler navbar-toggler-right"
-        type="button"
-        data-toggle="collapse"
-        aria-controls="navigation-index"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-bar burger-lines"></span>
-        <span class="navbar-toggler-bar burger-lines"></span>
-        <span class="navbar-toggler-bar burger-lines"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navigation">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <span class="no-icon"> <%= name %> </span>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="content">
-      <div id="accordion">
-        <section
-          class="accordion-section clearfix mt-3"
-          aria-label="Question Accordions"
-        >
-          <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <div
-              class="panel-group"
-              id="accordion"
-              role="tablist"
-              aria-multiselectable="true"
-            >
-              <div class="panel panel-default">
-                <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
-                  <h3 class="panel-title">
-                    <a
-                      class="collapsed"
-                      role="button"
-                      title=""
-                      data-toggle="collapse"
-                      data-parent="#accordion"
-                      href="#collapse2"
-                      aria-expanded="true"
-                      aria-controls="collapse2"
-                    >
-                      Which wireless health devices do you plan to connect?
-                    </a>
-                  </h3>
-                </div>
-                <div
-                  id="collapse2"
-                  class="panel-collapÏse collapse"
-                  role="tabpanel"
-                  aria-labelledby="heading2"
-                >
-                  <div class="panel-body px-3 mb-4">
-                    <p>
-                      We plan to integrate with popular fitness and nutrition trackers such as FitBit and MyFitnessPal. We will connect wireless health monitoring tools like wireless blood pressure cuffs, glucometers, and body scales. We will also add medication monitoring and reminder tools like smart pill bottles.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="panel panel-default">
-                <div class="panel-heading p-3 mb-4" role="tab" id="heading4">
-                  <h3 class="panel-title">
-                    <a
-                      class="collapsed"
-                      role="button"
-                      title=""
-                      data-toggle="collapse"
-                      data-parent="#accordion"
-                      href="#collapse4"
-                      aria-expanded="true"
-                      aria-controls="collapse4"
-                    >
-                      Where can I post an idea for a new feature?
-                    </a>
-                  </h3>
-                </div>
-                <div
-                  id="collapse4"
-                  class="panel-collapse collapse"
-                  role="tabpanel"
-                  aria-labelledby="heading4"
-                >
-                  <div class="panel-body px-3 mb-4">
-                    <p>
-                      Click on the "Ideas and Feedback" link below and we will
-                      implement your feedback. This is how we select what features to add next.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="panel panel-default">
-                <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
-                  <h3 class="panel-title">
-                    <a
-                      class="collapsed"
-                      role="button"
-                      title=""
-                      data-toggle="collapse"
-                      data-parent="#accordion"
-                      href="#collapse5"
-                      aria-expanded="true"
-                      aria-controls="collapse5"
-                    >
-                      How is the physician portal going to work?
-                    </a>
-                  </h3>
-                </div>
-                <div
-                  id="collapse5"
-                  class="panel-collapse collapse"
-                  role="tabpanel"
-                  aria-labelledby="heading5"
-                >
-                  <div class="panel-body px-3 mb-4">
-                    <p>Currently, we do not have a way to communicate with your physician or share your data. In the future, New Leaf will be used to manage chronic diseases and guide clinical decision-making through a physician portal. Right now, you can use our free app for lifestyle management of your illness. </p>
-                  </div>
-                </div>
-              </div>
+      <div class="content blankPanelSidebarOpen">
+        <div class="main-panel faqDesktopSettings">
+          <!-- Top Navbar -->
+          <nav class="navbar navbar-expand-lg" color-on-scroll="500">
+            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-bar burger-lines"></span>
+              <span class="navbar-toggler-bar burger-lines"></span>
+              <span class="navbar-toggler-bar burger-lines"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <span class="no-icon">
+                    <%= name %>
+                  </span>
+                </li>
+              </ul>
             </div>
-            <h2>Helpful Links</h2>
-            <a class="helpfulLink" href="https://tdeecalculator.net/"
-              >Food Diary Goal Calculator</a
-            >
-            <br />
-            <br />
-            <a class="helpfulLink" href="https://forms.gle/PaywH2iRGnwVyn6r6"
-              >Ideas and feedback</a
-            >
-            <br />
-            <br />
-            <a class="helpfulLink" href="https://forms.gle/mC54uMGXrD6ZVM1L9"
-              >Contact Us</a
-            >
+          </nav>
+          <div class="content">
+            <div id="accordion">
+              <section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
+                <div class="container">
+                  <h2>Frequently Asked Questions</h2>
+                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                      <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
+                        <h3 class="panel-title">
+                          <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                            href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                            Which wireless health devices do you plan to connect?
+                          </a>
+                        </h3>
+                      </div>
+                      <div id="collapse2" class="panel-collapÏse collapse" role="tabpanel" aria-labelledby="heading2">
+                        <div class="panel-body px-3 mb-4">
+                          <p>
+                            We plan to integrate with popular fitness and nutrition trackers such as FitBit and
+                            MyFitnessPal. We will connect wireless health monitoring tools like wireless blood pressure
+                            cuffs, glucometers, and body scales. We will also add medication monitoring and reminder
+                            tools like smart pill bottles.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default">
+                        <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
+                          <h3 class="panel-title">
+                            <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                              href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                              What are your plans for future features?
+                            </a>
+                          </h3>
+                        </div>
+                        <div id="collapse2" class="panel-collapÏse collapse" role="tabpanel" aria-labelledby="heading2">
+                          <div class="panel-body px-3 mb-4">
+                            <p>
+                              Physician portal for appointments and communications, integration with smart health devices, medication reminders and management, symptom tracking and management 
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+  
+
+
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading p-3 mb-4" role="tab" id="heading4">
+                        <h3 class="panel-title">
+                          <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                            href="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                            Where can I post an idea for a new feature?
+                          </a>
+                        </h3>
+                      </div>
+                      <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+                        <div class="panel-body px-3 mb-4">
+                          <p>
+                            Click on the "Ideas and Feedback" link below and we will
+                            implement your feedback. This is how we select what features to add next.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
+                        <h3 class="panel-title">
+                          <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion"
+                            href="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                            How is the physician portal going to work?
+                          </a>
+                        </h3>
+                      </div>
+                      <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
+                        <div class="panel-body px-3 mb-4">
+                          <p>Currently, we do not have a way to communicate with your physician or allow you to share
+                            your data. In the future, New Leaf will be used to manage chronic diseases and guide
+                            clinical decision-making through a physician portal. Right now, you can use our free app for
+                            lifestyle management of your illness. </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h2>Helpful Links</h2>
+                  <a class="helpfulLink"
+                    href="https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home">How
+                    to take a blood pressure</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink"
+                    href="https://www.amazon.com/TimerCap-Automatically-Displays-Opened-Built/dp/B00EZ6TL2S/ref=sr_1_1?dchild=1&keywords=smart+pill+bottles&qid=1608395396&sr=8-1">
+                    Smart pill bottles</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="https://tdeecalculator.net/">Calculate food diary goals</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="mailto:joinnewleaf@gmail.com?subject=Ideas and feedback">Ideas and
+                    feedback</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="mailto:joinnewleaf@gmail.com?subject=Report a bug">Report a bug</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="mailto:joinnewleaf@gmail.com?subject=Delete my account and data">Delete
+                    my account and my data</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="mailto:joinnewleaf@gmail.com?subject=Account issues">Account issues</a>
+                  <br />
+                  <br />
+                  <a class="helpfulLink" href="mailto:joinnewleaf@gmail.com?subject=Questions or concerns">Contact
+                    us</a>
+                  <br />
+                  <br />
+                </div>
+              </section>
+            </div>
           </div>
-        </section>
-      </div>
-    </div>
-    <!-- keep the footer partial outside of the content div in order to keep it fixed at the bottom of the page -->
-       <% include ./partials/footer.ejs %> 
-      </div>
+          <!-- keep the footer partial outside of the content div in order to keep it fixed at the bottom of the page -->
+          <% include ./partials/footer.ejs %>
+        </div>
 
-  <!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
-  <!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
+        <!-- all of this is long and annoying but we need it to make the sidebar work on mobile -->
+        <!-- JS files for the navbar/sidebar to move into/out of the page on mobile 
 JQuery MUST be loaded first so because this calls on functions in that file -->
-  <script type="text/javascript">
-    // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
-    var searchVisible = 0;
-    var transparent = true;
+        <script type="text/javascript">
+          // Sets the variables for the navbar/sidebar in relation to main panel (came from the light-bootstrap-dashboard.js)
+          var searchVisible = 0;
+          var transparent = true;
 
-    var transparentDemo = true;
-    var fixedTop = false;
+          var transparentDemo = true;
+          var fixedTop = false;
 
-    var navbar_initialized = false;
-    var mobile_menu_visible = 0,
-      mobile_menu_initialized = false,
-      toggle_initialized = false,
-      bootstrap_nav_initialized = false,
-      $sidebar,
-      isWindows;
+          var navbar_initialized = false;
+          var mobile_menu_visible = 0,
+            mobile_menu_initialized = false,
+            toggle_initialized = false,
+            bootstrap_nav_initialized = false,
+            $sidebar,
+            isWindows;
 
-    //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
-    $(document).ready(function () {
-      window_width = $(window).width();
+          //Function that changes the window width on mobile so that we can bring the sidebar into and out of view
+          $(document).ready(function () {
+            window_width = $(window).width();
 
-      // check if there is an image set for the sidebar's background -- we dont have an image right now
-      // but i kept it anyways in case we decide that we want to add one
-      lbd.checkSidebarImage();
+            // check if there is an image set for the sidebar's background -- we dont have an image right now
+            // but i kept it anyways in case we decide that we want to add one
+            lbd.checkSidebarImage();
 
-      // Init navigation toggle for small screens
-      if (window_width <= 991) {
-        lbd.initRightMenu();
-      }
-
-      //  Activate the tooltips --- I have no fucking idea what this is but if you un-comment it then it causes an error
-      // so just keep it here for now
-      // $('[rel="tooltip"]').tooltip();
-
-      // Activate regular switches
-      if ($("[data-toggle='switch']").length != 0) {
-        $("[data-toggle='switch']").bootstrapSwitch();
-      }
-
-      $(".form-control")
-        .on("focus", function () {
-          $(this).parent(".input-group").addClass("input-group-focus");
-        })
-        .on("blur", function () {
-          $(this).parent(".input-group").removeClass("input-group-focus");
-        });
-
-      // Fixes sub-nav not working as expected on IOS
-      $("body").on("touchstart.dropdown", ".dropdown-menu", function (e) {
-        e.stopPropagation();
-      });
-    });
-
-    // activate collapse right menu when the windows is resized
-    $(window).resize(function () {
-      if ($(window).width() <= 991) {
-        lbd.initRightMenu();
-      }
-    });
-
-    lbd = {
-      misc: {
-        navbar_menu_visible: 0,
-      },
-      checkSidebarImage: function () {
-        $sidebar = $(".sidebar");
-        image_src = $sidebar.data("image");
-
-        if (image_src !== undefined) {
-          sidebar_container =
-            '<div class="sidebar-background" style="background-image: url(' +
-            image_src +
-            ') "/>';
-          $sidebar.append(sidebar_container);
-        } else if (mobile_menu_initialized == true) {
-          // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
-          $sidebar_wrapper.find(".navbar-form").remove();
-          $sidebar_wrapper.find(".nav-mobile-menu").remove();
-
-          mobile_menu_initialized = false;
-        }
-      },
-
-      initRightMenu: function () {
-        $sidebar_wrapper = $(".sidebar-wrapper");
-
-        if (!mobile_menu_initialized) {
-          $navbar = $("nav").find(".navbar-collapse").first().clone(true);
-
-          nav_content = "";
-          mobile_menu_content = "";
-
-          //add the content from the regular header to the mobile menu
-          $navbar.children("ul").each(function () {
-            content_buff = $(this).html();
-            nav_content = nav_content + content_buff;
-          });
-
-          nav_content =
-            '<ul class="nav nav-mobile-menu">' + nav_content + "</ul>";
-
-          $navbar_form = $("nav").find(".navbar-form").clone(true);
-
-          $sidebar_nav = $sidebar_wrapper.find(" > .nav");
-
-          // insert the navbar form before the sidebar list
-          $nav_content = $(nav_content);
-          $nav_content.insertBefore($sidebar_nav);
-          $navbar_form.insertBefore($nav_content);
-
-          $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(
-            function (event) {
-              event.stopPropagation();
+            // Init navigation toggle for small screens
+            if (window_width <= 991) {
+              lbd.initRightMenu();
             }
-          );
 
-          mobile_menu_initialized = true;
-        } else {
-          console.log("window with:" + $(window).width());
-          if ($(window).width() > 991) {
-            // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
-            $sidebar_wrapper.find(".navbar-form").remove();
-            $sidebar_wrapper.find(".nav-mobile-menu").remove();
+            //  Activate the tooltips --- I have no fucking idea what this is but if you un-comment it then it causes an error
+            // so just keep it here for now
+            // $('[rel="tooltip"]').tooltip();
 
-            mobile_menu_initialized = false;
-          }
-        }
+            // Activate regular switches
+            if ($("[data-toggle='switch']").length != 0) {
+              $("[data-toggle='switch']").bootstrapSwitch();
+            }
 
-        if (!toggle_initialized) {
-          $toggle = $(".navbar-toggler");
-
-          $toggle.click(function () {
-            if (mobile_menu_visible == 1) {
-              $("html").removeClass("nav-open");
-
-              $(".close-layer").remove();
-              setTimeout(function () {
-                $toggle.removeClass("toggled");
-              }, 400);
-
-              mobile_menu_visible = 0;
-            } else {
-              setTimeout(function () {
-                $toggle.addClass("toggled");
-              }, 430);
-
-              // This is the function that figures out the height of the main panel when in mobile and then adds
-              // the a div at the begining of the main panel (pushing the content down on the screen) so that
-              // you can click on it and close out the sidebar without having to click on a link in the sidebar
-              main_panel_height = $(".main-panel")[0].scrollHeight;
-              $layer = $('<div class="close-layer"></div>');
-              $layer.css("height", main_panel_height + "px");
-              $layer.prependTo(".blankPanelSidebarOpen");
-
-              setTimeout(function () {
-                $layer.addClass("visible");
-              }, 100);
-
-              $layer.click(function () {
-                console.log("hi");
-                $("html").removeClass("nav-open");
-                mobile_menu_visible = 0;
-
-                $layer.removeClass("visible");
-
-                setTimeout(function () {
-                  $layer.remove();
-                  $toggle.removeClass("toggled");
-                }, 400);
+            $(".form-control")
+              .on("focus", function () {
+                $(this).parent(".input-group").addClass("input-group-focus");
+              })
+              .on("blur", function () {
+                $(this).parent(".input-group").removeClass("input-group-focus");
               });
 
-              $("html").addClass("nav-open");
-              mobile_menu_visible = 1;
+            // Fixes sub-nav not working as expected on IOS
+            $("body").on("touchstart.dropdown", ".dropdown-menu", function (e) {
+              e.stopPropagation();
+            });
+          });
+
+          // activate collapse right menu when the windows is resized
+          $(window).resize(function () {
+            if ($(window).width() <= 991) {
+              lbd.initRightMenu();
             }
           });
 
-          toggle_initialized = true;
-        }
-      },
-    };
-  </script>
-</div>
+          lbd = {
+            misc: {
+              navbar_menu_visible: 0,
+            },
+            checkSidebarImage: function () {
+              $sidebar = $(".sidebar");
+              image_src = $sidebar.data("image");
+
+              if (image_src !== undefined) {
+                sidebar_container =
+                  '<div class="sidebar-background" style="background-image: url(' +
+                  image_src +
+                  ') "/>';
+                $sidebar.append(sidebar_container);
+              } else if (mobile_menu_initialized == true) {
+                // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+                $sidebar_wrapper.find(".navbar-form").remove();
+                $sidebar_wrapper.find(".nav-mobile-menu").remove();
+
+                mobile_menu_initialized = false;
+              }
+            },
+
+            initRightMenu: function () {
+              $sidebar_wrapper = $(".sidebar-wrapper");
+
+              if (!mobile_menu_initialized) {
+                $navbar = $("nav").find(".navbar-collapse").first().clone(true);
+
+                nav_content = "";
+                mobile_menu_content = "";
+
+                //add the content from the regular header to the mobile menu
+                $navbar.children("ul").each(function () {
+                  content_buff = $(this).html();
+                  nav_content = nav_content + content_buff;
+                });
+
+                nav_content =
+                  '<ul class="nav nav-mobile-menu">' + nav_content + "</ul>";
+
+                $navbar_form = $("nav").find(".navbar-form").clone(true);
+
+                $sidebar_nav = $sidebar_wrapper.find(" > .nav");
+
+                // insert the navbar form before the sidebar list
+                $nav_content = $(nav_content);
+                $nav_content.insertBefore($sidebar_nav);
+                $navbar_form.insertBefore($nav_content);
+
+                $(".sidebar-wrapper .dropdown .dropdown-menu > li > a").click(
+                  function (event) {
+                    event.stopPropagation();
+                  }
+                );
+
+                mobile_menu_initialized = true;
+              } else {
+                console.log("window with:" + $(window).width());
+                if ($(window).width() > 991) {
+                  // reset all the additions that we made for the sidebar wrapper only if the screen is bigger than 991px
+                  $sidebar_wrapper.find(".navbar-form").remove();
+                  $sidebar_wrapper.find(".nav-mobile-menu").remove();
+
+                  mobile_menu_initialized = false;
+                }
+              }
+
+              if (!toggle_initialized) {
+                $toggle = $(".navbar-toggler");
+
+                $toggle.click(function () {
+                  if (mobile_menu_visible == 1) {
+                    $("html").removeClass("nav-open");
+
+                    $(".close-layer").remove();
+                    setTimeout(function () {
+                      $toggle.removeClass("toggled");
+                    }, 400);
+
+                    mobile_menu_visible = 0;
+                  } else {
+                    setTimeout(function () {
+                      $toggle.addClass("toggled");
+                    }, 430);
+
+                    // This is the function that figures out the height of the main panel when in mobile and then adds
+                    // the a div at the begining of the main panel (pushing the content down on the screen) so that
+                    // you can click on it and close out the sidebar without having to click on a link in the sidebar
+                    main_panel_height = $(".main-panel")[0].scrollHeight;
+                    $layer = $('<div class="close-layer"></div>');
+                    $layer.css("height", main_panel_height + "px");
+                    $layer.prependTo(".blankPanelSidebarOpen");
+
+                    setTimeout(function () {
+                      $layer.addClass("visible");
+                    }, 100);
+
+                    $layer.click(function () {
+                      console.log("hi");
+                      $("html").removeClass("nav-open");
+                      mobile_menu_visible = 0;
+
+                      $layer.removeClass("visible");
+
+                      setTimeout(function () {
+                        $layer.remove();
+                        $toggle.removeClass("toggled");
+                      }, 400);
+                    });
+
+                    $("html").addClass("nav-open");
+                    mobile_menu_visible = 1;
+                  }
+                });
+
+                toggle_initialized = true;
+              }
+            },
+          };
+        </script>
+      </div>
