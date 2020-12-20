@@ -110,7 +110,7 @@
       <div id="addModal4" class="modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
-            <form action="/days/addBloodSugar" method="POST" autocomplete="off">
+            <form id="addForm2" action="/days/addBloodSugar" method="POST" autocomplete="off">
               <div class="modal-header">
                 <h4 class="modal-title">Add Entry</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -289,6 +289,8 @@
         $("#time4").attr({
           value: g
         });
+        $(window).scrollTop(0);
+
       });
 
       //click the edit button
@@ -352,6 +354,9 @@
             }
             j++;
           });
+
+          $(window).scrollTop(0);
+
       });
 
       //deletes row
@@ -390,6 +395,7 @@
 
         //makes scroll work after click
         $(window).scrollTop(0);
+
       });
 
       //deletes all checked rows
