@@ -325,12 +325,12 @@
         //take each value in the actual row data and update the default value for the edit form
         tbl_row.find(".row_data").each(function (index, val) {
           //for each value of the row store to array, need to get the int out of it
-          temp_row_data[i] = parseInt($(this).html());
+          temp_row_data[i] = parseFloat($(this).html());
 
           //find what is written in the notes
           if (isNaN(temp_row_data[i])) {
             //if no value recorded, not recorded
-            temp_row_data[i] = "N/A";
+            temp_row_data[i] = "";
 
             //check if notes
             if (i == 3) {

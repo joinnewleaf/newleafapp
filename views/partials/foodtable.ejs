@@ -524,22 +524,22 @@
                     //switch case using the column header, add to the running sum for each column
                     switch (column_name) {
                         case "calorie_data":
-                            totalCalories += parseInt(column_value);
+                            totalCalories += parseFloat(column_value);
                             break;
                         case "carbs_data":
-                            totalCarbs += parseInt(column_value);
+                            totalCarbs += parseFloat(column_value);
                             break;
                         case "fats_data":
-                            totalFats += parseInt(column_value);
+                            totalFats += parseFloat(column_value);
                             break;
                         case "proteins_data":
-                            totalProteins += parseInt(column_value);
+                            totalProteins += parseFloat(column_value);
                             break;
                         case "sodium_data":
-                            totalSodium += parseInt(column_value);
+                            totalSodium += parseFloat(column_value);
                             break;
                         case "sugars_data":
-                            totalSugars += parseInt(column_value);
+                            totalSugars += parseFloat(column_value);
                     }
                 });
                 //new row
@@ -601,7 +601,7 @@
                 //take each value in the actual row data and update the default value for the edit form
                 tbl_row.find('.row_data').each(function (index, val) {
                     //for each value of the row store to array, need to get the int out of it
-                    temp_row_data[i] = parseInt(($(this).html()));
+                    temp_row_data[i] = parseFloat(($(this).html()));
                     i++;
                 });
                 //for each value in the edit form, we update with the temporary data
