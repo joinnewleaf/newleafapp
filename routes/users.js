@@ -185,7 +185,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res, next) => {
   //using the local strategy (passing in local)
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
+    successRedirect: "/bodymetrics",
     failureRedirect: "/users/login",
     failureFlash: true,
   })(req, res, next);

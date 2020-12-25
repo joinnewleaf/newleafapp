@@ -14,13 +14,13 @@ const UserGoals = require("../models/UserGoals"); // allows us to register users
 // need to retrieve Days model
 const Days = require("../models/Days"); // allows us to register users and post on their goals db
 
-// must bring in our created passport authentication middleware to protect dashboard route
+// must bring in our created passport authentication middleware to protect habitjournals route
 const { ensureAuthenticated } = require("../config/auth");
 
 // self made functions found in controllers, likely want to replace with one big passkit library
 // var passkit = require("../controllers/passkit"); //passkit function makes a request to passkit API
 
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/add", ensureAuthenticated, (req, res) => {
   // pull important values out of the request
   const new_row_data = {
@@ -92,8 +92,8 @@ router.post("/add", ensureAuthenticated, (req, res) => {
                   const { targetSystolic } = usergoals;
                   const { targetDiastolic } = usergoals;
 
-                  // re render the dashboard after having updated the days collection
-                  res.render("dashboard", {
+                  // re render the habitjournals after having updated the days collection
+                  res.render("habitjournals", {
                     name: req.user.name,
                     caloriesGoal,
                     carbsGoal,
@@ -115,7 +115,7 @@ router.post("/add", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/edit", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -180,8 +180,8 @@ router.post("/edit", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
-                res.render("dashboard", {
+                // re render the habitjournals after having updated the days collection
+                res.render("habitjournals", {
                   name: req.user.name,
                   caloriesGoal,
                   carbsGoal,
@@ -253,9 +253,9 @@ router.post("/delete", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
+                // re render the habitjournals after having updated the days collection
                 //replace name with username
-                res.render("dashboard", {
+                res.render("habitjournals", {
                   name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
@@ -345,8 +345,8 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
                       const { targetSystolic } = usergoals;
                       const { targetDiastolic } = usergoals;
 
-                      // re render the dashboard after having updated the days collection
-                      res.render("dashboard", {
+                      // re render the habitjournals after having updated the days collection
+                      res.render("habitjournals", {
                         name: req.user.email,
                         caloriesGoal,
                         carbsGoal,
@@ -410,8 +410,8 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
               const { targetSystolic } = usergoals;
               const { targetDiastolic } = usergoals;
 
-              // re render the dashboard after having updated the days collection
-              res.render("dashboard", {
+              // re render the habitjournals after having updated the days collection
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal,
                 carbsGoal,
@@ -430,7 +430,7 @@ router.post("/deleteMultipleFoods", ensureAuthenticated, (req, res) => {
 });
 
 // Blood Pressure Diary Section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addBP", ensureAuthenticated, (req, res) => {
   // pull important values out of the request
   const new_row_data = {
@@ -464,7 +464,7 @@ router.post("/addBP", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.name,
             days,
@@ -495,7 +495,7 @@ router.post("/deleteBP", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -542,7 +542,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
               dateString: req.body.dateString.trim(),
             }) //should properly check if either username or email match
               .then((days) => {
-                // re render the dashboard after having updated the days collection
+                // re render the habitjournals after having updated the days collection
                 res.render("bodymetrics", {
                   name: req.user.name,
                   days,
@@ -567,7 +567,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
       dateString: req.body.dateString.trim(),
     }) //should properly check if either username or email match
       .then((days) => {
-        // re render the dashboard after having updated the days collection
+        // re render the habitjournals after having updated the days collection
         res.render("bodymetrics", {
           name: req.user.name,
           days,
@@ -577,7 +577,7 @@ router.post("/deleteMultipleBP", ensureAuthenticated, (req, res) => {
   }
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editBP", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -595,7 +595,7 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -607,7 +607,7 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -619,7 +619,7 @@ router.post("/editBP", ensureAuthenticated, (req, res) => {
 });
 
 // weight log diary section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addBodyWeight", ensureAuthenticated, (req, res) => {
   // pull important values out of the request
   const new_row_data = {
@@ -651,7 +651,7 @@ router.post("/addBodyWeight", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -682,7 +682,7 @@ router.post("/deleteBodyWeight", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match, $ne is not equal
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -729,7 +729,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
               dateString: req.body.dateString.trim(),
             }) //should properly check if either username or email match
               .then((days) => {
-                //re render the dashboard after having updated the days collection
+                //re render the habitjournals after having updated the days collection
                 res.render("bodymetrics", {
                   name: req.user.email,
                   days,
@@ -750,7 +750,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
       dateString: req.body.dateString.trim(),
     }) //should properly check if either username or email match
       .then((days) => {
-        // re render the dashboard after having updated the days collection
+        // re render the habitjournals after having updated the days collection
         res.render("bodymetrics", {
           name: req.user.email,
           days,
@@ -760,7 +760,7 @@ router.post("/deleteMultipleBodyWeights", ensureAuthenticated, (req, res) => {
   }
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -776,7 +776,7 @@ router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -788,7 +788,7 @@ router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -800,7 +800,7 @@ router.post("/editBodyWeight", ensureAuthenticated, (req, res) => {
 });
 
 // exercise diary section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addExercise", ensureAuthenticated, (req, res) => {
   // pull important values out of the request
   const new_row_data = {
@@ -866,8 +866,8 @@ router.post("/addExercise", ensureAuthenticated, (req, res) => {
                   const { targetSystolic } = usergoals;
                   const { targetDiastolic } = usergoals;
 
-                  // re render the dashboard after having updated the days collection
-                  res.render("dashboard", {
+                  // re render the habitjournals after having updated the days collection
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal,
                     carbsGoal,
@@ -889,7 +889,7 @@ router.post("/addExercise", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editExercise", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -904,7 +904,7 @@ router.post("/editExercise", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -951,8 +951,8 @@ router.post("/editExercise", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
-                res.render("dashboard", {
+                // re render the habitjournals after having updated the days collection
+                res.render("habitjournals", {
                   name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
@@ -1023,8 +1023,8 @@ router.post("/deleteExercise", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
-                res.render("dashboard", {
+                // re render the habitjournals after having updated the days collection
+                res.render("habitjournals", {
                   name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
@@ -1114,8 +1114,8 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
                       const { targetSystolic } = usergoals;
                       const { targetDiastolic } = usergoals;
 
-                      // re render the dashboard after having updated the days collection
-                      res.render("dashboard", {
+                      // re render the habitjournals after having updated the days collection
+                      res.render("habitjournals", {
                         name: req.user.name,
                         caloriesGoal,
                         carbsGoal,
@@ -1179,8 +1179,8 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
               const { targetSystolic } = usergoals;
               const { targetDiastolic } = usergoals;
 
-              // re render the dashboard after having updated the days collection
-              res.render("dashboard", {
+              // re render the habitjournals after having updated the days collection
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal,
                 carbsGoal,
@@ -1199,7 +1199,7 @@ router.post("/deleteMultipleExercises", ensureAuthenticated, (req, res) => {
 });
 
 //stress log diary section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addStressLevel", ensureAuthenticated, (req, res) => {
   console.log(req.body);
   // pull important values out of the request
@@ -1232,7 +1232,7 @@ router.post("/addStressLevel", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1263,7 +1263,7 @@ router.post("/deleteStressLevel", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match, $ne is not equal
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1310,7 +1310,7 @@ router.post("/deleteMultipleStressLevels", ensureAuthenticated, (req, res) => {
               dateString: req.body.dateString.trim(),
             }) //should properly check if either username or email match
               .then((days) => {
-                //re render the dashboard after having updated the days collection
+                //re render the habitjournals after having updated the days collection
                 res.render("bodymetrics", {
                   name: req.user.email,
                   days,
@@ -1331,7 +1331,7 @@ router.post("/deleteMultipleStressLevels", ensureAuthenticated, (req, res) => {
       dateString: req.body.dateString.trim(),
     }) //should properly check if either username or email match
       .then((days) => {
-        // re render the dashboard after having updated the days collection
+        // re render the habitjournals after having updated the days collection
         res.render("bodymetrics", {
           name: req.user.email,
           days,
@@ -1341,7 +1341,7 @@ router.post("/deleteMultipleStressLevels", ensureAuthenticated, (req, res) => {
   }
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -1357,7 +1357,7 @@ router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -1369,7 +1369,7 @@ router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1381,7 +1381,7 @@ router.post("/editStressLevel", ensureAuthenticated, (req, res) => {
 });
 
 //Blood Sugar log section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addBloodSugar", ensureAuthenticated, (req, res) => {
   console.log(req.body);
   // pull important values out of the request
@@ -1414,7 +1414,7 @@ router.post("/addBloodSugar", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1442,7 +1442,7 @@ router.post("/deleteBloodSugar", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match, $ne is not equal
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1489,7 +1489,7 @@ router.post("/deleteMultipleBloodSugar", ensureAuthenticated, (req, res) => {
               dateString: req.body.dateString.trim(),
             }) //should properly check if either username or email match
               .then((days) => {
-                //re render the dashboard after having updated the days collection
+                //re render the habitjournals after having updated the days collection
                 res.render("bodymetrics", {
                   name: req.user.email,
                   days,
@@ -1510,7 +1510,7 @@ router.post("/deleteMultipleBloodSugar", ensureAuthenticated, (req, res) => {
       dateString: req.body.dateString.trim(),
     }) //should properly check if either username or email match
       .then((days) => {
-        // re render the dashboard after having updated the days collection
+        // re render the habitjournals after having updated the days collection
         res.render("bodymetrics", {
           name: req.user.email,
           days,
@@ -1520,7 +1520,7 @@ router.post("/deleteMultipleBloodSugar", ensureAuthenticated, (req, res) => {
   }
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -1536,7 +1536,7 @@ router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -1548,7 +1548,7 @@ router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
         dateString: req.body.dateString.trim(),
       }) //should properly check if either username or email match
         .then((days) => {
-          // re render the dashboard after having updated the days collection
+          // re render the habitjournals after having updated the days collection
           res.render("bodymetrics", {
             name: req.user.email,
             days,
@@ -1560,7 +1560,7 @@ router.post("/editBloodSugar", ensureAuthenticated, (req, res) => {
 });
 
 //mindfulness section
-// post request on the dashboard adds in new data to diary
+// post request on the habitjournals adds in new data to diary
 router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
   // pull important values out of the request
   const new_row_data = {
@@ -1626,8 +1626,8 @@ router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
                   const { targetSystolic } = usergoals;
                   const { targetDiastolic } = usergoals;
 
-                  // re render the dashboard after having updated the days collection
-                  res.render("dashboard", {
+                  // re render the habitjournals after having updated the days collection
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal,
                     carbsGoal,
@@ -1649,7 +1649,7 @@ router.post("/addMindfulness", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// post request on the dashboard edits old data on the diary
+// post request on the habitjournals edits old data on the diary
 router.post("/editMindfulness", ensureAuthenticated, (req, res) => {
   // have to turn string into a mongo object id
   const _id = mongoose.mongo.ObjectId(req.body.row_id);
@@ -1664,7 +1664,7 @@ router.post("/editMindfulness", ensureAuthenticated, (req, res) => {
       },
     }
 
-    // want to query the foods for that day and pass them into the table/rerender the dashboard
+    // want to query the foods for that day and pass them into the table/rerender the habitjournals
   )
     .then((response) => {
       // query days
@@ -1711,8 +1711,8 @@ router.post("/editMindfulness", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
-                res.render("dashboard", {
+                // re render the habitjournals after having updated the days collection
+                res.render("habitjournals", {
                   name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
@@ -1786,8 +1786,8 @@ router.post("/deleteMindfulness", ensureAuthenticated, (req, res) => {
                 const { targetSystolic } = usergoals;
                 const { targetDiastolic } = usergoals;
 
-                // re render the dashboard after having updated the days collection
-                res.render("dashboard", {
+                // re render the habitjournals after having updated the days collection
+                res.render("habitjournals", {
                   name: req.user.email,
                   caloriesGoal,
                   carbsGoal,
@@ -1877,8 +1877,8 @@ router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
                       const { targetSystolic } = usergoals;
                       const { targetDiastolic } = usergoals;
 
-                      // re render the dashboard after having updated the days collection
-                      res.render("dashboard", {
+                      // re render the habitjournals after having updated the days collection
+                      res.render("habitjournals", {
                         name: req.user.name,
                         caloriesGoal,
                         carbsGoal,
@@ -1942,8 +1942,8 @@ router.post("/deleteMultipleMindfulness", ensureAuthenticated, (req, res) => {
               const { targetSystolic } = usergoals;
               const { targetDiastolic } = usergoals;
 
-              // re render the dashboard after having updated the days collection
-              res.render("dashboard", {
+              // re render the habitjournals after having updated the days collection
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal,
                 carbsGoal,

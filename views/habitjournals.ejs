@@ -1,23 +1,22 @@
-<%/*  this is a super simple dashboard that can be displayed to a user after
-login. after login and passport authentication, we get access to the user
-object, user.name is an element of this object; also has a logout
-button*/%>
+<% /* this is a super simple dashboard that can be displayed to a user after login. after login and passport
+  authentication, we get access to the user object, user.name is an element of this object; also has a logout button*/%>
 
   <%# sidebar file and main panel%>
     <% include ./partials/navbar %>
-    <div class="content blankPanelSidebarOpen">
-      <div class="main-panel">
-        <% include ./partials/mainpanel %>
+      <div class="content blankPanelSidebarOpen">
+        <div class="main-panel">
+          <% include ./partials/mainpanel %>
+        </div>
       </div>
-      </div>
-      
+
 
       <!-- Daypicker libraries -->
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
       <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"
-      />
+      <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+      <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
       <script type="text/javascript">
         $(document).ready(function ($) {
@@ -40,5 +39,3 @@ button*/%>
         });
 
       </script>
-
-

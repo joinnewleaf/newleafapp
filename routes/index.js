@@ -15,7 +15,7 @@ const UserGoals = require("../models/UserGoals"); //allows us to register users 
 //need to retrieve Days model
 const Days = require("../models/Days"); //allows us to register users and post on their goals db
 
-//must bring in our created passport authentication middleware to protect dashboard route
+//must bring in our created passport authentication middleware to protect habitjournals route
 const { ensureAuthenticated } = require("../config/auth");
 
 //self made functions found in controllers, likely want to replace with one big passkit library
@@ -36,9 +36,9 @@ const { ensureAuthenticated } = require("../config/auth");
 //welcome page
 router.get("/", (req, res) => res.render("welcome"));
 
-//dashboard page, we pass in ensure athenticated as a second parameter middleware
-//when we render the dashboard we pass in an object to let it know the user
-router.get("/dashboard", ensureAuthenticated, (req, res) => {
+//habitjournals page, we pass in ensure athenticated as a second parameter middleware
+//when we render the habitjournals we pass in an object to let it know the user
+router.get("/habitjournals", ensureAuthenticated, (req, res) => {
   //we need to update the user goals if it already exists; we then need to temporarily store the original values, to check if they need changed
   UserGoals.findOne({
     $or: [
@@ -81,9 +81,9 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
           .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-              //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+              //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
-              res.render("dashboard", {
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
@@ -107,10 +107,10 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
               newDays
                 .save()
 
-                //if days gets saved, render the dashboard page
+                //if days gets saved, render the habitjournals page
                 .then((days) => {
-                  //renders the dashboard page anytime this page gets called
-                  res.render("dashboard", {
+                  //renders the habitjournals page anytime this page gets called
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
@@ -128,7 +128,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 
           .catch((err) => console.log(err));
       } else {
-        //if dashboard page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
+        //if habitjournals page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
         //also need if/else statements in here for Day transactions
         let caloriesGoal = 2000;
         let carbsGoal = 275;
@@ -156,9 +156,9 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
           .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-              //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+              //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
-              res.render("dashboard", {
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
@@ -182,10 +182,10 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
               newDays
                 .save()
 
-                //if days gets saved, render the dashboard page
+                //if days gets saved, render the habitjournals page
                 .then((days) => {
-                  //renders the dashboard page anytime this page gets called
-                  res.render("dashboard", {
+                  //renders the habitjournals page anytime this page gets called
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
@@ -205,8 +205,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//post request on the dashboard pulls in data from the database for a certain date
-router.post("/dashboard", ensureAuthenticated, (req, res) => {
+//post request on the habitjournals pulls in data from the database for a certain date
+router.post("/habitjournals", ensureAuthenticated, (req, res) => {
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
   let dateRequest = new Date(parsedDate);
@@ -250,8 +250,8 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
           .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-              //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
-              res.render("dashboard", {
+              //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
@@ -275,10 +275,10 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
               newDays
                 .save()
 
-                //if days gets saved, render the dashboard page
+                //if days gets saved, render the habitjournals page
                 .then((days) => {
-                  //renders the dashboard page anytime this page gets called
-                  res.render("dashboard", {
+                  //renders the habitjournals page anytime this page gets called
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
@@ -294,7 +294,7 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
           })
           .catch((err) => console.log(err));
       } else {
-        //if dashboard page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
+        //if habitjournals page get is requested, and there are no user goals to retrieve from, set to fda approved guidelines
         //also need if/else statements in here for Day transactions
         let caloriesGoal = 2000;
         let carbsGoal = 275;
@@ -322,9 +322,9 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
           .then((days) => {
             //if this user exists with this date, render the page with both the goals AND the transactions for that date
             if (days) {
-              //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+              //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
               //also pass in the goals we set earlier
-              res.render("dashboard", {
+              res.render("habitjournals", {
                 name: req.user.email,
                 caloriesGoal: caloriesGoal,
                 carbsGoal: carbsGoal,
@@ -348,10 +348,10 @@ router.post("/dashboard", ensureAuthenticated, (req, res) => {
               newDays
                 .save()
 
-                //if days gets saved, render the dashboard page
+                //if days gets saved, render the habitjournals page
                 .then((days) => {
-                  //renders the dashboard page anytime this page gets called
-                  res.render("dashboard", {
+                  //renders the habitjournals page anytime this page gets called
+                  res.render("habitjournals", {
                     name: req.user.email,
                     caloriesGoal: caloriesGoal,
                     carbsGoal: carbsGoal,
@@ -403,7 +403,7 @@ router.get("/bodymetrics", ensureAuthenticated, (req, res) => {
     .then((days) => {
       //if this user exists with this date, render the page with both the goals AND the transactions for that date
       if (days) {
-        //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+        //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
         //also pass in the goals we set earlier
         res.render("bodymetrics", {
           name: req.user.email,
@@ -423,9 +423,9 @@ router.get("/bodymetrics", ensureAuthenticated, (req, res) => {
         newDays
           .save()
 
-          //if days gets saved, render the dashboard page
+          //if days gets saved, render the habitjournals page
           .then((days) => {
-            //renders the dashboard page anytime this page gets called
+            //renders the habitjournals page anytime this page gets called
             res.render("bodymetrics", {
               name: req.user.email,
               days: days,
@@ -437,7 +437,7 @@ router.get("/bodymetrics", ensureAuthenticated, (req, res) => {
     .catch((err) => console.log(err));
 });
 
-//post request on the dashboard pulls in data from the database for a certain date
+//post request on the habitjournals pulls in data from the database for a certain date
 router.post("/bodymetrics", ensureAuthenticated, (req, res) => {
   //pull date from submitted request, turns into readable format using JS Date methods
   let parsedDate = Date.parse(req.body.date);
@@ -456,7 +456,7 @@ router.post("/bodymetrics", ensureAuthenticated, (req, res) => {
     .then((days) => {
       //if this user exists with this date, render the page with both the goals AND the transactions for that date
       if (days) {
-        //render the dashboard page and pass in the Day, which should include the IDs for transactions for that date
+        //render the habitjournals page and pass in the Day, which should include the IDs for transactions for that date
         res.render("bodymetrics", {
           name: req.user.email,
           days: days,
@@ -475,9 +475,9 @@ router.post("/bodymetrics", ensureAuthenticated, (req, res) => {
         newDays
           .save()
 
-          //if days gets saved, render the dashboard page
+          //if days gets saved, render the habitjournals page
           .then((days) => {
-            //renders the dashboard page anytime this page gets called
+            //renders the habitjournals page anytime this page gets called
             res.render("bodymetrics", {
               name: req.user.email,
               days: days,
