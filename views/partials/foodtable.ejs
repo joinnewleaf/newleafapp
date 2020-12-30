@@ -13,6 +13,13 @@
             appearance: none;
             margin: 0;
         }
+
+        /* potentially fix mobile dropdown */
+        /* @media (max-width: 1023px) {
+            .nav-collapse {
+                overflow-y: auto;
+            }
+        } */
     </style>
 
     <!-- <div class="panel panel-default panel-default-Mobile"> -->
@@ -223,28 +230,28 @@
                         </div>
                         <div class="form-group">
                             <label>Calories</label>
-                            <input type="number" step="any" name="calories" class="form-control edit_row_data" value="0"
+                            <input type="number" step=".01" name="calories" class="form-control edit_row_data" value="0"
                                 maxlength="10" required onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Carbs</label>
-                            <input type="number" step="any" name="carbs" class="form-control edit_row_data" value="0"
+                            <input type="number" step=".01" name="carbs" class="form-control edit_row_data" value="0"
                                 maxlength="10" required onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Fats</label>
-                            <input type="number" step="any" name="fats" class="form-control edit_row_data" value="0" required
-                                maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" name="fats" class="form-control edit_row_data" value="0"
+                                required maxlength="10" onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Protein</label>
-                            <input type="number" step="any" name="proteins" class="form-control edit_row_data" value="0"
+                            <input type="number" step=".01" name="proteins" class="form-control edit_row_data" value="0"
                                 maxlength="10" required onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sugar</label>
-                            <input type="number" step="any" name="sugar" class="form-control edit_row_data" value="0" required
-                                onclick="this.select()">
+                            <input type="number" step=".01" name="sugar" class="form-control edit_row_data" value="0"
+                                required onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sodium</label>
@@ -276,7 +283,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Food</label>
+                            <label id="addFoodLabel">Food</label>
                             <input list="result" name="food" placeholder="search" class="form-control" id="search"
                                 type="text" required maxlength="50" onclick="this.select()">
                             <datalist id="result">
@@ -285,33 +292,39 @@
                         </div>
                         <div class="form-group">
                             <label>Calories</label>
-                            <input type="number" step="any" name="calories" class="form-control add_row_data calories_data"
-                                value="0" required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" name="calories"
+                                class="form-control add_row_data calories_data" id="caloriesSearch" value="0" required
+                                maxlength="10" onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Carbs</label>
-                            <input type="number" step="any" name="carbs" class="form-control add_row_data carbs_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" name="carbs" id="carbsSearch"
+                                class="form-control add_row_data carbs_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Fats</label>
-                            <input type="number" step="any" name="fats" class="form-control add_row_data fats_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" name="fats" id="fatsSearch"
+                                class="form-control add_row_data fats_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Protein</label>
-                            <input type="number" step="any" name="proteins" class="form-control add_row_data proteins_data"
-                                value="0" required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="proteinsSearch" name="proteins"
+                                class="form-control add_row_data proteins_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sugar</label>
-                            <input type="number" step="any" name="sugar" class="form-control add_row_data sugars_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="sugarsSearch" name="sugar"
+                                class="form-control add_row_data sugars_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sodium</label>
-                            <input type="number" step="any" name="sodium" class="form-control add_row_data sodium_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="sodiumSearch" name="sodium"
+                                class="form-control add_row_data sodium_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <input type="hidden" name="date" value="<%= days.date %>" />
                         <input type="hidden" name="dateString" value="<%= days.dateString %>" />
@@ -324,8 +337,9 @@
         </div>
     </div>
 
+    <!-- duplicate, commenting out -->
     <!-- Add Modal HTML -->
-    <div id="addModal" class="modal fade">
+    <!-- <div id="addModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="/days/add" method="POST" autocomplete="off">
@@ -335,7 +349,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Food</label>
+                            <label id="addFoodLabel">Food</label>
                             <input list="result" name="food" placeholder="search" class="form-control" id="search"
                                 type="text" required maxlength="50" onclick="this.select()">
                             <datalist id="result">
@@ -344,33 +358,39 @@
                         </div>
                         <div class="form-group">
                             <label>Calories</label>
-                            <input type="number" step="any" name="calories" class="form-control add_row_data calories_data"
-                                value="0" required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="caloriesSearch" name="calories"
+                                class="form-control add_row_data calories_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Carbs</label>
-                            <input type="number" step="any" name="carbs" class="form-control add_row_data carbs_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="carbsSearch" name="carbs"
+                                class="form-control add_row_data carbs_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Fats</label>
-                            <input type="number" step="any" name="fats" class="form-control add_row_data fats_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="fatsSearch" name="fats"
+                                class="form-control add_row_data fats_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Protein</label>
-                            <input type="number" step="any" name="proteins" class="form-control add_row_data proteins_data"
-                                value="0" required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="proteinsSearch" name="proteins"
+                                class="form-control add_row_data proteins_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sugar</label>
-                            <input type="number" step="any" name="sugar" class="form-control add_row_data sugars_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="sugarsSearch" name="sugar"
+                                class="form-control add_row_data sugars_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <div class="form-group">
                             <label>Sodium</label>
-                            <input type="number" step="any" name="sodium" class="form-control add_row_data sodium_data" value="0"
-                                required maxlength="10" onclick="this.select()">
+                            <input type="number" step=".01" id="sodiumSearch" name="sodium"
+                                class="form-control add_row_data sodium_data" value="0" required maxlength="10"
+                                onclick="this.select()">
                         </div>
                         <input type="hidden" name="date" value="<%= days.date %>" />
                         <input type="hidden" name="dateString" value="<%= days.dateString %>" />
@@ -381,11 +401,13 @@
                 </form>
             </div>
         </div>
-    </div>
-    </div>
+    </div> -->
+
+
     </div>
     <script type="text/javascript">
         $(document).ready(function ($) {
+
             //on changing the checkbox header
             $('#checkbox2').change(function () {
                 //if the check box is checked, cycle through document and check everything
@@ -418,6 +440,26 @@
                         //check if the input element has the attribute list
                         if (list) {
                             input.removeAttribute('list'); //remove it so we don't see the dropdown
+
+                            document.getElementById("search").value = "Searching...";
+
+                            document.getElementById("caloriesSearch").setAttribute("type", "text");
+                            document.getElementById("caloriesSearch").value = "Searching...";
+
+                            document.getElementById("carbsSearch").setAttribute("type", "text");
+                            document.getElementById("carbsSearch").value = "Searching...";
+
+                            document.getElementById("fatsSearch").setAttribute("type", "text");
+                            document.getElementById("fatsSearch").value = "Searching...";
+
+                            document.getElementById("sugarsSearch").setAttribute("type", "text");
+                            document.getElementById("sugarsSearch").value = "Searching...";
+
+                            document.getElementById("sodiumSearch").setAttribute("type", "text");
+                            document.getElementById("sodiumSearch").value = "Searching...";
+
+                            document.getElementById("proteinsSearch").setAttribute("type", "text");
+                            document.getElementById("proteinsSearch").value = "Searching...";
                         }
                         var inputCounter = 0;
                         //pull the fdcId from the DOM
@@ -429,23 +471,42 @@
                             dataType: "json",
                             cache: false,
                             success: (data) => {
+                                console.log(data);
                                 if (typeof data != undefined) {
+
+                                    document.getElementById("search").value = userText;
+
+                                    //after search returns, switch back input type
+                                    document.getElementById("caloriesSearch").setAttribute("type", "number");
+                                    document.getElementById("carbsSearch").setAttribute("type", "number");
+                                    document.getElementById("fatsSearch").setAttribute("type", "number");
+                                    document.getElementById("sugarsSearch").setAttribute("type", "number");
+                                    document.getElementById("sodiumSearch").setAttribute("type", "number");
+                                    document.getElementById("proteinsSearch").setAttribute("type", "number");
                                     //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
                                     recheckInput = false;
                                     //once we get the data find the elements that need updated, loop and update
                                     $("#addModal").find('.add_row_data').each(function (index, val) {
+                                        console.log("loop 2");
+
                                         if ($(this).hasClass('calories_data')) {
-                                            $(this).attr("value", data['details'][0]['calories']);
+                                            // $(this).attr("value", data['details'][0]['calories']);
+                                            document.getElementById("caloriesSearch").value = data['details'][0]['calories'];
                                         } else if ($(this).hasClass('carbs_data')) {
-                                            $(this).attr("value", data['details'][0]['carbs']);
+                                            // $(this).attr("value", data['details'][0]['carbs']);
+                                            document.getElementById("carbsSearch").value = data['details'][0]['carbs'];
                                         } else if ($(this).hasClass('proteins_data')) {
-                                            $(this).attr("value", data['details'][0]['proteins']);
+                                            // $(this).attr("value", data['details'][0]['proteins']);
+                                            document.getElementById("proteinsSearch").value = data['details'][0]['proteins'];
                                         } else if ($(this).hasClass('fats_data')) {
-                                            $(this).attr("value", data['details'][0]['fats']);
+                                            // $(this).attr("value", data['details'][0]['fats']);
+                                            document.getElementById("fatsSearch").value = data['details'][0]['fats'];
                                         } else if ($(this).hasClass('sugars_data')) {
-                                            $(this).attr("value", data['details'][0]['sugars']);
+                                            // $(this).attr("value", data['details'][0]['sugars']);
+                                            document.getElementById("sugarsSearch").value = data['details'][0]['sugars'];
                                         } else if ($(this).hasClass('sodium_data')) {
-                                            $(this).attr("value", data['details'][0]['sodium']);
+                                            // $(this).attr("value", data['details'][0]['sodium']);
+                                            document.getElementById("sodiumSearch").value = data['details'][0]['sodium'];
                                         }
                                         inputCounter++;
                                         //check if at end of loop, if at end we need to be allowed to recheck if input changes
@@ -455,6 +516,7 @@
                                     });
                                 } else {
                                     console.log("No matches");
+
                                 }
                             }
                         })
@@ -463,6 +525,9 @@
             });
             //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
             $('#search').keyup(function (event) {
+
+
+
                 //result is stored in an unordered list which we wish to write to after retrieving query
                 $('#result').html('');
                 //if we need to start rechecking for new dropdowns
@@ -487,13 +552,36 @@
                     dataType: "json",
                     cache: false,
                     success: (data) => {
-                        // console.log(data['foods']);
+
+                        console.log("json data  = " +JSON.stringify(data));
+
                         if (data['foods']) {
-                            //loop through all the returned results
-                            data['foods'].forEach(function (data) {
-                                //Appends the data to a dropdown menu, when we click the dropdown menu, it should fire another event
-                                $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + data.description + '"></option>');
+                            //count for each new keystroke
+                            var searchCounter = 0;
+
+                            // document.getElementById("addFoodLabel").innerText = "Food " + "- 0 results found for " + searchField
+                            // console.log("value =" + document.getElementById("addFoodLabel").innerText)
+
+                            // every is like forEach but can break out at certain element number, set to 20
+                            data['foods'].every(function (searchData) {
+
+                                // console.log("string data = " + JSON.stringify(searchData));
+
+                                //if list of options too long
+                                if (searchCounter > 19) {
+                                    // document.getElementById("addFoodLabel").innerText = "Food " + "- 20+ results found for " + searchField
+                                    return false;
+                                }
+
+                                //if list ends before list of options
+
+                                searchCounter++;
+                                $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + searchData.description + '"></option>');
+
+                                // Make sure you return true. If you don't return a value, `every()` will stop.
+                                return true;
                             });
+
                         } else {
                             console.log("No response returned");
                             recheckInput = true;
@@ -548,12 +636,12 @@
                 totals_row += '<tr id="totals_row">';
                 totals_row += '<td></td>';
                 totals_row += '<td>Totals</td>';
-                totals_row += '<td total_type="Calories">' + totalCalories + '</td>';
-                totals_row += '<td class="row_data newRowMobile" data-label="Carbs: " total_type="Carbs">' + totalCarbs + '</td>';
-                totals_row += '<td class="row_data newRowMobile" data-label="Fats: " total_type="Fats">' + totalFats + '</td>';
-                totals_row += '<td class="row_data newRowMobile" data-label="Proteins: " total_type="Proteins">' + totalProteins + '</td>';
-                totals_row += '<td class="row_data newRowMobile" data-label="Sugars: " total_type="Sugars">' + totalSugars + '</td>';
-                totals_row += '<td class="row_data newRowMobile" data-label="Sodium: " total_type="Sodium">' + totalSodium + '</td>';
+                totals_row += '<td total_type="Calories">' + Math.floor(totalCalories * 100) / 100 + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Carbs: " total_type="Carbs">' + Math.floor(totalCarbs * 100) / 100 + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Fats: " total_type="Fats">' + Math.floor(totalFats * 100) / 100 + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Proteins: " total_type="Proteins">' + Math.floor(totalProteins * 100) / 100 + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Sugars: " total_type="Sugars">' + Math.floor(totalSugars * 100) / 100 + '</td>';
+                totals_row += '<td class="row_data newRowMobile" data-label="Sodium: " total_type="Sodium">' + Math.floor(totalSodium * 100) / 100 + '</td>';
                 totals_row += '<td></td>';
                 totals_row += '</tr>';
                 //removes the previous totals row, and appends the new one
@@ -570,10 +658,10 @@
                 var updatedProteinsGoal = proteinsGoal - totalProteins;
                 var updatedFatsGoal = fatsGoal - totalFats;
                 //updates html page
-                $(document).find('.goals').html(updatedCaloriesGoal);
-                $(document).find('.proteins').html(updatedProteinsGoal + ' g');
-                $(document).find('.fats').html(updatedFatsGoal + ' g');
-                $(document).find('.carbs').html(updatedCarbsGoal + ' g');
+                $(document).find('.goals').html(Math.floor(updatedCaloriesGoal * 100) / 100);
+                $(document).find('.proteins').html(Math.floor(updatedProteinsGoal * 100) / 100 + ' g');
+                $(document).find('.fats').html(Math.floor(updatedFatsGoal * 100) / 100 + ' g');
+                $(document).find('.carbs').html(Math.floor(updatedCarbsGoal * 100) / 100 + ' g');
                 //update progress bar using a percentage
                 var updatedProgressBar_calories = Math.floor((totalCalories / caloriesGoal) * 100);
                 var updatedProgressBar_proteins = Math.floor((totalProteins / proteinsGoal) * 100);
