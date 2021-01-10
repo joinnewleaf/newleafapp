@@ -25,12 +25,12 @@ router.get("/:foodsearch", ensureAuthenticated, (req, res) => {
     //pull search data
     let foodToLookUp = req.params.foodsearch;
 
-    console.log("food search REQUEST = "+foodToLookUp);
+    // console.log("food search REQUEST = "+foodToLookUp);
     //call the usda food search endpoint; returns json object with list of foods
     //give it a callback to make things async
     //we pass it a value which will end up being the search results, then we print it
     usda.searchFood(foodToLookUp, function callback(data){
-        console.log("food search results = "+JSON.stringify(data));
+        // console.log("food search results = "+JSON.stringify(data));
         res.send(data)
     });
 });
@@ -40,11 +40,11 @@ router.get("/foodDetails/:fdcId", ensureAuthenticated, (req, res) => {
 
     //pull search data
     let foodIdToLookUp = req.params.fdcId;
-    console.log("food ID REQUEST = "+foodIdToLookUp);
+    // console.log("food ID REQUEST = "+foodIdToLookUp);
 
     // call the usda food details endpoint; returns json object with list of details
     usda.searchFoodDetails(foodIdToLookUp, function callback(data){
-        console.log("food ID results = "+JSON.stringify(data));
+        // console.log("food ID results = "+JSON.stringify(data));
         res.send(data)
     });
 });

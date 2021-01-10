@@ -37,7 +37,10 @@ function searchFood(search, callback) {
       body["foods"].forEach(function (data) {
         // get individual description
         str1 = data["description"].toString();
-        str1 = str1.replace(/\\/g, "\\\\").replace(/\"/g, '\\"'); //to escape double quotes
+        console.log("string 1 = "+str1)
+        str1 = str1.replace(/\\/g, "\\\\").replace(/\"/g, '\\"'); //to escape double quotes, sometimes ends early with inches (pizza 14")
+        console.log("string 2 = "+str1)
+
         // get individual id
         str2 = data["fdcId"].toString();
         str2 = str2.replace(/\\/g, "\\\\").replace(/\"/g, '\\"'); //to escape double quotes
@@ -56,7 +59,7 @@ function searchFood(search, callback) {
           fullObjString = fullObjString + "]}";
 
           let responseSearch = JSON.parse(fullObjString);
-
+          console.log("response search = "+ JSON.stringify(responseSearch))
           //return callback with the search results
           callback(responseSearch);
         } else {
@@ -91,6 +94,7 @@ function searchFoodDetails(searchId, callback) {
 
     //parse the response
     var details = JSON.parse(body);
+    console.log("food result details = " + details);
 
     let counter = 0;
 

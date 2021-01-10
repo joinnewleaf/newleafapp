@@ -13,13 +13,6 @@
             appearance: none;
             margin: 0;
         }
-
-        /* potentially fix mobile dropdown */
-        /* @media (max-width: 1023px) {
-            .nav-collapse {
-                overflow-y: auto;
-            }
-        } */
     </style>
 
     <!-- <div class="panel panel-default panel-default-Mobile"> -->
@@ -337,76 +330,252 @@
         </div>
     </div>
 
-    <!-- duplicate, commenting out -->
-    <!-- Add Modal HTML -->
-    <!-- <div id="addModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="/days/add" method="POST" autocomplete="off">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Food</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label id="addFoodLabel">Food</label>
-                            <input list="result" name="food" placeholder="search" class="form-control" id="search"
-                                type="text" required maxlength="50" onclick="this.select()">
-                            <datalist id="result">
-                                <option class="searchResultOptions" value="Quick Add">
-                            </datalist>
-                        </div>
-                        <div class="form-group">
-                            <label>Calories</label>
-                            <input type="number" step=".01" id="caloriesSearch" name="calories"
-                                class="form-control add_row_data calories_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <div class="form-group">
-                            <label>Carbs</label>
-                            <input type="number" step=".01" id="carbsSearch" name="carbs"
-                                class="form-control add_row_data carbs_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <div class="form-group">
-                            <label>Fats</label>
-                            <input type="number" step=".01" id="fatsSearch" name="fats"
-                                class="form-control add_row_data fats_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <div class="form-group">
-                            <label>Protein</label>
-                            <input type="number" step=".01" id="proteinsSearch" name="proteins"
-                                class="form-control add_row_data proteins_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <div class="form-group">
-                            <label>Sugar</label>
-                            <input type="number" step=".01" id="sugarsSearch" name="sugar"
-                                class="form-control add_row_data sugars_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <div class="form-group">
-                            <label>Sodium</label>
-                            <input type="number" step=".01" id="sodiumSearch" name="sodium"
-                                class="form-control add_row_data sodium_data" value="0" required maxlength="10"
-                                onclick="this.select()">
-                        </div>
-                        <input type="hidden" name="date" value="<%= days.date %>" />
-                        <input type="hidden" name="dateString" value="<%= days.dateString %>" />
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-
     </div>
     <script type="text/javascript">
         $(document).ready(function ($) {
+
+            var recheckInput = true;
+
+            //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
+            $("#search").on("input", function (event) {
+
+                //call everytime a character is entered
+                if (recheckInput == true) {
+                    keystrokeEvent();
+                }
+
+                //fire event when user selects a dropdown item
+                if (recheckInput == false) {
+                    selectEvent();
+                }
+
+            });
+
+            function keystrokeEvent() {
+                console.log("keystroke event");
+
+                //store event as input
+                var input = event.target,
+                    list = input.getAttribute('list'); //get the list attribute from the event
+                //if there is no value to list
+                if (list == null) {
+
+                    input.setAttribute('list', 'result'); //allow us to display options as a list again
+                    console.log("adding list attribute during keystroke");
+                    $('#result').html('');
+
+                }
+
+                //get the text box search value and store it into a variable
+                var searchField = $('#search').val();
+
+                //check if it's the first in the list
+                var firstOptionCheck = true;
+
+                //cycle through datalist of options, find if the first one was actually picked
+                $("#result").find("option").each(function () {
+                    if (($(this).val() == searchField) && firstOptionCheck) {
+                        console.log($(this).val() + " was selected")
+
+                        //no longer need to check input char events
+                        recheckInput = false;
+                        firstOptionCheck = false;
+                    }
+                })
+
+                //on switching recheck input after selecting dropdown, this needs to be rechecked
+                if (recheckInput == true) {
+                    doSearch(searchField);
+                    document.getElementById("addFoodLabel").innerText = 'Food ' + '- Loading matches for "' + searchField + '"'
+
+
+                    //cycle through data list and remove anything at beginning of char entered
+                    $("#result").find("option").each(function () {
+                        var attr = $(this).attr('fdcId');
+
+                        if (typeof attr !== typeof undefined && attr !== false) {
+                            // Element has this attribute
+                            $(this).remove();
+                        }
+                    })
+                }
+
+                //makes call to foods/: with the search field we enter
+                //used to delay search in ajax, make less requests
+                var delayTimer;
+                function doSearch(searchField) {
+                    clearTimeout(delayTimer);
+                    delayTimer = setTimeout(function () {
+
+                        //need to set the url manually to be absolute
+                        $.ajax({
+                            url: "/foods/" + searchField,
+                            type: "GET",
+                            dataType: "json",
+                            cache: false,
+                            success: (data) => {
+                                // console.log("json data  = " + JSON.stringify(data));
+
+                                if (data['foods']) {
+
+                                    //set results back
+                                    document.getElementById("addFoodLabel").innerText = 'Food ' + '- Records matching "' + searchField + '"'
+
+                                    //count for each new keystroke
+                                    var searchCounter = 0;
+
+                                    // every is like forEach but can break out at certain element number, set to 20
+                                    data['foods'].every(function (searchData) {
+
+                                        // console.log("string data = " + JSON.stringify(searchData));
+
+                                        //if list of options too long
+                                        if (searchCounter > 19) {
+                                            // document.getElementById("addFoodLabel").innerText = "Food " + "- 20+ results found for " + searchField
+                                            return false;
+                                        }
+
+                                        //if list ends before list of options
+
+                                        searchCounter++;
+                                        $('#result').append('<option class = "searchResultOptions" fdcId = "' + searchData.fdcId + '" value="' + searchData.description + '"></option>');
+
+                                        // Make sure you return true. If you don't return a value, `every()` will stop.
+                                        return true;
+                                    });
+
+                                } else {
+                                    console.log("No response returned");
+                                }
+                            }
+                        });
+                        // Do the ajax stuff
+                    }, 700); // Will do the ajax stuff after 1000 ms, or 1 s
+                }
+
+            }
+
+            function selectEvent() {
+
+                console.log("selected input event");
+
+                //the text the user entered
+                var userText = $("#search").val();
+                console.log("search field = " + userText);
+
+                //store event as input
+                var input = event.target,
+                    list = input.getAttribute('list'); //get the list attribute from the event
+                //check if the input element has the attribute list
+                if (list) {
+                    input.removeAttribute('list'); //remove it so we don't see the dropdown
+                    console.log("removing list attribute");
+
+                    document.getElementById("caloriesSearch").setAttribute("type", "text");
+                    document.getElementById("caloriesSearch").value = "Searching...";
+
+                    document.getElementById("carbsSearch").setAttribute("type", "text");
+                    document.getElementById("carbsSearch").value = "Searching...";
+
+                    document.getElementById("fatsSearch").setAttribute("type", "text");
+                    document.getElementById("fatsSearch").value = "Searching...";
+
+                    document.getElementById("sugarsSearch").setAttribute("type", "text");
+                    document.getElementById("sugarsSearch").value = "Searching...";
+
+                    document.getElementById("sodiumSearch").setAttribute("type", "text");
+                    document.getElementById("sodiumSearch").value = "Searching...";
+
+                    document.getElementById("proteinsSearch").setAttribute("type", "text");
+                    document.getElementById("proteinsSearch").value = "Searching...";
+                }
+
+                var inputCounter = 0;
+                //pull the fdcId from the DOM
+
+
+                //cycle through datalist of options, find if the first one was actually picked
+                var firstOptionCheck = true;
+
+                $("#result").find("option").each(function () {
+                    if (($(this).val() == userText) && firstOptionCheck) {
+
+                        var fdcId = $(this).attr('fdcId');
+                        console.log("id = " + fdcId);
+
+                        //no longer need to check input char events
+                        firstOptionCheck = false;
+
+                        console.log("doing that")
+                        doSearch(fdcId);
+                    }
+                })
+
+                var delayTimer;
+                function doSearch(fdcId) {
+                    clearTimeout(delayTimer);
+                    delayTimer = setTimeout(function () {
+
+                        //ajax call with fdcId as param
+                        $.ajax({
+                            url: "/foods/foodDetails/" + fdcId,
+                            type: "GET",
+                            dataType: "json",
+                            cache: false,
+                            success: (data) => {
+                                if (typeof data != undefined) {
+
+                                    //set results back
+                                    document.getElementById("search").value = userText;
+                                    document.getElementById("addFoodLabel").innerText = 'Food ' + '- Information found for "' + userText + '"'
+
+                                    //after search returns, switch back input type
+                                    document.getElementById("caloriesSearch").setAttribute("type", "number");
+                                    document.getElementById("carbsSearch").setAttribute("type", "number");
+                                    document.getElementById("fatsSearch").setAttribute("type", "number");
+                                    document.getElementById("sugarsSearch").setAttribute("type", "number");
+                                    document.getElementById("sodiumSearch").setAttribute("type", "number");
+                                    document.getElementById("proteinsSearch").setAttribute("type", "number");
+
+                                    //once we get the data find the elements that need updated, loop and update
+                                    $("#addModal").find('.add_row_data').each(function (index, val) {
+
+                                        if ($(this).hasClass('calories_data')) {
+                                            $(this).attr("value", data['details'][0]['calories']);
+                                            document.getElementById("caloriesSearch").value = data['details'][0]['calories'];
+                                        } else if ($(this).hasClass('carbs_data')) {
+                                            $(this).attr("value", data['details'][0]['carbs']);
+                                            document.getElementById("carbsSearch").value = data['details'][0]['carbs'];
+                                        } else if ($(this).hasClass('proteins_data')) {
+                                            $(this).attr("value", data['details'][0]['proteins']);
+                                            document.getElementById("proteinsSearch").value = data['details'][0]['proteins'];
+                                        } else if ($(this).hasClass('fats_data')) {
+                                            $(this).attr("value", data['details'][0]['fats']);
+                                            document.getElementById("fatsSearch").value = data['details'][0]['fats'];
+                                        } else if ($(this).hasClass('sugars_data')) {
+                                            $(this).attr("value", data['details'][0]['sugars']);
+                                            document.getElementById("sugarsSearch").value = data['details'][0]['sugars'];
+                                        } else if ($(this).hasClass('sodium_data')) {
+                                            $(this).attr("value", data['details'][0]['sodium']);
+                                            document.getElementById("sodiumSearch").value = data['details'][0]['sodium'];
+                                        }
+                                        inputCounter++;
+                                        //check if at end of loop, if at end we need to be allowed to recheck if input changes
+                                        if (inputCounter == $("#addModal").find('.add_row_data').length) {
+                                            recheckInput = true;//we are at the end of the loop so we can now recheck any keystrokes
+                                        }
+                                    });
+                                } else {
+                                    console.log("No matches");
+                                }
+                            }
+                        })
+
+                        // Do the ajax stuff
+                    }, 1000); // Will do the ajax stuff after 1000 ms, or 1 s
+                }
+
+            }
 
             //on changing the checkbox header
             $('#checkbox2').change(function () {
@@ -420,174 +589,6 @@
                         $(val).prop("checked", false);
                     })
                 }
-            })
-            var recheckInput = true;
-            //when user selects an element from the dropdown, make a request to the db for details and remove the list attribute to stop displaying options
-            $("#search").on("input", function (event) {
-                //the text the user entered
-                var userText = $(this).val();
-                //we need to replace first option with the exact clicked option
-                var firstOption = true;
-                //if the user selected an option from the list, make an ajax call to the ingredients db
-                $("#result").find("option").each(function () {
-                    //check if the value entered is in the list
-                    if (($(this).val() == userText) && firstOption) {
-                        //only select the first of the matched values
-                        firstOption = false;
-                        //store event as input
-                        var input = event.target,
-                            list = input.getAttribute('list'); //get the list attribute from the event
-                        //check if the input element has the attribute list
-                        if (list) {
-                            input.removeAttribute('list'); //remove it so we don't see the dropdown
-
-                            document.getElementById("search").value = "Searching...";
-
-                            document.getElementById("caloriesSearch").setAttribute("type", "text");
-                            document.getElementById("caloriesSearch").value = "Searching...";
-
-                            document.getElementById("carbsSearch").setAttribute("type", "text");
-                            document.getElementById("carbsSearch").value = "Searching...";
-
-                            document.getElementById("fatsSearch").setAttribute("type", "text");
-                            document.getElementById("fatsSearch").value = "Searching...";
-
-                            document.getElementById("sugarsSearch").setAttribute("type", "text");
-                            document.getElementById("sugarsSearch").value = "Searching...";
-
-                            document.getElementById("sodiumSearch").setAttribute("type", "text");
-                            document.getElementById("sodiumSearch").value = "Searching...";
-
-                            document.getElementById("proteinsSearch").setAttribute("type", "text");
-                            document.getElementById("proteinsSearch").value = "Searching...";
-                        }
-                        var inputCounter = 0;
-                        //pull the fdcId from the DOM
-                        var fdcId = $(this).attr('fdcId');
-                        //ajax call with fdcId as param
-                        $.ajax({
-                            url: "/foods/foodDetails/" + fdcId,
-                            type: "GET",
-                            dataType: "json",
-                            cache: false,
-                            success: (data) => {
-                                console.log(data);
-                                if (typeof data != undefined) {
-
-                                    document.getElementById("search").value = userText;
-
-                                    //after search returns, switch back input type
-                                    document.getElementById("caloriesSearch").setAttribute("type", "number");
-                                    document.getElementById("carbsSearch").setAttribute("type", "number");
-                                    document.getElementById("fatsSearch").setAttribute("type", "number");
-                                    document.getElementById("sugarsSearch").setAttribute("type", "number");
-                                    document.getElementById("sodiumSearch").setAttribute("type", "number");
-                                    document.getElementById("proteinsSearch").setAttribute("type", "number");
-                                    //we are going to dynamically fill in data, so we don't want to currently recheck for Inputs
-                                    recheckInput = false;
-                                    //once we get the data find the elements that need updated, loop and update
-                                    $("#addModal").find('.add_row_data').each(function (index, val) {
-                                        console.log("loop 2");
-
-                                        if ($(this).hasClass('calories_data')) {
-                                            // $(this).attr("value", data['details'][0]['calories']);
-                                            document.getElementById("caloriesSearch").value = data['details'][0]['calories'];
-                                        } else if ($(this).hasClass('carbs_data')) {
-                                            // $(this).attr("value", data['details'][0]['carbs']);
-                                            document.getElementById("carbsSearch").value = data['details'][0]['carbs'];
-                                        } else if ($(this).hasClass('proteins_data')) {
-                                            // $(this).attr("value", data['details'][0]['proteins']);
-                                            document.getElementById("proteinsSearch").value = data['details'][0]['proteins'];
-                                        } else if ($(this).hasClass('fats_data')) {
-                                            // $(this).attr("value", data['details'][0]['fats']);
-                                            document.getElementById("fatsSearch").value = data['details'][0]['fats'];
-                                        } else if ($(this).hasClass('sugars_data')) {
-                                            // $(this).attr("value", data['details'][0]['sugars']);
-                                            document.getElementById("sugarsSearch").value = data['details'][0]['sugars'];
-                                        } else if ($(this).hasClass('sodium_data')) {
-                                            // $(this).attr("value", data['details'][0]['sodium']);
-                                            document.getElementById("sodiumSearch").value = data['details'][0]['sodium'];
-                                        }
-                                        inputCounter++;
-                                        //check if at end of loop, if at end we need to be allowed to recheck if input changes
-                                        if (inputCounter == $("#addModal").find('.add_row_data').length) {
-                                            recheckInput = true;//we are at the end of the loop so we can now recheck any keystrokes
-                                        }
-                                    });
-                                } else {
-                                    console.log("No matches");
-
-                                }
-                            }
-                        })
-                    }
-                })
-            });
-            //everytime a char is entered into the search field, query the database for a list of foods, also need to display options as a dropdown list
-            $('#search').keyup(function (event) {
-
-
-
-                //result is stored in an unordered list which we wish to write to after retrieving query
-                $('#result').html('');
-                //if we need to start rechecking for new dropdowns
-                if (recheckInput == true) {
-                    //reset because we won't need to recheck Inputs until we select another dropdown option
-                    recheckInput = false;
-                    //store event as input
-                    var input = event.target,
-                        list = input.getAttribute('list'); //get the list attribute from the event
-                    //if there is no value to list
-                    if (list == null) {
-                        input.setAttribute('list', 'result'); //allow us to display options as a list again
-                    }
-                }
-                //get the text box search value and store it into a variable
-                var searchField = $('#search').val();
-                //makes call to foods/: with the search field we enter
-                //need to set the url manually to be absolute
-                $.ajax({
-                    url: "/foods/" + searchField,
-                    type: "GET",
-                    dataType: "json",
-                    cache: false,
-                    success: (data) => {
-
-                        console.log("json data  = " +JSON.stringify(data));
-
-                        if (data['foods']) {
-                            //count for each new keystroke
-                            var searchCounter = 0;
-
-                            // document.getElementById("addFoodLabel").innerText = "Food " + "- 0 results found for " + searchField
-                            // console.log("value =" + document.getElementById("addFoodLabel").innerText)
-
-                            // every is like forEach but can break out at certain element number, set to 20
-                            data['foods'].every(function (searchData) {
-
-                                // console.log("string data = " + JSON.stringify(searchData));
-
-                                //if list of options too long
-                                if (searchCounter > 19) {
-                                    // document.getElementById("addFoodLabel").innerText = "Food " + "- 20+ results found for " + searchField
-                                    return false;
-                                }
-
-                                //if list ends before list of options
-
-                                searchCounter++;
-                                $('#result').append('<option class = "searchResultOptions" fdcId = "' + data.fdcId + '" value="' + searchData.description + '"></option>');
-
-                                // Make sure you return true. If you don't return a value, `every()` will stop.
-                                return true;
-                            });
-
-                        } else {
-                            console.log("No response returned");
-                            recheckInput = true;
-                        }
-                    }
-                });
             });
             //we will place the goal data, to be imported from the database within each day here
             var caloriesGoal = "<%= caloriesGoal %>";
@@ -674,7 +675,6 @@
                 $('#progress-bar-proteins').attr('style', "width: " + updatedProgressBar_proteins + "%");
             }
             $(document).on('click', '.edit', function (event) {
-                console.log("edit")
                 //find tbl row and its ID closest to the click, will be used to update the db
                 var tbl_row = $(this).closest('tr');
                 var id = tbl_row.attr('id');
@@ -703,11 +703,9 @@
                 $(window).scrollTop(0);
             });
             $(document).on('click', '.delete', function (event) {
-                console.log("delete one")
                 //find tbl row and its ID closest to the click, will be used to update the db
                 var tbl_row = $(this).closest('tr');
                 var id = tbl_row.attr('id');
-                console.log(id);
                 //update row id in the submit form
                 $("#deleteModal").find('.row_id_data').attr("value", id);
                 //makes scroll work after click
@@ -716,7 +714,6 @@
             calculateTotal();
             //deletes all checked rows
             $(document).on('click', '.btn-delete-multiple', function (event) {
-                console.log("delete multiple")
                 //find tbl row and its ID closest to the click, will be used to update the db
                 var tbl_row_array = [];
                 var id_array = [];
